@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@theme {
+  --color-oasis-aqua: #00D0FF; /* Login Reg*/
+  --color-oasis-dark: #54A194; /* GRADIENT */
+  --color-oasis-blue: #D0FCDC; /* ELEMENTS */
+  --color-oasis-header: #2B6259; /* DARK */
+  --color-oasis-light: #3E8679; /* INTERACTIVE */
+  --color-oasis-button-light: #54A194;
+  --color-oasis-button-dark: #2D6259;
+  
+  --font-oasis-text: "Poppins";
+}
+
+body {
+  background: linear-gradient(to right, #C9FDD7, #54A194);
+}
