@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import 'animate.css';
 import './styles.css'
 import LandingPage from './pages/landingPage'
 import Admin from './pages/admin'

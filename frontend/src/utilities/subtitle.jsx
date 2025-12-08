@@ -1,4 +1,3 @@
-import '../styles.css'
 
 export default function Subtitle({ text }) {
     return (

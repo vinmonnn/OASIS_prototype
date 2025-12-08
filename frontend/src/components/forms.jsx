@@ -1,4 +1,3 @@
-import '../styles.css'
 
 export function RegForm() {
     return (

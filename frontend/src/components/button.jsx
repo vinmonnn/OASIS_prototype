@@ -1,4 +1,3 @@
-import '../styles.css'
 
 export default function Button({ text }) {
     return (
