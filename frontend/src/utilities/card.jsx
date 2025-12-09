@@ -5,12 +5,11 @@ import Subtitle from "./subtitle";
 export function CustomCard({ title, desc }) {
   const [showBack, setShowBack] = useState(false);
 
-  const flip = () => setShowBack((prev) => !prev);
-
   return (
     <div
       className="w-60 h-60 perspective cursor-pointer"
-      onClick={flip}
+      onMouseOver={() => setShowBack(true)}
+      onMouseLeave={() => setShowBack(false)}
     >
       <div
         className={`

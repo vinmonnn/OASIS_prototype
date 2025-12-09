@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import oasisLogo from '../assets/oasisLogo.png'
-import Title from '../utilities/title'
-import Subtitle from '../utilities/subtitle'
-import MainScreen from '../layouts/mainScreen'
-import LogregScreen from '../layouts/logregScreen'
+import oasisLogo from './assets/oasisLogo.png'
+import Title from './utilities/title'
+import Subtitle from './utilities/subtitle'
+import MainScreen from './layouts/mainScreen'
+import LogregScreen from './layouts/logregScreen'
 
 export default function NotFound() {
     return(

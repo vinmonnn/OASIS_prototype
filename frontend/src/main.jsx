@@ -3,17 +3,15 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import 'animate.css';
 import './styles.css'
-import LandingPage from './pages/landingPage'
+import LandingPage from './landingPage'
 import Admin from './pages/admin'
 import Student from './pages/student'
-import Login from './pages/login'
-import Register from './pages/register'
-import NotFound from './pages/notFound'
+import UserAccess from './pages/userAccess'
+import NotFound from './notFound'
 
 const router = createBrowserRouter([
   {path: '/', element: <LandingPage />},
-  {path: '/login', element: <Login />},
-  {path: '/register', element: <Register />},
+  {path: '/access', element: <UserAccess />},,
   {path: '/admin', element: <Admin />}, 
   {path: '/student', element: <Student />},
   {path: '*', element: <NotFound />}

@@ -1,14 +1,12 @@
-import MainScreen from '../layouts/mainScreen'
-import Header from '../components/header'
-import ctaBg from '../assets/ctaBg.png'
-import { UpperWave, LowerWave } from '../utilities/waves'
-import Title from '../utilities/title'
-import Subtitle from '../utilities/subtitle'
-import { CustomCard } from '../utilities/card'
+import MainScreen from './layouts/mainScreen'
+import ctaBg from './assets/ctaBg.png'
+import { UpperWave, LowerWave } from './utilities/waves'
+import Title from './utilities/title'
+import Subtitle from './utilities/subtitle'
+import { CustomCard } from './utilities/card'
 
 
 export default function LandingPage() {
-
 
     return(
         <>
