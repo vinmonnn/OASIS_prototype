@@ -11,7 +11,7 @@ import Register from './pages/register'
 import NotFound from './pages/notFound'
 
 const router = createBrowserRouter([
-  {path: '/landing', element: <LandingPage />},
+  {path: '/', element: <LandingPage />},
   {path: '/login', element: <Login />},
   {path: '/register', element: <Register />},
   {path: '/admin', element: <Admin />}, 
