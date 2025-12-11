@@ -4,8 +4,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import 'animate.css';
 import './styles.css'
 import LandingPage from './landingPage'
-import Admin from './pages/admin'
-import Student from './pages/student'
+import Admin from './pages/adminPages/admin'
+import Student from './pages/studentPages/student'
 import UserAccess from './pages/userAccess'
 import NotFound from './notFound'
 

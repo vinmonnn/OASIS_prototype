@@ -5,7 +5,6 @@ import Title from './utilities/title'
 import Subtitle from './utilities/subtitle'
 import { CustomCard } from './utilities/card'
 
-
 export default function LandingPage() {
 
     return(
@@ -37,6 +36,7 @@ export default function LandingPage() {
                 <LowerWave/>
                 <p>text</p>
 
+                
             </MainScreen>
         </>
     )
