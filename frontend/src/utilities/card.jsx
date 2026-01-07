@@ -37,7 +37,7 @@ export function AdmCard({ cardTitle, cardIcon, cardNumber, cardDate}) {
     return (
       <>
       
-        <div className="bg-[#CDE8E3] p-3 min-w-56 min-h-42 rounded-2xl font-oasis-text text-[0.8rem] flex flex-col justify-between items-center">
+        <div className="bg-admin-element p-3 min-w-56 min-h-42 rounded-2xl font-oasis-text text-[0.8rem] flex flex-col justify-between items-center">
 
           <section className="w-full flex flex-row justify-between items-center">
               <p>{cardTitle}</p>

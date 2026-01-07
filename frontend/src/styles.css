@@ -9,9 +9,9 @@
   --color-oasis-light: #3E8679; /* INTERACTIVE */
   --color-oasis-button-light: #54A194;
   --color-oasis-button-dark: #2D6259;
-
+  
   --color-admin-header-bg: rgba(178,190,181, 0.3);
-
+  --color-admin-element: #CDE8E3;
   --font-oasis-text: "Poppins";
 }
 

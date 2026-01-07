@@ -8,8 +8,8 @@ export default function NavItem({ to, label }) {
                 <NavLink
                     to={to}
                     className={({ isActive }) =>
-                        `font-oasis-text transition-all duration-200 ${
-                            isActive ? "scale-110 -translate-y-1 text-oasis-aqua" : ""
+                        `font-oasis-text transition-all duration-200 font-bold ${
+                            isActive ? "scale-110 -translate-y-1 text-oasis-aqua underline underline-offset-4" : ""
                         }`
                     }
                 >
