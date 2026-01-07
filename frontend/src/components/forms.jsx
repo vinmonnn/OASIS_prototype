@@ -140,7 +140,9 @@ export function UpdatedReg() {
                                         />
                                     </div>
                                     
-                                    <p id="uidnote" className={userFocus && user && !validName ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic": "opacity-0 font-oasis-text text-[0.8rem] italic text-red-900"}>Must be a valid webmail. E.g. juanmdelacruz@iskolarngbayan.pup.edu.ph</p>
+                                    <p id="uidnote" className={userFocus && user && !validName ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic m-auto text-center": "opacity-0 "}>Must be a valid webmail.<br/> 
+                                    E.g. juanmdelacruz@iskolarngbayan.pup.edu.ph
+                                    </p>
                                     <Button
                                         text="Send OTP"
                                         disabled={!validName}
@@ -277,7 +279,7 @@ export function UpdatedLogin() {
         <>
             <section className="w-full p-1 flex flex-col items-center justify-center gap-1">
                 <Title text={"Login"}></Title>
-                <p ref={errRef} className={errMsg ? "right-0" : "right-full"} aria-live="assertive">{errMsg}</p>
+                <p ref={errRef} className={errMsg ? "opacity-1" : "opacity-0"} aria-live="assertive">{errMsg}</p>
             </section>
             <form className=" w-full p-5 flex flex-col items-center justify-center gap-5">
                 <div className="w-full">
