@@ -1,6 +1,6 @@
 import 'animate.css';
 
-export default function Button({ text, onClick, disabled }) {
+export function Button({ text, onClick, disabled }) {
     return (
         <button
             type="button"

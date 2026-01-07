@@ -1,6 +1,5 @@
-import Button from "./button";
+import { Button } from "./button";
 import { useForm } from "react-hook-form";
-import InputField from "../utilities/inputField";
 import { useRef, useState, useEffect } from "react";
 import Title from "../utilities/title";
 import { Link } from "react-router-dom";

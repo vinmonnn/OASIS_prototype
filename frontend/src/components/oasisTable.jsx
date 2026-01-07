@@ -1,31 +1,52 @@
-import { useState } from "react";
 import Title from "../utilities/title";
-import Subtitle from "../utilities/subtitle";
+import { Filter } from "./adminComps";
 
-export default function OasisTable() {
-
-
+export default function OasisTable({ headers = [] }) {
     return (
         <>
-            <div className="w-[85%] p-3 bg-oasis-light rounded-2xl flex flex-col items-center justify-center font-oasis-text">
+            <div className="w-[85%] p-3 bg-oasis-blue rounded-2xl flex flex-col items-center justify-center font-oasis-text">
+                <div className="w-[95%] flex flex-col justify-center items-start">
+                    <Title text={"Filter by year"}/>
+                    <div className="flex flex-row items-center justify-start gap-5">
+                        <Filter text={"All"}/>
+                        <Filter text={"2nd year"}/>
+                        <Filter text={"3rd year"}/>
+                    </div>
+                    
+                    
 
-                <table className="w-full p-5 flex flex-col justify-center items-center gap-1">
-                    <tr className="w-full p-3 justify-between items-center bg-white rounded-2xl overflow-hidden">
-                        <th className="p-2 flex justify-center items-center text-[1.2rem]">
-                            <td>Header</td>
-                        </th>
+                </div>
+              
+                
+                <table className="w-full border-separate border-spacing-y-2">
+                    
+                    {/* HEADER */}
+                    <thead>
+                        <tr className="bg-white rounded-2xl">
+                            {headers.map((header, index) => (
+                                <th
+                                    key={index}
+                                    className="p-3 text-[1rem] text-black text-center"
+                                >
+                                    {header}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
 
-                    </tr>
-
-                    <tr className="w-full p-3 bg-white rounded-2xl text-[0.8rem] overflow-hidden">
-                        <td className="">Data</td>
-                        
-                    </tr>
+                    {/* BODY (sample row) */}
+                    <tbody>
+                        <tr className="bg-white rounded-2xl text-[0.9rem] text-center">
+                            {headers.map((_, index) => (
+                                <td key={index} className="p-3">
+                                    Data
+                                </td>
+                            ))}
+                        </tr>
+                    </tbody>
 
                 </table>
-
             </div>
-            
         </>
     );
 }
