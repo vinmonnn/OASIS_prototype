@@ -4,9 +4,13 @@ import InputField from "../utilities/inputField";
 import { useRef, useState, useEffect } from "react";
 import Title from "../utilities/title";
 import { Link } from "react-router-dom";
+import { sendOtp, verifyOtp } from "../api/auth.service";
+
 
 const USER_REGEX = /^[a-z]+[a-z][a-z]+@iskolarngbayan\.pup\.edu\.ph$/;
 const PWD_REGEX = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+const OTP_REGEX = /^\d{6}$/;
+
 
 export function UpdatedReg() {
 
@@ -59,8 +63,11 @@ export function UpdatedReg() {
         console.log(result);
         console.log(user);
         setValidName(result);
-
     }, [user])
+
+    useEffect(() => { //OTP validation
+        setValidOtp(OTP_REGEX.test(otp));
+    }, [otp]);
 
     useEffect(() => { //password validation
         const result = PWD_REGEX.test(pwd);
@@ -69,254 +76,249 @@ export function UpdatedReg() {
         setValidPwd(result);
         const match = pwd === matchPwd;
         setValidMatch(match);
-
     }, [pwd, matchPwd])
 
     useEffect(() => {
         setErrMsg('');
-
     }, [user, pwd, matchPwd])
 
-    return(
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (step !== STEPS.PASSWORD) return;
+
+        const v1 = USER_REGEX.test(user);
+        const v2 = PWD_REGEX.test(pwd);
+
+        if (!v1 || !v2) {
+            setErrMsg("Invalid Entry");
+            return;
+        }
+
+        setSuccess(true);
+    };
+
+    return (
         <>
-            <section className="w-full p-1 flex flex-col items-center justify-center gap-1">
-                <Title text={"Register"}></Title>
-                <p ref={errRef} className={errMsg ? "right-0" : "right-full"} aria-live="assertive">{errMsg}</p>
-
-            </section>
-
-            {/* WEBMAIL */}
-            <form className=" w-full p-5 flex flex-col items-center justify-center gap-3">
-                {step === STEPS.EMAIL && (
+            {success ? (
                     <>
-                        <label className="mb-1 text-oasis-header font-oasis-text" htmlFor="webMail">PUP Webmail</label>
-                        <input
-                            type="text"
-                            id="webMail"
-                            placeholder="Enter valid webmail"
-                            ref={userRef}
-                            autoComplete="off"
-                            required
-                            onChange={(e) => setUser(e.target.value)}
-                            aria-invalid={validName ? "false" : "true"}
-                            aria-describedby="uidnote"
-                            onFocus={() => setUserFocus(true)}
-                            onBlur={() => setUserFocus(false)}
-
-                            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
-                        />
-                        <p id="uidnote" className={userFocus && user && !validName ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic": "opacity-0 font-oasis-text text-[0.8rem] italic text-red-900"}>Must be a valid webmail. E.g. juanmdelacruz@iskolarngbayan.pup.edu.ph</p>
-                        <Button
-                            text="Send OTP"
-                            disabled={!validName}
-                            onClick={async (e) => {
-                                e.preventDefault();
-
-                                try {
-                                    // axios.post("/send-otp", { email: user })
-                                    setStep(STEPS.OTP);
-                                } catch {
-                                    setErrMsg("Failed to send OTP");
-                                }
-                            }}
-                        />
-
+                        <section>
+                            <h1>success</h1>
+                            <p>
+                                Sign in
+                            </p>
+                        </section>
                     </>
-                )}
-
-                {/* OTP */}
-                {step === STEPS.OTP && (
+                ) : (
                     <>
-                        <label htmlFor="otp" className="mb-1 text-oasis-header font-oasis-text">Enter OTP</label>
-                        <input
-                            ref={otpRef}
-                            type="text"
-                            id="otp"
-                            required
-                            placeholder="6-digit OTP"
-                            onChange={(e) => setOtp(e.target.value)}
-                            aria-describedby="otpnote"
-                            onFocus={() => setOtpFocus(true)}
-                            onBlur={() => setOtpFocus(false)}
-                            
-                            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
-                        />
-                        <p id="otpnote" className={otpFocus && otp && !validOtp ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic": "opacity-0 font-oasis-text text-[0.8rem] italic text-red-900"}>Verified OTP sent to your PUP webmail</p>
-                        <Button
-                            text="Verify OTP"
-                            onClick={async (e) => {
-                                e.preventDefault();
+                        <section className="w-full p-1 flex flex-col items-center justify-center gap-1">
+                            <Title text={"Register"}></Title>
+                            <p ref={errRef} className={errMsg ? "right-0" : "right-full"} aria-live="assertive">{errMsg}</p>
 
-                                try {
-                                    // axios.post("/verify-otp", { email: user, otp })
-                                    setValidOtp(true);
-                                    setStep(STEPS.PASSWORD);
-                                } catch {
-                                    setErrMsg("Invalid OTP");
-                                }
-                            }}
-                        />
+                        </section>
+
+                        {/* WEBMAIL */}
+                        <form onSubmit={handleSubmit} className=" w-full p-5 flex flex-col items-center justify-center gap-3">
+                            {step === STEPS.EMAIL && (
+                                <>
+                                    <div className="text-center">
+                                        <label className="mb-1 text-oasis-header font-oasis-text" htmlFor="webMail">PUP Webmail</label>
+                                        <input
+                                            type="text"
+                                            id="webMail"
+                                            placeholder="Enter valid webmail"
+                                            ref={userRef}
+                                            autoComplete="off"
+                                            required
+                                            onChange={(e) => setUser(e.target.value)}
+                                            aria-invalid={validName ? "false" : "true"}
+                                            aria-describedby="uidnote"
+                                            onFocus={() => setUserFocus(true)}
+                                            onBlur={() => setUserFocus(false)}
+
+                                            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                                        />
+                                    </div>
+                                    
+                                    <p id="uidnote" className={userFocus && user && !validName ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic": "opacity-0 font-oasis-text text-[0.8rem] italic text-red-900"}>Must be a valid webmail. E.g. juanmdelacruz@iskolarngbayan.pup.edu.ph</p>
+                                    <Button
+                                        text="Send OTP"
+                                        disabled={!validName}
+                                        onClick={async (e) => {
+                                            e.preventDefault();
+                                            try {
+                                                await sendOtp(user);
+                                                setStep(STEPS.OTP);
+
+                                            } catch {
+                                                setErrMsg("Failed to send OTP");
+                                            }
+                                        }}
+                                    />
+                                </>
+                            )}
+
+                            {/* OTP */}
+                            {step === STEPS.OTP && (
+                                <>
+                                    <div className="text-center">
+                                        <label htmlFor="otp" className="mb-1 text-oasis-header font-oasis-text">Enter OTP</label>
+                                        <input
+                                            ref={otpRef}
+                                            type="text"
+                                            id="otp"
+                                            required
+                                            placeholder="6-digit OTP"
+                                            onChange={(e) => setOtp(e.target.value)}
+                                            aria-describedby="otpnote"
+                                            onFocus={() => setOtpFocus(true)}
+                                            onBlur={() => setOtpFocus(false)}
+                                            
+                                            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                                        />
+                                    </div>
+                                    <p id="otpnote" className={otpFocus && otp && !validOtp ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic": "opacity-0 font-oasis-text text-[0.8rem] italic text-red-900"}> OTP must be a 6-digit number.</p>
+                                    <Button
+                                        text="Verify OTP"
+                                        disabled={!validOtp}
+                                        onClick={async (e) => {
+                                            e.preventDefault();
+
+                                            try {
+                                                await verifyOtp(user, otp); //backend call
+                                                setStep(STEPS.PASSWORD);
+                                            } catch {
+                                                setErrMsg("Invalid OTP");
+                                            }
+                                        }}
+                                    />
+
+                                </>
+                            )}
+
+                            {/* PASSWORD */}
+                            {step === STEPS.PASSWORD && (
+                                <>
+                                    <div className="text-center">
+                                        <label htmlFor="password" className="mb-1 text-oasis-header font-oasis-text">Password</label>
+                                        <input
+                                            ref={pwdRef}
+                                            type="password"
+                                            id="password"
+                                            required
+                                            onChange={(e) => setPwd(e.target.value)}
+                                            aria-invalid={!validPwd}
+                                            aria-describedby="pwdnote"
+                                            onFocus={() => setPwdFocus(true)}
+                                            onBlur={() => setPwdFocus(false)}
+
+                                            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                                        />
+                                    </div>
+
+                                    <div className="text-center">
+                                        <label htmlFor="confirm_pwd">Confirm Password</label>
+                                        <input
+                                            type="password"
+                                            id="confirm_pwd"
+                                            onChange={(e) => setMatchPwd(e.target.value)}
+                                            aria-invalid={!validMatch}
+                                            aria-describedby="matchnote"
+                                            required
+                                            onFocus={() => setMatchFocus(true)}
+                                            onBlur={() => setMatchFocus(false)}
+                                            
+                                            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                                        />
+                                    </div>
+
+                                    <p id="pwdnote" className={pwdFocus && pwd && !validPwd ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic": "opacity-0 font-oasis-text text-[0.8rem] italic text-red-900"}>
+                                        Password must not be less than 8 characters.<br/>
+                                        Including an uppercase letter, and special character
+                                    </p>
+                                    <p id="matchnote" className={matchFocus && matchPwd && !validMatch ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic": "opacity-0 font-oasis-text text-[0.8rem] italic text-red-900"}>
+                                        password not matched!
+                                    </p>
+
+                                    <Button
+                                        text="Register"
+                                        disabled={!validPwd || !validMatch}
+                                    />
+                                </>
+                            )}
+                        </form>
                     </>
-                )}
-
-                {/* PASSWORD */}
-                {step === STEPS.PASSWORD && (
-                    <>
-                        <label htmlFor="password" className="mb-1 text-oasis-header font-oasis-text">Password</label>
-                        <input
-                            ref={pwdRef}
-                            type="password"
-                            id="password"
-                            required
-                            onChange={(e) => setPwd(e.target.value)}
-                            aria-invalid={!validPwd}
-                            aria-describedby="pwdnote"
-                            onFocus={() => setPwdFocus(true)}
-                            onBlur={() => setPwdFocus(false)}
-
-                            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
-                        />
-
-                        <label htmlFor="confirm_pwd">Confirm Password</label>
-                        <input
-                            type="password"
-                            id="confirm_pwd"
-                            onChange={(e) => setMatchPwd(e.target.value)}
-                            aria-invalid={!validMatch}
-                            aria-describedby="matchnote"
-                            required
-                            onFocus={() => setMatchFocus(true)}
-                            onBlur={() => setMatchFocus(false)}
-                            
-                            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
-                        />
-                        <p id="pwdnote" className={pwdFocus && pwd && !validPwd ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic": "opacity-0 font-oasis-text text-[0.8rem] italic text-red-900"}>
-                            Password must not be less than 8 characters.<br/>
-                            Including an uppercase letter, and special character
-                        </p>
-                        <p id="matchnote" className={matchFocus && match && !validMatch ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic": "opacity-0 font-oasis-text text-[0.8rem] italic text-red-900"}>
-                            password not matched!
-                        </p>
-
-                        <Button
-                            text="Register"
-                            disabled={!validPwd || !validMatch}
-                        />
-                    </>
-                )}
-
-
-            </form>
-
+            )}
         </>
-    )
-        
-
+    );
+    
 }
 
 export function UpdatedLogin() {
-    return(
+    
+    const userRef = useRef();
+    const errRef = useRef();
+
+    const [user, setUser] = useState('');
+    const [pwd, setPwd] = useState('');
+    const [errMsg, setErrMsg] = useState('');
+    const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+        userRef.current.focus();
+    }, [])
+    
+    useEffect(() => {
+        setErrMsg('');
+    }, [user, pwd])
+
+
+    return (
         <>
-            <p>Login</p>
+            <section className="w-full p-1 flex flex-col items-center justify-center gap-1">
+                <Title text={"Login"}></Title>
+                <p ref={errRef} className={errMsg ? "right-0" : "right-full"} aria-live="assertive">{errMsg}</p>
+            </section>
+            <form className=" w-full p-5 flex flex-col items-center justify-center gap-5">
+                <div className="w-full">
+                    <label className="mb-1 text-oasis-header font-oasis-text text-[1rem]" htmlFor="webMail">
+                        PUP Webmail
+                    </label>
+                    <input
+                        type="text"
+                        id="webMail"
+                        placeholder="Enter valid webmail"
+                        ref={userRef}
+                        autoComplete="off"
+                        onChange={(e) => setUser(e.target.value)}
+                        value={user}
+                        required
+
+                        className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                    />
+                </div>
+                
+                <div className="w-full">
+                    <label className="mb-1 text-oasis-header font-oasis-text text-[1rem]" htmlFor="loginPwd">
+                        Password
+                    </label>
+                    <input
+                        type="text"
+                        id="loginPwd"
+                        placeholder="Enter password"
+                        ref={userRef}
+                        autoComplete="off"
+                        onChange={(e) => setPwd(e.target.value)}
+                        value={pwd}
+                        required
+
+                        className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                    />
+                </div> 
+                
+                <Button text={"Sign in"}/>
+            </form>
         </>
     )
 }
 
-export function RegForm() {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitting },
-    } = useForm();
-
-    const onSubmit = (data) => {
-        console.log("FORM DATA:", data);
-    };
-
-    return (
-        <form
-        className=" w-full p-5 flex flex-col items-center justify-center gap-3"
-        onSubmit={handleSubmit(onSubmit)}
-        >
-            {/* EMAIL */}
-             <InputField
-                label="PUP Webmail"
-                name="pupWebmail"
-                placeholder="Enter PUP Webmail"
-                errors={errors}
-                register={register}
-                rules={{
-                required: "Webmail is required",
-                validate: (value) =>
-                    value.includes("@iskolarngbayan.pup.edu.ph") ||
-                    "Please input a proper PUP webmail",
-                }}
-            />
-
-
-        <Button type="submit" disabled={isSubmitting} text="Register" />
-        </form>
-    );
-}
-
-
-
-export function LoginForm() {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitting },
-    } = useForm();
-
-    const onSubmit = (data) => {
-        console.log("LOGIN DATA:", data);
-    };
-
-    return (
-        <form
-        className="w-full p-5 flex flex-col items-center justify-center"
-        onSubmit={handleSubmit(onSubmit)}
-        >
-        {/* EMAIL */}
-        <InputField
-            label="PUP Webmail"
-            name="pupWebmail"
-            placeholder="Enter PUP Webmail"
-            type="text"
-            register={register}
-            errors={errors}
-            rules={{
-                required: "Webmail is required",
-                validate: (value) =>
-                    value.includes("@iskolarngbayan.pup.edu.ph") ||
-                    "Please input a proper PUP Webmail",
-
-            }}
-        />
-
-        {/* PASSWORD */}
-        <InputField
-            label="Password"
-            name="password"
-            placeholder="Enter Password"
-            type="password"
-            register={register}
-            errors={errors}
-            rules={{
-                required: "Password is required",
-                minLength: {
-                    value: 8,
-                    message: "Password must be at least 8 characters",
-                },
-            
-            }}
-        />
-
-        <Button
-            type="submit"
-            disabled={isSubmitting}
-            text="Login"
-        />
-        </form>
-    );
-}

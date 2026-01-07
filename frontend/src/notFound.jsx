@@ -11,7 +11,7 @@ export default function NotFound() {
            <LogregScreen>
                 <h1 className='text-black font-normal font-oasis-text text-5xl'>404</h1>
                 <img src={oasisLogo} className='w-100 aspect-auto'></img>
-                <Title text={"Are you lost bbgirl?"}/>
+                <Title text={"Are you lost?"}/>
                 <Link to="/"><Subtitle text={"Click here to go back!"}/></Link>
            </LogregScreen>
                

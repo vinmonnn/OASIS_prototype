@@ -25,7 +25,7 @@ export function CustomCard({ title, desc }) {
 
 
         <div className="absolute inset-0 bg-oasis-button-dark p-8 rounded-[20px] shadow-[3px_3px_5px_rgba(0,0,0,0.3)] flex items-center justify-center transform-[rotateY(180deg)] backface-hidden">
-          <Subtitle text={desc} />
+          <Subtitle color={'text-white'} text={desc} />
         </div>
       </div>
     </div>
