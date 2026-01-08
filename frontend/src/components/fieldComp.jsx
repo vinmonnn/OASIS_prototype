@@ -1,4 +1,4 @@
-import { AdminField, ContentField } from "../utilities/inputField"
+import { AdminField, ContentField, UploadField } from "../utilities/inputField"
 import { Label } from "../utilities/label"
 
 export function SingleField({
@@ -22,5 +22,14 @@ export function MultiField({
             <ContentField pholder={fieldHolder} id={fieldId} maxNum={max}/> 
 
          </div>
+    )
+}
+
+export function FileUploadField( {labelText, fieldId} ) {
+    return (
+        <>
+            <Label fieldId={fieldId} labelText={labelText}/>
+            <UploadField />
+        </>
     )
 }

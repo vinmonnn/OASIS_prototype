@@ -9,8 +9,10 @@ import { SingleField, MultiField } from '../../components/fieldComp.jsx';
 import { Filter, Dropdown } from '../../components/adminComps.jsx';
 import { Label } from '../../utilities/label.jsx';
 import SearchBar from '../../components/searchBar.jsx';
+import { AnnounceButton } from '../../components/button.jsx';
 
 export default function Admin() {
+    const categories = ["HTE Related", "Deadlines", "Newly Approved HTEs", "Events and Webinars"]
     return(
         <>
             <AdminScreen>
@@ -64,7 +66,8 @@ export default function Admin() {
 
                             <div className='w-full'>
 
-                                <Dropdown labelText={"Select Category"}/>
+                                <Dropdown labelText={"Select Category"}
+                                categories={categories}/>
                                 <section className='flex flex-row items-start justify-start gap-10'>
                                     {/* FOR BUTTONS */}
                                 </section>
@@ -84,11 +87,20 @@ export default function Admin() {
                             </section>
                             
                             <SearchBar />
-                            <section className='w-full p-5 flex flex-col items-center justify-evenly '>
-                                <div className='p-5 bg-white w-full text-black rounded-2xl'>
+                            <section className='w-full bg-white p-5 flex flex-row items-center justify-evenly '>
+                                <div className='p-5  w-full text-black rounded-2xl'>
                                     <p className='text-[0.6rem] font-normal mb-5'>Announcement date</p>
                                     <h3 className='text-[1rem] font-bold'>Announcement Title</h3>
                                     <p className='text-[0.8rem] font-medium'>Announcement description</p>
+                                </div>
+
+                                <div className='w-[50%] flex flex-row justify-evenly items-center gap-10'>
+                                    <AnnounceButton
+                                        btnText='Posted'
+                                    />
+                                    <AnnounceButton
+                                        btnText='Delete'
+                                    />
                                 </div>
                             </section>
 
@@ -102,6 +114,8 @@ export default function Admin() {
                                 <h3 className='text-[0.8rem] font-bold'>Notif title</h3>
                                 <p className='text-[0.7rem] font-light'>Notif Description</p>
                             </div>
+
+
                         </div>
                         
 

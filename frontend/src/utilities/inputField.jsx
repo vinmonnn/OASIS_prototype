@@ -15,3 +15,11 @@ export function ContentField({ pholder, id, maxNum = 'max-h-100'}) {
       </>
     )
 }
+
+export function UploadField() {
+  return (
+    <>
+      <input type='file' className='bg-white w-full p-3 rounded-tl-none rounded-2xl text-black cursor-pointer'/>
+    </>
+  )
+}

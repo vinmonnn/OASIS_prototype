@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { Label } from "../utilities/label";
 
+export function Container({ children }) {
+    return (
+        <>
+            <div className='w-[90%] p-5 rounded-3xl bg-oasis-blue flex flex-col justify-between items-start shadow-[0px_0px_10px_rgba(0,0,0,0.5)]'>
+                {children}
+            </div>
+        </>
+    )
+}
 export function Filter({ text }) {
     return (
         <>
@@ -9,7 +18,7 @@ export function Filter({ text }) {
     );
 }   
 
-export function Dropdown({ labelText, fieldId}) {
+export function Dropdown({ labelText, fieldId, categories = []}) {
 
     const [selected, setSelected] = useState('');
 
@@ -19,12 +28,12 @@ export function Dropdown({ labelText, fieldId}) {
     return (
         <>
             <Label labelText={labelText} fieldId={fieldId}/>
-                <select id={fieldId} value={selected} onChange={handleChange} className="w-full p-3 bg-white rounded-2xl rounded-tl-none text-[0.8rem]">
+                <select id={fieldId} value={selected} onChange={handleChange} className="w-full p-3 bg-white rounded-2xl rounded-tl-none text-[0.8rem] font-oasis-text">
                     <option>Select category</option>
-                    <option>HTE-Related</option>
-                    <option>Deadlines</option>
-                    <option>Newly Approved HTEs</option>
-                    <option>Events and Webinars</option>
+                    {categories.map((option, index) => (
+                        <option key={index}>{option}</option>
+                    ))}
+                    
                 </select>
         
                 

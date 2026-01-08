@@ -9,8 +9,9 @@ import oasisLogo from "../assets/oasisLogo.png";
 export default function Footer() {
     return (
         <>
+        
             <FooterWave/>
-            <div className="w-full min-h-50 flex flex-row sticky bottom-0 bg-linear-to-b p-5 from-oasis-blue from-10% via-oasis-blue via-40% to-white">
+            <footer className="w-full min-h-50 flex flex-row sticky bottom-0 bg-linear-to-b p-5 from-oasis-blue from-10% via-oasis-blue via-40% to-white">
                 {/* LEFT SIDE */}
                 <section className="w-[50%]">
                     <img src={oasisLogo}/>
@@ -45,7 +46,7 @@ export default function Footer() {
                         <Button text={"Submit"}/>
                     </form>
                 </section>
-            </div>
+            </footer>
 
         </>
     )

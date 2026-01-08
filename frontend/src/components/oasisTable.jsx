@@ -1,24 +1,14 @@
 import Title from "../utilities/title";
 import { Filter } from "./adminComps";
 
-export default function OasisTable({ headers = [] }) {
+export default function OasisTable({ headers = [], children }) {
     return (
         <>
-            <div className="w-[85%] p-3 bg-oasis-blue rounded-2xl flex flex-col items-center justify-center font-oasis-text">
+            <div className="w-[90%] p-3 bg-oasis-blue rounded-2xl flex flex-col items-center justify-center font-oasis-text shadow-[0px_0px_10px_rgba(0,0,0,0.5)]">
                 <div className="w-[95%] flex flex-col justify-center items-start">
-                    <Title text={"Filter by year"}/>
-                    <div className="flex flex-row items-center justify-start gap-5">
-                        <Filter text={"All"}/>
-                        <Filter text={"2nd year"}/>
-                        <Filter text={"3rd year"}/>
-                    </div>
-                    
-                    
-
+                    {children}
                 </div>
-              
-                
-                <table className="w-full border-separate border-spacing-y-2">
+                <table className="w-full p-5 border-separate border-spacing-y-2 ">
                     
                     {/* HEADER */}
                     <thead>
