@@ -21,7 +21,7 @@ export function Filter({ text, isActive = false, onClick }) {
                 transition duration-300 ease-in-out
                 ${
                     isActive
-                        ? "bg-oasis-aqua text-black translate-y-[-10%] drop-shadow-[0px_0px_1px_rgba(0,0,0,0.5)]"
+                        ? "bg-oasis-aqua text-black translate-y-[-10%] shadow-[inset_0px_0px_5px_rgba(0,0,0,0.4)]"
                         : "bg-oasis-button-dark text-white hover:bg-oasis-aqua hover:translate-y-[-10%] drop-shadow-[0px_2px_5px_rgba(0,0,0,0.5)]"
                 }
             `}

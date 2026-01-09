@@ -100,26 +100,8 @@ export function AdminHeader() {
 }
 
 export function StudentHeader() {
-    const [time, setTime] = useState('');
+
     const [scrolled, setScrolled] = useState(false);
-
-    // Time update
-    useEffect(() => {
-        const updateTime = () => {
-            setTime(
-                new Date().toLocaleTimeString("en-US", {
-                    hour: "numeric",
-                    minute: "2-digit",
-                    hour12: true,
-                })
-            );
-        };
-
-        updateTime();
-        const interval = setInterval(updateTime, 1000);
-
-        return () => clearInterval(interval);
-    }, []);
 
     //Scroll detection
     useEffect(() => {
@@ -140,36 +122,19 @@ export function StudentHeader() {
             className={`
                 fixed top-0 left-0 w-full z-50 translate-y-15
                 transition-all duration-300 
-                ${scrolled ? 'backdrop-blur-md bg-white/30 shadow-lg translate-y-[-15]' : 'bg-white box-shadow-[0px_3px_5px_rgba(0,0,0,1)]'}
+                ${scrolled ? 'backdrop-blur-md bg-white/30 shadow-lg translate-y-[-15]' : 'bg-white drop-shadow-[0px_10px_5px_rgba(0,0,0,0.3)]'}
                 flex flex-row justify-between items-center px-5 py-3
             `}
         >
-            {/* Time + Clock */}
-            <div className="bg-admin-header-bg p-3 rounded-4xl min-w-28 flex flex-wrap flex-row justify-center items-center gap-3">
-                <p className="animate__animated animate__fadeInUp ease-in">{time}</p>
-                <img src={clock} className="w-[1.2rem]" />
-            </div>
-
-            {/* Navigation */}
-            <div className="bg-admin-header-bg p-1 rounded-4xl w-fit min-h-14 max-h-14 flex flex-row justify-between items-center text-white text-shadow-[2px_2px_5px_rgba(0,0,0,1)]">
+    
                 <ul className="w-full p-3 flex flex-row justify-center items-center gap-15">
                     <NavItem to="/home" label="Home" />
                     <NavItem to="/htedirectory" label="HTE Directory" />
                     <NavItem to="/ojthub" label="OJT Hub" />
                     <NavItem to="/announcements" label="Announcement" />
                 </ul>
-            </div>
+            
 
-            {/* Icons */}
-            <div className="bg-admin-header-bg p-3 rounded-4xl w-fit flex flex-row justify-between items-center gap-5">
-                <HoverLift>
-                    <img src={settings} className="w-[1.2rem]" />
-                </HoverLift>
-
-                <HoverLift>
-                    <img src={user} className="w-[1.2rem]" />
-                </HoverLift>
-            </div>
         </div>
     );
 }
