@@ -11,7 +11,7 @@ export default function LandingPage() {
     return(
         <>
             
-            <MainScreen>
+            <MainScreen showHeader={false}>
                 <div className="w-[90%] aspect-video p-5 bg-[url('../assets/ctaBg.png')]">
                     <img src={ctaBg} className='w-full aspect-'></img>
                 </div>
@@ -34,7 +34,7 @@ export default function LandingPage() {
                     </div>
                 </div>
                 <LowerWave/>
-            <OasisTable></OasisTable>
+                <OasisTable></OasisTable>
                 
             </MainScreen>
         </>

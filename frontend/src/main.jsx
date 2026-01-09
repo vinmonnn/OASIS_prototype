@@ -1,18 +1,27 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import 'animate.css';
-import './styles.css'
-import LandingPage from './landingPage'
-import Admin from './pages/adminPages/admin'
-import Student from './pages/studentPages/student'
-import UserAccess from './pages/userAccess'
-import NotFound from './notFound'
+import './styles.css';
+
+import LandingPage from './landingPage';
+import UserAccess from './pages/userAccess';
+import NotFound from './notFound';
+import ScrollToTop from './components/scrollToTop';
+
+
+import Student from './pages/studentPages/student';
+import OjtHub from './pages/studentPages/ojtHub';
+import HteDirectory from './pages/studentPages/hteDirectory';
+import Announcements from './pages/studentPages/announcements';
+
+import Admin from './pages/adminPages/admin';
 import AdmOperations from './pages/adminPages/admOperations';
 import DocsUpload from './pages/adminPages/docsUpload';
 import MoaOverview from './pages/adminPages/moaOverview';
 import RegStudents from './pages/adminPages/regStudents';
-import ScrollToTop from './components/scrollToTop';
+
+
 
 function RootLayout() {
   return (
@@ -35,7 +44,10 @@ const router = createBrowserRouter([
       { path: 'admUploads', element: <DocsUpload /> },
       { path: 'admMoaOverview', element: <MoaOverview /> },
       { path: 'admStudents', element: <RegStudents /> },
-      { path: 'student', element: <Student /> },
+      { path: 'home', element: <Student /> },
+      { path: 'htedirectory', element: <HteDirectory /> },
+      { path: 'ojthub', element: <OjtHub /> },
+      { path: 'announcements', element: <Announcements /> },
       { path: '*', element: <NotFound /> }
     ]
   }

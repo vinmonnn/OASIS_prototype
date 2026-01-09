@@ -318,11 +318,11 @@ export function FormsTemplates() {
     return (
         <>
             <FormLayout>       
-                <section className='w-full flex flex-row basis-[calc(50%-0.5rem)] '>
-                    <SingleField labelText={"Document Title"} fieldHolder={"Enter Document Title..."} fieldId={"documentName"} fieldType={"text"}/>
-                    <FileUploadField labelText={"Upload Document"} fieldId={"documentFile"}/>
-                </section>
+                <SingleField labelText={"Document Title"} fieldHolder={"Enter Document Title..."} fieldId={"documentName"} fieldType={"text"}/>
+                
                 <MultiField labelText={"Description"} fieldHolder={"Enter description"} fieldId={"documentDescription"}/>
+                             
+                <FileUploadField labelText={"Upload Document"} fieldId={"documentFile"}/>
 
                 <section className='w-full flex flex-row items-center justify-start gap-3 '>
                     <AnnounceButton btnText='Upload Document'/>

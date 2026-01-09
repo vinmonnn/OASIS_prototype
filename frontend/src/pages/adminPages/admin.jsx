@@ -25,7 +25,7 @@ export default function Admin() {
                         <Title text={"Admin Dashboard"}/>
                     </div>
 
-                    <section className='p-5 w-[90%] flex flex-row justify-between items-center flex-wrap gap-5'>
+                    <section className='p-5 basis-[calc(50%-0.5rem)] flex flex-row justify-between items-center flex-wrap gap-5'>
 
                         <AdmCard 
                             cardTitle={"Total Students"}
@@ -34,21 +34,21 @@ export default function Admin() {
                             cardDate={"January 7, 2026"}
                         />
                         <AdmCard 
-                            cardTitle={"Total Students"}
+                            cardTitle={"Total Active MOAs"}
                             cardIcon={user}
-                            cardNumber={"24"}
+                            cardNumber={"105"}
                             cardDate={"January 7, 2026"}
                         />
                         <AdmCard 
-                            cardTitle={"Total Students"}
+                            cardTitle={"Total expired MOAs"}
                             cardIcon={user}
-                            cardNumber={"24"}
+                            cardNumber={"32"}
                             cardDate={"January 7, 2026"}
                         />
                         <AdmCard 
-                            cardTitle={"Total Students"}
+                            cardTitle={"Total Notifications"}
                             cardIcon={user}
-                            cardNumber={"24"}
+                            cardNumber={"55"}
                             cardDate={"January 7, 2026"}
                         />
                     </section>
