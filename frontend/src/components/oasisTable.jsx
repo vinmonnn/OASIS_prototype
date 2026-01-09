@@ -4,7 +4,7 @@ import { Filter } from "./adminComps";
 export default function OasisTable({ headers = [], children }) {
     return (
         <>
-            <div className="w-[90%] p-3 bg-oasis-blue rounded-2xl flex flex-col items-center justify-center font-oasis-text shadow-[0px_0px_10px_rgba(0,0,0,0.5)]">
+            <div className="w-[90%] p-3 bg-admin-element rounded-2xl flex flex-col items-center justify-center font-oasis-text shadow-[0px_0px_10px_rgba(0,0,0,0.5)]">
                 <div className="w-[95%] flex flex-col justify-center items-start">
                     {children}
                 </div>

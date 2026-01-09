@@ -33,3 +33,12 @@ export function FileUploadField( {labelText, fieldId} ) {
         </>
     )
 }
+
+export function BulletField( { labelText, fieldId }) {
+    return(
+        <>
+            
+        
+        </>
+    )
+}

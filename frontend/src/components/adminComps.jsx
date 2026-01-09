@@ -1,22 +1,35 @@
 import { useState } from "react";
 import { Label } from "../utilities/label";
 
-export function Container({ children }) {
+export function Container({ children, column = true }) {
     return (
-        <>
-            <div className='w-[90%] p-5 rounded-3xl bg-oasis-blue flex flex-col justify-between items-start shadow-[0px_0px_10px_rgba(0,0,0,0.5)]'>
-                {children}
-            </div>
-        </>
-    )
-}
-export function Filter({ text }) {
-    return (
-        <>
-            <div className="p-3 bg-oasis-button-dark font-oasis-text font-medium text-white text-[0.7rem] rounded-3xl cursor-pointer hover:bg-oasis-aqua hover:translate-y-[-10%] ease-in-out transition duration-300">{text}</div>
-        </>
+        <div
+            className={`w-[90%] p-5 rounded-3xl bg-admin-element flex ${
+                column ? "flex-col" : "flex-row"
+            } justify-between items-start shadow-[0px_0px_10px_rgba(0,0,0,0.5)]`}
+        >
+            {children}
+        </div>
     );
-}   
+}
+
+export function Filter({ text, isActive = false, onClick }) {
+    return (
+        <div
+            onClick={onClick}
+            className={`p-3 font-oasis-text font-medium text-[0.7rem] rounded-3xl cursor-pointer
+                transition duration-300 ease-in-out
+                ${
+                    isActive
+                        ? "bg-oasis-aqua text-black translate-y-[-10%] drop-shadow-[0px_0px_1px_rgba(0,0,0,0.5)]"
+                        : "bg-oasis-button-dark text-white hover:bg-oasis-aqua hover:translate-y-[-10%] drop-shadow-[0px_2px_5px_rgba(0,0,0,0.5)]"
+                }
+            `}
+        >
+            {text}
+        </div>
+    );
+}
 
 export function Dropdown({ labelText, fieldId, categories = []}) {
 
@@ -35,10 +48,7 @@ export function Dropdown({ labelText, fieldId, categories = []}) {
                     ))}
                     
                 </select>
-        
-                
-           
-            
         </>
     )
 }
+

@@ -28,38 +28,38 @@ export default function AdmOperations() {
                 </div>
                 <OasisTable headers={headers}></OasisTable>
 
-                <div className="w-[90%] p-5 rounded-3xl bg-oasis-blue flex flex-col gap-5 shadow-[0px_0px_10px_rgba(0,0,0,0.5)]">
+                <div className="w-[90%] p-5 rounded-3xl bg-admin-element flex flex-col gap-5 shadow-[0px_0px_10px_rgba(0,0,0,0.5)]">
 
                     <form className="w-full flex flex-col gap-5">
 
                         {/* ROW CONTENT */}
-                        <div className="w-full flex flex-row justify-evenly p-2">
+                        <div className="w-full flex flex-row justify-evenly p-2 text-oasis-button-dark">
 
-                        <div className="w-[20%] p-2 flex flex-col gap-5">
-                            <FileUploadField labelText="Upload Logo" fieldId="logoFile" />
-                            <FileUploadField labelText="Upload HTE Thumbnail" fieldId="thumbnailFile" />
-                        </div>
+                            <div className="w-[20%] p-2 flex flex-col gap-5">
+                                <FileUploadField labelText="Upload Logo" fieldId="logoFile" />
+                                <FileUploadField labelText="Upload HTE Thumbnail" fieldId="thumbnailFile" />
+                            </div>
 
-                        <div className="w-[70%] p-2 flex flex-col gap-3">
-                            <SingleField labelText="Company Name" fieldHolder="Enter company name" fieldType="text" fieldId="companyName" />
-                            <MultiField labelText="About Company" fieldHolder="Enter company description" fieldId="companyAbout" />
-                            <SingleField labelText="Location" fieldHolder="Enter company address" fieldType="text" fieldId="companyLoc" />
-                            <Dropdown labelText="Status" categories={categories} />
-                            <Label labelText="Eligible Course" />
+                            <div className="w-[70%] p-2 flex flex-col gap-3">
+                                <SingleField labelText="Company Name" fieldHolder="Enter company name" fieldType="text" fieldId="companyName" />
+                                <MultiField labelText="About Company" fieldHolder="Enter company description" fieldId="companyAbout" />
+                                <SingleField labelText="Location" fieldHolder="Enter company address" fieldType="text" fieldId="companyLoc" />
+                                <Dropdown labelText="Status" categories={categories} />
+                                <Label labelText="Eligible Course" />
 
-                            <section className="w-full flex flex-row flex-wrap gap-3">
-                            <CoursesButton text="DIT" />
-                            <CoursesButton text="DLMOT" />
-                            <CoursesButton text="DEET" />
-                            <CoursesButton text="DMET" />
-                            <CoursesButton text="DCvET" />
-                            <CoursesButton text="DCpET" />
-                            <CoursesButton text="DRET" />
-                            <CoursesButton text="DECET" />
-                            </section>
+                                <section className="w-full flex flex-row flex-wrap gap-3">
+                                <CoursesButton text="DIT" />
+                                <CoursesButton text="DLMOT" />
+                                <CoursesButton text="DEET" />
+                                <CoursesButton text="DMET" />
+                                <CoursesButton text="DCvET" />
+                                <CoursesButton text="DCpET" />
+                                <CoursesButton text="DRET" />
+                                <CoursesButton text="DECET" />
+                                </section>
 
-                            <FileUploadField labelText="MOA" fieldId="moaFile" />
-                        </div>
+                                <FileUploadField labelText="MOA" fieldId="moaFile" />
+                            </div>
                         </div>
 
                         {/* ACTION BUTTONS (NOT PART OF ROW) */}
@@ -76,7 +76,7 @@ export default function AdmOperations() {
                 </div>
 
                 {/* PARENT CONTAINER */}
-                <div className='w-[90%] p-5 rounded-3xl bg-oasis-blue flex flex-col justify-between items-start shadow-[0px_0px_10px_rgba(0,0,0,0.5)]'>
+                <div className='w-[90%] p-5 rounded-3xl bg-admin-element flex flex-col justify-between items-start shadow-[0px_0px_10px_rgba(0,0,0,0.5)]'>
                     <Subtitle text={"Approve or reject student reviews. Approved reviews will be visible on the public HTE profiles."}/>
                     
                     

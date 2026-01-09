@@ -3,7 +3,7 @@
 export function Label({ fieldId, labelText}) {
     return (
         <>
-             <label htmlFor={fieldId} className='font-semibold text-[1rem]'>{labelText}</label>
+             <label htmlFor={fieldId} className='font-bold text-[1rem] text-oasis-button-dark'>{labelText}</label>
         </>
     )
 }
