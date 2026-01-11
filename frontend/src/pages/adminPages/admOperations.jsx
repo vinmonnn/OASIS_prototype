@@ -84,6 +84,7 @@ export default function AdmOperations() {
                         {/* REVIEWS PARENT CONTAINER */}
                         <div className="w-[70%] py-5 flex flex-wrap gap-4">
 
+                    {/* CARD CONTAINER */}
                             <div className="basis-[calc(50%-0.5rem)] aspect-video max-h-75 p-5 bg-white rounded-3xl drop-shadow-[0px_2px_5px_rgba(0,0,0,0.5)] transition duration-300 ease-in-out flex flex-col justify-evenly items-start">
 
                                 <sections className='w-full flex flex-row justify-between items-center'>

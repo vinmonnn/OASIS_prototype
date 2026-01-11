@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom'
-import MainScreen from '../../layouts/mainScreen'
 import AdminScreen from '../../layouts/adminScreen.jsx';
 import { AdminHeader } from '../../components/headers.jsx'
 import Title from "../../utilities/title.jsx";
@@ -10,9 +8,57 @@ import { Filter, Dropdown } from '../../components/adminComps.jsx';
 import { Label } from '../../utilities/label.jsx';
 import SearchBar from '../../components/searchBar.jsx';
 import { AnnounceButton } from '../../components/button.jsx';
+import { useLocalStorage } from '../../hooks/useLocalStorage.jsx';
+import { useState, useEffect } from 'react';
 
 export default function Admin() {
-    const categories = ["HTE Related", "Deadlines", "Newly Approved HTEs", "Events and Webinars"]
+
+     const categories = [
+        "HTE Related",
+        "Deadlines",
+        "Newly Approved HTEs",
+        "Events and Webinars"
+    ];
+
+    const [announcements, setAnnouncements] = useLocalStorage("announcements", []);
+    const [activeFilter, setActiveFilter] = useState("All");
+    const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+    
+    const filteredAnnouncements =
+        activeFilter === "All"
+            ? announcements
+            : announcements.filter(a => a.category === activeFilter);
+
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const [category, setCategory] = useState(categories[0]);
+
+    const handlePost = (e) => {
+        e.preventDefault(); // stop default form submit
+        if (!title || !content) return;
+
+        const newAnnouncement = {
+            id: crypto.randomUUID(),
+            title,
+            content,
+            category,
+            date: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+            time: new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
+        };
+
+        setAnnouncements(prev => [newAnnouncement, ...prev]);
+        setTitle("");
+        setContent("");
+        setCategory("");
+    };
+
+
+
+    useEffect(() => {
+        console.log("Updated announcements:", announcements);
+    }, [announcements]);
+
+
     return(
         <>
             <AdminScreen>
@@ -58,18 +104,38 @@ export default function Admin() {
                     {/* POST ANNOUNCEMENTS SECTION */}
                     <section className='p-5 w-[90%] flex flex-row justify-between items-start gap-5 font-oasis-text text-oasis-button-dark'>
                         
-                        <div className='w-[70%] min-h-24 p-10 bg-admin-element flex flex-col items-start justify-center gap-5'>
+                        <form className='w-[70%] min-h-24 p-10 bg-admin-element flex flex-col items-start justify-center gap-5 text-black' onSubmit={(e) => {
+                            e.preventDefault();
+                            handlePost(e);
+                        }}>
 
-                            <SingleField labelText={'Announcement Title'} fieldType={'text'} fieldHolder={'Enter title...'} fieldId={'title'}/>
+                            <SingleField
+                                labelText="Announcement Title"
+                                fieldHolder="Enter title..."
+                                fieldId="title"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
 
-                            <MultiField labelText={'Announcement Content'}  fieldHolder={'Enter Contents...'} fieldId={'content'}/>
+                            <MultiField
+                                labelText="Announcement Content"
+                                fieldHolder="Enter contents..."
+                                fieldId="content"
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
+                            />
 
                             <div className='w-full'>
 
-                                <Dropdown labelText={"Select Category"}
-                                categories={categories}/>
-                                <section className='flex flex-row items-start justify-start gap-10'>
-                                    {/* FOR BUTTONS */}
+                               <Dropdown
+                                    labelText="Select Category"
+                                    categories={categories}
+                                    value={category}
+                                    onChange={setCategory}
+                                />
+
+                                <section className='flex flex-row items-start justify-start gap-10 mt-10'>
+                                    <AnnounceButton btnText="Post" type="submit"/>
                                 </section>
                             </div>
                             
@@ -104,7 +170,7 @@ export default function Admin() {
                                 </div>
                             </section>
 
-                        </div>
+                        </form>
 
                         {/* NOTIFICATIONS */}
                         <div className='w-[25%] min-h-24 p-10 bg-admin-element'>

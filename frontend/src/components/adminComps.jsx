@@ -31,24 +31,38 @@ export function Filter({ text, isActive = false, onClick }) {
     );
 }
 
-export function Dropdown({ labelText, fieldId, categories = []}) {
-
-    const [selected, setSelected] = useState('');
-
+export function Dropdown({
+    labelText,
+    fieldId,
+    categories = [],
+    value = "",
+    onChange
+}) {
     const handleChange = (e) => {
-        setSelected(e.target.value);
-    }
+        onChange?.(e.target.value); 
+    };
+
     return (
         <>
-            <Label labelText={labelText} fieldId={fieldId}/>
-                <select id={fieldId} value={selected} onChange={handleChange} className="w-full p-3 bg-white rounded-2xl rounded-tl-none text-[0.8rem] font-oasis-text">
-                    <option>Select category</option>
-                    {categories.map((option, index) => (
-                        <option key={index}>{option}</option>
-                    ))}
-                    
-                </select>
+            <Label labelText={labelText} fieldId={fieldId} />
+
+            <select
+                id={fieldId}
+                value={value}
+                onChange={handleChange}
+                className="w-full p-3 bg-white rounded-2xl rounded-tl-none text-[0.8rem] font-oasis-text"
+            >
+                <option value="" disabled>
+                    Select category
+                </option>
+
+                {categories.map((option, index) => (
+                    <option key={index} value={option}>
+                        {option}
+                    </option>
+                ))}
+            </select>
         </>
-    )
+    );
 }
 

@@ -1,6 +1,10 @@
 import { useState } from "react";
 import Title from "./title";
 import Subtitle from "./subtitle";
+import { Label, RatingLabel } from "./label";
+import { AnnounceButton } from "../components/button";
+import star from "../assets/icons/star.png";
+import goldStar from "../assets/icons/goldStar.png";
 
 export function CustomCard({ title, desc }) {
   const [showBack, setShowBack] = useState(false);
@@ -52,4 +56,48 @@ export function AdmCard({ cardTitle, cardIcon, cardNumber, cardDate}) {
       </>
     );
 
+}
+
+
+export function ReviewCard({ 
+    username = "Francine Ishael Hardy", 
+    hteName = "Prima Tech", 
+    role, // student intern, prof
+    dateTime = "22/11/2025, 8:41 PM", 
+    rating = "5",
+    message = "Prima Tech is such a good company to take an intern job since they have benefits like allowance as well as a healthy environment with supportive and kind employees and mentors! Really had a great time here.",
+
+}) {
+  return (
+    <>
+        <div className="basis-[calc(50%-0.5rem)] aspect-video max-h-75 p-5 bg-white rounded-3xl drop-shadow-[0px_2px_5px_rgba(0,0,0,0.5)] transition duration-300 ease-in-out flex flex-col justify-evenly items-start gap-3">
+            <section className="w-full flex justify-center items-center">
+              <h3 className='font-oasis-text font-bold text-[1.3rem] text-center'>{hteName}</h3>
+            </section>
+
+            <sections className='w-full flex flex-col justify-start items-start'>
+                <p className='font-oasis-text text-[0.7rem] text-justify w-full overflow-y-auto'>{message}</p>
+            </sections>
+    
+            <div className='w-full flex flex-row justify-between items-center'>
+
+                <section className="w-full flex flex-col justify-start items-start">
+                  <Label labelText={username}/>
+                  <Subtitle text={"Student intern"}/>
+                  <div className="flex flex-row">
+                     
+                      <img src={goldStar} className="w-7.5 aspect-square object-contain"/>
+                      <img src={goldStar} className="w-7.5 aspect-square object-contain"/>
+                      <img src={goldStar} className="w-7.5 aspect-square object-contain"/>
+                      <img src={goldStar} className="w-7.5 aspect-square object-contain"/>
+                      <img src={goldStar} className="w-7.5 aspect-square object-contain"/>
+                  </div>
+                  
+                </section>
+                
+
+            </div>
+    </div>
+    </>
+  )
 }

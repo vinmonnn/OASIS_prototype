@@ -46,7 +46,7 @@
 
 .embla__container {
   display: flex;
-
+  
   touch-action: pan-y pinch-zoom;
   margin-left: calc(var(--slide-spacing) * -1);
 }
@@ -58,7 +58,7 @@
   flex: 0 0 var(--slide-size);
   min-width: 0;
   padding-left: var(--slide-spacing);
-
+ box-shadow: 0px 0px 20px rgba(0,0,0,1);
   
 }
 .embla__slide__number {
@@ -71,6 +71,7 @@
   justify-content: center;
   height: var(--slide-height);
   user-select: none;
+  
 }
 .embla__controls {
   display: grid;

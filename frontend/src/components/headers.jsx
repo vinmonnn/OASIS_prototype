@@ -120,10 +120,10 @@ export function StudentHeader() {
     return (
         <div
             className={`
-                fixed top-0 left-0 w-full z-50 translate-y-15
+                fixed top-0 left-0 w-full z-110 translate-y-15
                 transition-all duration-300 
                 ${scrolled ? 'backdrop-blur-md bg-white/30 shadow-lg translate-y-[-15]' : 'bg-white drop-shadow-[0px_10px_5px_rgba(0,0,0,0.3)]'}
-                flex flex-row justify-between items-center px-5 py-3
+                flex flex-row justify-between items-center px-5 py-3 z-100
             `}
         >
     

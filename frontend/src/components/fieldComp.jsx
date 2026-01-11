@@ -2,28 +2,49 @@ import { AdminField, ContentField, UploadField } from "../utilities/inputField"
 import { Label } from "../utilities/label"
 
 export function SingleField({
-   labelText, fieldType, fieldHolder, fieldId 
+  labelText,
+  fieldType = "text",
+  fieldHolder,
+  fieldId,
+  value,
+  onChange
 }) {
-    return (
-        <div className="w-full">
-            <Label fieldId={fieldId} labelText={labelText}/>
-            <AdminField type={fieldType} pholder={fieldHolder} id={fieldId}/> 
-        
-         </div>
-    )
+  return (
+    <div className="w-full">
+      <Label fieldId={fieldId} labelText={labelText} />
+      <AdminField
+        type={fieldType}
+        placeholder={fieldHolder}
+        id={fieldId}
+        value={value}
+        onChange={onChange}
+      />
+    </div>
+  );
 }
 
 export function MultiField({
-   labelText, fieldId, fieldHolder, max
+  labelText,
+  fieldId,
+  fieldHolder,
+  value,
+  onChange,
+  max
 }) {
-    return (
-        <div className={`w-full`}>
-            <Label fieldId={fieldId} labelText={labelText}/>  
-            <ContentField pholder={fieldHolder} id={fieldId} maxNum={max}/> 
-
-         </div>
-    )
+  return (
+    <div className="w-full">
+      <Label fieldId={fieldId} labelText={labelText} />
+      <ContentField
+        placeholder={fieldHolder}
+        id={fieldId}
+        value={value}
+        onChange={onChange}
+        maxNum={max}
+      />
+    </div>
+  );
 }
+
 
 export function FileUploadField( {labelText, fieldId} ) {
     return (

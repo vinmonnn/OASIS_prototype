@@ -40,3 +40,43 @@ export default function OasisTable({ headers = [], children }) {
         </>
     );
 }
+
+export function UserTable({ headers = [], children }) {
+    return (
+        <>
+            <div className="w-[90%] p-3 rounded-2xl flex flex-col items-center justify-center font-oasis-text ">
+                <div className="w-[95%] flex flex-col justify-center items-start">
+                    {children}
+                </div>
+                <table className="w-full p-5 border-separate border-spacing-y-2 ">
+                    
+                    {/* HEADER */}
+                    <thead className="shadow-[2px_2px_1px_rgba(0,0,0,0.5)]">
+                        <tr className="bg-linear-to-b from-oasis-button-light to-oasis-blue to-90% rounded-2xl">
+                            {headers.map((header, index) => (
+                                <th
+                                    key={index}
+                                    className="p-3 text-[1rem] text-black text-center"
+                                >
+                                    {header}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+
+                    {/* BODY */}
+                    <tbody>
+                        <tr className="shadow-[2px_2px_1px_rgba(0,0,0,0.5)] bg-white text-[0.9rem] text-center">
+                            {headers.map((_, index) => (
+                                <td key={index} className="p-3">
+                                    Data
+                                </td>
+                            ))}
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </>
+    );
+}
