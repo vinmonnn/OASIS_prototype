@@ -47,7 +47,7 @@ export default function Announcements() {
                 </section>
 
                 {/* ANNOUNCEMENTS */}
-                <section className="flex flex-col gap-3">
+                <section className="flex flex-col">
                     {filteredAnnouncements.map(a => (
                         <div
                             key={a.id}

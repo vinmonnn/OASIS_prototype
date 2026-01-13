@@ -19,17 +19,23 @@ const [accessType, setAccessType] = useState(ACCESS.LOGIN);
     return (
         <>
             <LogregScreen>
+
+                
                 <UserModal>
 
                     {accessType === ACCESS.LOGIN && (
                         <>
                             <UpdatedLogin />
-                            <section className="flex flex-row items-center justify-center">
+                            <section className="w-full flex flex-row items-center justify-between">
                                 <p
-                                    className="cursor-pointer underline font-oasis-text text-[0.8rem]"
+                                    className="cursor-pointer hover:underline underline-offset-2 font-oasis-text text-[0.8rem]"
                                     onClick={() => setAccessType(ACCESS.REGISTER)}
                                 >
                                     Not registered yet?
+                                </p>
+                                <p 
+                                    className="cursor-pointer hover:underline underline-offset-2 font-oasis-text text-[0.8rem]">
+                                    Forgot password
                                 </p>
                             </section>
                         </>

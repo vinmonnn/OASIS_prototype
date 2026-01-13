@@ -5,6 +5,8 @@ import { Label, RatingLabel } from "./label";
 import { AnnounceButton } from "../components/button";
 import star from "../assets/icons/star.png";
 import goldStar from "../assets/icons/goldStar.png";
+import blackStar from "../assets/icons/blackStar.png"
+import { MultiField, SingleField } from "../components/fieldComp";
 
 export function CustomCard({ title, desc }) {
   const [showBack, setShowBack] = useState(false);
@@ -98,6 +100,32 @@ export function ReviewCard({
 
             </div>
     </div>
+    </>
+  )
+}
+
+
+export function AddReviewCard() {
+  return (
+    <>
+      <div className=" w-60 aspect-square p-5 flex flex-col gap-5 bg-linear-to-br from-oasis-button-dark via-oasis-blue via-50% to-oasis-blue to-50% rounded-2xl drop-shadow-[0px_0px_10px_rgba(0,0,0,0.5)]">
+          <div className="w-full p-2 bg-oasis-button-dark rounded-3xl ">
+              <p className="text-white text-[0.9rem] text-center">Add review for Prima Tech</p>
+          </div>
+          <section className="w-full flex justify-evenly items-center">
+              <img src={blackStar} className="w-8 aspect-square object-contain"/> 
+              <img src={blackStar} className="w-8 aspect-square object-contain"/> 
+              <img src={blackStar} className="w-8 aspect-square object-contain"/> 
+              <img src={blackStar} className="w-8 aspect-square object-contain"/> 
+              <img src={blackStar} className="w-8 aspect-square object-contain"/> 
+          </section>
+          <section className="w-full flex flex-col gap-2">
+              <SingleField fieldHolder={"Enter name..."} fieldId={"reviewerName"}/>
+              <MultiField fieldHolder={"Enter review"} fieldId={"reviewContent"}/>
+          </section>
+          <AnnounceButton btnText="Submit"/>
+
+      </div>
     </>
   )
 }

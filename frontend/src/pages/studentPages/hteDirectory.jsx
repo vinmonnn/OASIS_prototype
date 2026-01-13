@@ -10,7 +10,7 @@ import { UserTable } from '../../components/oasisTable';
 import { Filter } from '../../components/adminComps'
 import ReviewRatings from '../../components/reviewRatings'
 import AverageRating from '../../components/averageRating'
-import { ReviewCard } from '../../utilities/card'
+import { AddReviewCard, ReviewCard } from '../../utilities/card'
 
 export function CarouselItem({ thumbnail, hteName = "Name of HTE", hteAddress = "Address of HTE" }) {
     return (
@@ -103,14 +103,19 @@ export default function HteDirectory() {
                             <AverageRating/>
                         </section>
 
-                        <section className="w-[50%] max-h-dvh overflow-y-auto p-5 flex flex-wrap gap-4 rounded-3xl shadow-[0px_0px_10px_rgba(0,0,0,0.5)]">
-                            <ReviewCard/>
-                            <ReviewCard/>
-                            <ReviewCard/>
-                            <ReviewCard/>
+                        <section className="w-full p-5 flex flex-col justify-center items-center relative">
+                            <section className="w-[80%] max-h-dvh overflow-y-auto p-5 flex gap-4 rounded-3xl shadow-[0px_0px_10px_rgba(0,0,0,0.5)]">
+                                <ReviewCard/>
+                                <ReviewCard/>
+                                <ReviewCard/>
+                                <ReviewCard/>
+        
+                            </section>
                             
-    
+                            <AddReviewCard />
                         </section>
+                        
+
                     </section>
                     
                 </div>

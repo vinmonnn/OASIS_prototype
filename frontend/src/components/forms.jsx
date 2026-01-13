@@ -120,12 +120,12 @@ export function UpdatedReg() {
                         <form onSubmit={handleSubmit} className=" w-full p-5 flex flex-col items-center justify-center gap-3">
                             {step === STEPS.EMAIL && (
                                 <>
-                                    <div className="text-center">
+                                    <div className="w-full">
                                         <label className="mb-1 text-oasis-header font-oasis-text" htmlFor="webMail">PUP Webmail</label>
                                         <input
                                             type="text"
                                             id="webMail"
-                                            placeholder="Enter valid webmail"
+                                            placeholder="Enter PUP webmail"
                                             ref={userRef}
                                             autoComplete="off"
                                             required
@@ -139,8 +139,7 @@ export function UpdatedReg() {
                                         />
                                     </div>
                                     
-                                    <p id="uidnote" className={userFocus && user && !validName ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic m-auto text-center": "opacity-0 "}>Must be a valid webmail.<br/> 
-                                    E.g. juanmdelacruz@iskolarngbayan.pup.edu.ph
+                                    <p id="uidnote" className={userFocus && user && !validName ? "opacity-100 font-oasis-text text-red-600 text-xs m-auto text-center": "opacity-0 "}>Must be a valid PUP webmail.
                                     </p>
                                     <Button
                                         text="Send OTP"
@@ -178,7 +177,7 @@ export function UpdatedReg() {
                                             className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
                                         />
                                     </div>
-                                    <p id="otpnote" className={otpFocus && otp && !validOtp ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic": "opacity-0 font-oasis-text text-[0.8rem] italic text-red-900"}> OTP must be a 6-digit number.</p>
+                                    <p id="otpnote" className={otpFocus && otp && !validOtp ? "opacity-100 font-oasis-text text-red-600 text-xs ": "opacity-0 "}> OTP must be a 6-digit number.</p>
                                     <Button
                                         text="Verify OTP"
                                         disabled={!validOtp}
@@ -206,6 +205,7 @@ export function UpdatedReg() {
                                             ref={pwdRef}
                                             type="password"
                                             id="password"
+                                            placeholder="Enter password"
                                             required
                                             onChange={(e) => setPwd(e.target.value)}
                                             aria-invalid={!validPwd}
@@ -222,6 +222,7 @@ export function UpdatedReg() {
                                         <input
                                             type="password"
                                             id="confirm_pwd"
+                                            placeholder="Re-enter password"
                                             onChange={(e) => setMatchPwd(e.target.value)}
                                             aria-invalid={!validMatch}
                                             aria-describedby="matchnote"
@@ -233,11 +234,11 @@ export function UpdatedReg() {
                                         />
                                     </div>
 
-                                    <p id="pwdnote" className={pwdFocus && pwd && !validPwd ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic": "opacity-0 font-oasis-text text-[0.8rem] italic text-red-900"}>
+                                    <p id="pwdnote" className={pwdFocus && pwd && !validPwd ? "opacity-100 font-oasis-text text-red-600 text-xs ": "opacity-0 "}>
                                         Password must not be less than 8 characters.<br/>
                                         Including an uppercase letter, and special character
                                     </p>
-                                    <p id="matchnote" className={matchFocus && matchPwd && !validMatch ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic": "opacity-0 font-oasis-text text-[0.8rem] italic text-red-900"}>
+                                    <p id="matchnote" className={matchFocus && matchPwd && !validMatch ? "opacity-100 font-oasis-text text-red-600 text-xs": "opacity-0 "}>
                                         password not matched!
                                     </p>
 
@@ -255,71 +256,110 @@ export function UpdatedReg() {
     
 }
 
+
 export function UpdatedLogin() {
-    
     const userRef = useRef();
     const errRef = useRef();
 
-    const [user, setUser] = useState('');
-    const [pwd, setPwd] = useState('');
-    const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
+    const [user, setUser] = useState("");
+    const [pwd, setPwd] = useState("");
+
+    const [validName, setValidName] = useState(false);
+    const [validPwd, setValidPwd] = useState(false);
+
+    const [userFocus, setUserFocus] = useState(false);
+    const [pwdFocus, setPwdFocus] = useState(false);
+
+    const [errMsg, setErrMsg] = useState("");
 
     useEffect(() => {
         userRef.current.focus();
-    }, [])
-    
-    useEffect(() => {
-        setErrMsg('');
-    }, [user, pwd])
+    }, []);
 
+    useEffect(() => {
+        setValidName(USER_REGEX.test(user));
+    }, [user]);
+
+    useEffect(() => {
+        setValidPwd(PWD_REGEX.test(pwd));
+    }, [pwd]);
+
+    useEffect(() => {
+        setErrMsg("");
+    }, [user, pwd]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!validName || !validPwd) {
+            setErrMsg("Invalid email or password");
+            errRef.current.focus();
+            return;
+        }
+
+        // 🔐 login logic here (API / auth)
+        console.log("Login successful:", { user, pwd });
+    };
 
     return (
         <>
-            <section className="w-full p-1 flex flex-col items-center justify-center gap-1">
-                <Title text={"Login"}></Title>
-                <p ref={errRef} className={errMsg ? "opacity-1" : "opacity-0"} aria-live="assertive">{errMsg}</p>
+            <section className="w-full p-1 flex flex-col items-center gap-1">
+                <Title text="Login" />
+                <p
+                    ref={errRef}
+                    className={errMsg ? "text-red-600 text-sm" : "opacity-0"}
+                    aria-live="assertive"
+                >
+                    {errMsg}
+                </p>
             </section>
-            <form className=" w-full p-5 flex flex-col items-center justify-center gap-5">
-                <div className="w-full">
-                    <label className="mb-1 text-oasis-header font-oasis-text text-[1rem]" htmlFor="webMail">
-                        PUP Webmail
-                    </label>
+
+            <form onSubmit={handleSubmit} className="w-full p-5 flex flex-col gap-5">
+                {/* EMAIL */}
+                <div className="w-full p-5 flex flex-col">
+                    <label className="mb-1 text-oasis-header font-oasis-text" htmlFor="webMail">PUP Webmail</label>
                     <input
+                        ref={userRef}
                         type="text"
                         id="webMail"
-                        placeholder="Enter valid webmail"
-                        ref={userRef}
+                        placeholder="Enter PUP webmail"
                         autoComplete="off"
-                        onChange={(e) => setUser(e.target.value)}
                         value={user}
-                        required
-
+                        onChange={(e) => setUser(e.target.value)}
+                        onFocus={() => setUserFocus(true)}
+                        onBlur={() => setUserFocus(false)}
+                        aria-invalid={!validName}
                         className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                        required
                     />
-                </div>
-                
-                <div className="w-full">
-                    <label className="mb-1 text-oasis-header font-oasis-text text-[1rem]" htmlFor="loginPwd">
-                        Password
-                    </label>
+                    <p className={userFocus && user && !validName ? "text-red-600 text-xs" : "opacity-0"}>
+                        Must be a valid PUP webmail.
+                    </p>
+
+
+                {/* PASSWORD */}
+
+                    <label className="mb-1 text-oasis-header font-oasis-text" htmlFor="loginPwd">Password</label>
                     <input
-                        type="text"
+                        type="password"
                         id="loginPwd"
                         placeholder="Enter password"
-                        ref={userRef}
-                        autoComplete="off"
-                        onChange={(e) => setPwd(e.target.value)}
                         value={pwd}
-                        required
-
+                        onChange={(e) => setPwd(e.target.value)}
+                        onFocus={() => setPwdFocus(true)}
+                        onBlur={() => setPwdFocus(false)}
+                        aria-invalid={!validPwd}
                         className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                        required
                     />
-                </div> 
-                
-                <Button text={"Sign in"}/>
+                    <p className={pwdFocus && pwd && !validPwd ? "text-red-600 text-xs" : "opacity-0"}>
+                        Password must be at least 8 characters, include uppercase, number, and symbol.
+                    </p>
+                    <Button text="Sign in" disabled={!validName || !validPwd} />
+                </div>
+
+
             </form>
         </>
-    )
+    );
 }
-

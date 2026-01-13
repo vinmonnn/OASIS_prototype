@@ -20,12 +20,18 @@ import AdmOperations from './pages/adminPages/admOperations';
 import DocsUpload from './pages/adminPages/docsUpload';
 import MoaOverview from './pages/adminPages/moaOverview';
 import RegStudents from './pages/adminPages/regStudents';
+import { LoadingProvider, useLoading } from './context/LoadingContext';
+import LoadingScreen from './components/LoadingScreen';
 
 
 
 function RootLayout() {
+
+  const { loading } = useLoading();
+
   return (
     <>
+      {loading && <LoadingScreen />}
       <ScrollToTop />
       <Outlet />
     </>
@@ -57,7 +63,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <LoadingProvider>
+      <RouterProvider router={router} />
+    </LoadingProvider>
+    
   </StrictMode>
 );
 

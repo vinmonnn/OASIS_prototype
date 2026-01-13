@@ -10,6 +10,7 @@ import SearchBar from '../../components/searchBar.jsx';
 import { AnnounceButton } from '../../components/button.jsx';
 import { useLocalStorage } from '../../hooks/useLocalStorage.jsx';
 import { useState, useEffect } from 'react';
+import { AnnouncementModal } from '../../components/userModal.jsx';
 
 export default function Admin() {
 
@@ -34,7 +35,7 @@ export default function Admin() {
     const [category, setCategory] = useState(categories[0]);
 
     const handlePost = (e) => {
-        e.preventDefault(); // stop default form submit
+        e.preventDefault(); 
         if (!title || !content) return;
 
         const newAnnouncement = {
@@ -63,7 +64,11 @@ export default function Admin() {
         <>
             <AdminScreen>
                 <AdminHeader/>
-                
+                 <AnnouncementModal 
+                    visible={!!selectedAnnouncement} 
+                    onClose={() => setSelectedAnnouncement(null)}
+                    {...selectedAnnouncement}
+                />
                 {/* PARENT CONTAINER */}
                 
                 <div className='w-full flex flex-col gap-10 items-center justify-center rounded-3xl drop-shadow-[0_5px_10px_rgba(0,0,0,0.25)]'>
@@ -144,34 +149,38 @@ export default function Admin() {
 
                             <Label labelText={"Filter Announcements"}/>
                             <section className='w-full flex flex-row items-center justify-start gap-5'>
-                                <Filter text={"All"}/>
-                                <Filter text={"HTE-Related"}/>
-                                <Filter text={"Deadlines"}/>
-                                <Filter text={"Newly Approved HTEs"}/>
-                                <Filter text={"Events and Webinars"}/>
+                                {["All", "HTE Related", "Deadlines", "Newly Approved HTEs", "Events and Webinars"].map(f => (
+                                    <Filter
+                                        key={f}
+                                        text={f}
+                                        onClick={() => setActiveFilter(f)}
+                                        isActive={activeFilter === f}
+                                    />
+                                ))} 
 
                             </section>
                             
                             <SearchBar />
-                            <section className='w-full bg-white p-5 flex flex-row items-center justify-evenly '>
-                                <div className='p-5  w-full text-black rounded-2xl'>
-                                    <p className='text-[0.6rem] font-normal mb-5'>Announcement date</p>
-                                    <h3 className='text-[1rem] font-bold'>Announcement Title</h3>
-                                    <p className='text-[0.8rem] font-medium'>Announcement description</p>
-                                </div>
+                            {filteredAnnouncements.map(a => (
+                                <section
+                                    key={a.id}
+                                    onClick={() => setSelectedAnnouncement(a)}
+                                    className="w-full bg-white p-5 flex flex-row items-center justify-evenly cursor-pointer"
+                                >
+                                    <div className="p-5 w-full text-black rounded-2xl">
+                                        <p className="text-[0.6rem] font-normal mb-5">{a.date}</p>
+                                        <h3 className="text-[1rem] font-bold">{a.title}</h3>
+                                        <p className="text-[0.8rem] font-medium">{a.content}</p>
+                                    </div>
 
-                                <div className='w-[50%] flex flex-row justify-evenly items-center gap-10'>
-                                    <AnnounceButton
-                                        btnText='Posted'
-                                    />
-                                    <AnnounceButton
-                                        btnText='Delete'
-                                    />
-                                </div>
-                            </section>
-
+                                    <div className="w-[50%] flex flex-row justify-evenly items-center gap-10">
+                                        <AnnounceButton btnText="Posted" />
+                                        <AnnounceButton btnText="Delete" />
+                                    </div>
+                                </section>
+                            ))}
                         </form>
-
+                       
                         {/* NOTIFICATIONS */}
                         <div className='w-[25%] min-h-24 p-10 bg-admin-element'>
                             <p className='text-[0.8rem] mb-5 font-black'>Notifications</p>

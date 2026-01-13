@@ -26,7 +26,7 @@ def register():
     hashed_password = hash_password(password)
     new_user = User(email=email, password_hash=hashed_password, role="student", is_verified=False)
     db.session.add(new_user)
-    db.session.commit()
+    db.session.commit() 
 
     otp = generate_otp()
     otp_store[email] = otp 
