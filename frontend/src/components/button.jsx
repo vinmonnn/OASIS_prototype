@@ -1,18 +1,21 @@
 import 'animate.css';
 import { useState } from 'react';
+import 'animate.css';
 import HoverLift from './hoverLift';
-export function Button({ text, onClick, disabled, width = "w-auto" }) {
-    return (
-        <button
-            type="button"
-            onClick={onClick}
-            disabled={disabled}
-            className={`animate__animated animate__fadeIn min-w-70 ${width} p-3 bg-linear-to-t from-oasis-button-dark to-oasis-button-light font-oasis-text text-white font-semibold hover:from-oasis-button-light hover:to-oasis-aqua ease-in duration-100 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}
-        >
-            {text}
-        </button>
-    );
+
+export function Button({ text, onClick, disabled, width = "w-auto", type = "button" }) {
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={`animate__animated animate__fadeIn min-w-70 ${width} p-3 bg-linear-to-t from-oasis-button-dark to-oasis-button-light font-oasis-text text-white font-semibold hover:from-oasis-button-light hover:to-oasis-aqua ease-in duration-100 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}
+    >
+      {text}
+    </button>
+  );
 }
+
 
 export function AnnounceButton({ type="button", btnText = "Posted", onClick }) {
     const text = btnText.toLowerCase();

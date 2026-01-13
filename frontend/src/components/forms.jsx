@@ -2,119 +2,135 @@ import { Button } from "./button";
 import { useForm } from "react-hook-form";
 import { useRef, useState, useEffect } from "react";
 import Title from "../utilities/title";
-import { Link } from "react-router-dom";
-import { sendOtp, verifyOtp } from "../api/auth.service";
-
+import { useNavigate } from "react-router-dom";
+import {
+  sendOtp,
+  verifyOtp,
+  registerStudent,
+  loginStudent,
+  loginAdmin,
+} from "../api/auth.service";
 
 const USER_REGEX = /^[a-z]+[a-z][a-z]+@iskolarngbayan\.pup\.edu\.ph$/;
 const PWD_REGEX = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 const OTP_REGEX = /^\d{6}$/;
 
-
 export function UpdatedReg() {
+  const navigate = useNavigate();
 
-    const STEPS = {
-        EMAIL: "EMAIL",
-        OTP: "OTP",
-        PASSWORD: "PASSWORD"
-    };
+  const STEPS = {
+    EMAIL: "EMAIL",
+    OTP: "OTP",
+    PASSWORD: "PASSWORD",
+  };
 
-    const [step, setStep] = useState(STEPS.EMAIL);
-    const otpRef = useRef();
-    const pwdRef = useRef();
+  const [step, setStep] = useState(STEPS.EMAIL);
+  const otpRef = useRef();
+  const pwdRef = useRef();
 
-    const userRef = useRef();
-    const errRef = useRef();
+  const userRef = useRef();
+  const errRef = useRef();
 
-    const [user, setUser] = useState('');
-    const [validName, setValidName] = useState(false);
-    const [userFocus, setUserFocus] = useState(false);
+  const [user, setUser] = useState("");
+  const [validName, setValidName] = useState(false);
+  const [userFocus, setUserFocus] = useState(false);
 
-    const [pwd, setPwd] = useState('');
-    const [validPwd, setValidPwd] = useState(false);
-    const [pwdFocus, setPwdFocus] = useState(false);
+  const [pwd, setPwd] = useState("");
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
 
-    const [matchPwd, setMatchPwd] = useState('');
-    const [validMatch, setValidMatch] = useState(false);
-    const [matchFocus, setMatchFocus] = useState(false);
+  const [matchPwd, setMatchPwd] = useState("");
+  const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false);
 
-    const [otp, setOtp] = useState('')
-    const [validOtp, setValidOtp] = useState(false);
-    const [otpFocus, setOtpFocus] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [validOtp, setValidOtp] = useState(false);
+  const [otpFocus, setOtpFocus] = useState(false);
 
-    const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const [success, setSuccess] = useState(false);
 
+  useEffect(() => {
+    userRef.current?.focus();
+  }, []);
 
-    useEffect(() => {
-        userRef.current.focus();
+  useEffect(() => {
+    if (step === STEPS.EMAIL) userRef.current?.focus();
+    if (step === STEPS.OTP) otpRef.current?.focus();
+    if (step === STEPS.PASSWORD) pwdRef.current?.focus();
+  }, [step]);
 
-    }, [])
+  useEffect(() => {
+    // webmail validation
+    const result = USER_REGEX.test(user);
+    setValidName(result);
+  }, [user]);
 
-    useEffect(() => {
-        if (step === STEPS.EMAIL) userRef.current?.focus();
-        if (step === STEPS.OTP) otpRef.current?.focus();
-        if (step === STEPS.PASSWORD) pwdRef.current?.focus();
-    }, [step]);
+  useEffect(() => {
+    // OTP validation
+    setValidOtp(OTP_REGEX.test(otp));
+  }, [otp]);
 
-    useEffect(() => { //webmail validation
-        const result = USER_REGEX.test(user);
-        console.log(result);
-        console.log(user);
-        setValidName(result);
-    }, [user])
+  useEffect(() => {
+    // password validation
+    const result = PWD_REGEX.test(pwd);
+    setValidPwd(result);
+    const match = pwd === matchPwd;
+    setValidMatch(match);
+  }, [pwd, matchPwd]);
 
-    useEffect(() => { //OTP validation
-        setValidOtp(OTP_REGEX.test(otp));
-    }, [otp]);
+  useEffect(() => {
+    setErrMsg("");
+  }, [user, pwd, matchPwd, otp]);
 
-    useEffect(() => { //password validation
-        const result = PWD_REGEX.test(pwd);
-        console.log(result);
-        console.log(pwd);
-        setValidPwd(result);
-        const match = pwd === matchPwd;
-        setValidMatch(match);
-    }, [pwd, matchPwd])
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    useEffect(() => {
-        setErrMsg('');
-    }, [user, pwd, matchPwd])
+    // only submit on PASSWORD step
+    if (step !== STEPS.PASSWORD) return;
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const v1 = USER_REGEX.test(user);
+    const v2 = PWD_REGEX.test(pwd);
 
-        if (step !== STEPS.PASSWORD) return;
+    if (!v1 || !v2) {
+      setErrMsg("Invalid Entry");
+      return;
+    }
 
-        const v1 = USER_REGEX.test(user);
-        const v2 = PWD_REGEX.test(pwd);
+    try {
+      await registerStudent(user, pwd);
+      setSuccess(true);
+      navigate("/home");
+    } catch (err) {
+      setErrMsg(
+        err?.response?.data?.error ||
+          err?.response?.data?.message ||
+          "Registration failed."
+      );
+    }
+  };
 
-        if (!v1 || !v2) {
-            setErrMsg("Invalid Entry");
-            return;
-        }
-
-        setSuccess(true);
-    };
-
-    return (
+  return (
+    <>
+      {success ? (
         <>
-            {success ? (
-                    <>
-                        <section>
-                            <h1>success</h1>
-                            <p>
-                                Sign in
-                            </p>
-                        </section>
-                    </>
-                ) : (
-                    <>
-                        <section className="w-full p-1 flex flex-col items-center justify-center gap-1">
-                            <Title text={"Register"}></Title>
-                            <p ref={errRef} className={errMsg ? "right-0" : "right-full"} aria-live="assertive">{errMsg}</p>
-
-                        </section>
+          <section>
+            <h1>success</h1>
+            <p>Sign in</p>
+          </section>
+        </>
+      ) : (
+        <>
+          <section className="w-full p-1 flex flex-col items-center justify-center gap-1">
+            <Title text={"Register"}></Title>
+            <p
+              ref={errRef}
+              className={errMsg ? "right-0" : "right-full"}
+              aria-live="assertive"
+            >
+              {errMsg}
+            </p>
+          </section>
 
                         {/* WEBMAIL */}
                         <form onSubmit={handleSubmit} className=" w-full p-5 flex flex-col items-center justify-center gap-3">
@@ -125,7 +141,7 @@ export function UpdatedReg() {
                                         <input
                                             type="text"
                                             id="webMail"
-                                            placeholder="Enter PUP webmail"
+                                            placeholder="Enter valid webmail"
                                             ref={userRef}
                                             autoComplete="off"
                                             required
@@ -139,7 +155,8 @@ export function UpdatedReg() {
                                         />
                                     </div>
                                     
-                                    <p id="uidnote" className={userFocus && user && !validName ? "opacity-100 font-oasis-text text-red-600 text-xs m-auto text-center": "opacity-0 "}>Must be a valid PUP webmail.
+                                    <p id="uidnote" className={userFocus && user && !validName ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic m-auto text-center": "opacity-0 "}>Must be a valid webmail.<br/> 
+                                    E.g. juanmdelacruz@iskolarngbayan.pup.edu.ph
                                     </p>
                                     <Button
                                         text="Send OTP"
@@ -177,7 +194,7 @@ export function UpdatedReg() {
                                             className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
                                         />
                                     </div>
-                                    <p id="otpnote" className={otpFocus && otp && !validOtp ? "opacity-100 font-oasis-text text-red-600 text-xs ": "opacity-0 "}> OTP must be a 6-digit number.</p>
+                                     <p id="otpnote" className={otpFocus && otp && !validOtp ? "opacity-100 font-oasis-text text-red-600 text-xs ": "opacity-0 "}> OTP must be a 6-digit number.</p>
                                     <Button
                                         text="Verify OTP"
                                         disabled={!validOtp}
@@ -238,128 +255,86 @@ export function UpdatedReg() {
                                         Password must not be less than 8 characters.<br/>
                                         Including an uppercase letter, and special character
                                     </p>
-                                    <p id="matchnote" className={matchFocus && matchPwd && !validMatch ? "opacity-100 font-oasis-text text-red-600 text-xs": "opacity-0 "}>
+                                   <p id="matchnote" className={matchFocus && matchPwd && !validMatch ? "opacity-100 font-oasis-text text-red-600 text-xs": "opacity-0 "}>
                                         password not matched!
                                     </p>
 
-                                    <Button
-                                        text="Register"
-                                        disabled={!validPwd || !validMatch}
-                                    />
-                                </>
-                            )}
-                        </form>
-                    </>
+                <Button text="Register" type="submit" disabled={!validPwd || !validMatch} />
+              </>
             )}
+          </form>
         </>
-    );
-    
+      )}
+    </>
+  );
 }
 
 
 export function UpdatedLogin() {
+    
     const userRef = useRef();
     const errRef = useRef();
 
-    const [user, setUser] = useState("");
-    const [pwd, setPwd] = useState("");
-
-    const [validName, setValidName] = useState(false);
-    const [validPwd, setValidPwd] = useState(false);
-
-    const [userFocus, setUserFocus] = useState(false);
-    const [pwdFocus, setPwdFocus] = useState(false);
-
-    const [errMsg, setErrMsg] = useState("");
+    const [user, setUser] = useState('');
+    const [pwd, setPwd] = useState('');
+    const [errMsg, setErrMsg] = useState('');
+    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         userRef.current.focus();
-    }, []);
-
+    }, [])
+    
     useEffect(() => {
-        setValidName(USER_REGEX.test(user));
-    }, [user]);
+        setErrMsg('');
+    }, [user, pwd])
 
-    useEffect(() => {
-        setValidPwd(PWD_REGEX.test(pwd));
-    }, [pwd]);
-
-    useEffect(() => {
-        setErrMsg("");
-    }, [user, pwd]);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (!validName || !validPwd) {
-            setErrMsg("Invalid email or password");
-            errRef.current.focus();
-            return;
-        }
-
-        // 🔐 login logic here (API / auth)
-        console.log("Login successful:", { user, pwd });
-    };
 
     return (
         <>
-            <section className="w-full p-1 flex flex-col items-center gap-1">
-                <Title text="Login" />
-                <p
-                    ref={errRef}
-                    className={errMsg ? "text-red-600 text-sm" : "opacity-0"}
-                    aria-live="assertive"
-                >
-                    {errMsg}
-                </p>
+            <section className="w-full p-1 flex flex-col items-center justify-center gap-1">
+                <Title text={"Login"}></Title>
+                <p ref={errRef} className={errMsg ? "opacity-1" : "opacity-0"} aria-live="assertive">{errMsg}</p>
             </section>
-
-            <form onSubmit={handleSubmit} className="w-full p-5 flex flex-col gap-5">
-                {/* EMAIL */}
-                <div className="w-full p-5 flex flex-col">
-                    <label className="mb-1 text-oasis-header font-oasis-text" htmlFor="webMail">PUP Webmail</label>
+            <form className=" w-full p-5 flex flex-col items-center justify-center gap-5">
+                <div className="w-full">
+                    <label className="mb-1 text-oasis-header font-oasis-text text-[1rem]" htmlFor="webMail">
+                        PUP Webmail
+                    </label>
                     <input
-                        ref={userRef}
                         type="text"
                         id="webMail"
-                        placeholder="Enter PUP webmail"
+                        placeholder="Enter valid webmail"
+                        ref={userRef}
                         autoComplete="off"
-                        value={user}
                         onChange={(e) => setUser(e.target.value)}
-                        onFocus={() => setUserFocus(true)}
-                        onBlur={() => setUserFocus(false)}
-                        aria-invalid={!validName}
-                        className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                        value={user}
                         required
+
+                        className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
                     />
-                    <p className={userFocus && user && !validName ? "text-red-600 text-xs" : "opacity-0"}>
-                        Must be a valid PUP webmail.
-                    </p>
-
-
-                {/* PASSWORD */}
-
-                    <label className="mb-1 text-oasis-header font-oasis-text" htmlFor="loginPwd">Password</label>
+                </div>
+                
+                <div className="w-full">
+                    <label className="mb-1 text-oasis-header font-oasis-text text-[1rem]" htmlFor="loginPwd">
+                        Password
+                    </label>
                     <input
-                        type="password"
+                        type="text"
                         id="loginPwd"
                         placeholder="Enter password"
-                        value={pwd}
+                        ref={userRef}
+                        autoComplete="off"
                         onChange={(e) => setPwd(e.target.value)}
-                        onFocus={() => setPwdFocus(true)}
-                        onBlur={() => setPwdFocus(false)}
-                        aria-invalid={!validPwd}
-                        className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                        value={pwd}
                         required
+
+                        className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
                     />
-                    <p className={pwdFocus && pwd && !validPwd ? "text-red-600 text-xs" : "opacity-0"}>
-                        Password must be at least 8 characters, include uppercase, number, and symbol.
-                    </p>
-                    <Button text="Sign in" disabled={!validName || !validPwd} />
-                </div>
-
-
+                </div> 
+                
+                <Button text={"Sign in"}/>
             </form>
         </>
-    );
+    )
 }
+
