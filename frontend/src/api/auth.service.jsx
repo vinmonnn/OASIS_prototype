@@ -1,45 +1,50 @@
-// src/api/auth.service.jsx
-import axios from "./axios";
+// frontend/src/api/auth.service.jsx
+import api from "./axios";
+import { setToken, clearToken } from "./token";
 
-export const sendOtp = (email) => {
-    console.log("Mock send OTP to:", email);
+// Debug/Connectivity
+export async function health() {
+  const res = await api.get("/api/health");
+  return res.data;
+}
 
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({
-                data: {
-                    message: "OTP sent",
-                    otp: "123456" // mock OTP
-                }
-            });
-        }, 800);
-    });
-};
+// OTP
+export async function sendOtp(email) {
+  const res = await api.post("/api/auth/student/send-otp", { email });
+  return res.data;
+}
 
-export const verifyOtp = (email, otp) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if (otp === "123456") {
-                resolve({ data: { message: "OTP verified" } });
-            } else {
-                reject(new Error("Invalid OTP"));
-            }
-        }, 800);
-    });
-};
+export async function verifyOtp(email, otp) {
+  const res = await api.post("/api/auth/student/verify-otp", { email, otp });
+  return res.data;
+}
 
-// export const sendOtp = (email) => {
-//     return axios.post("/send-otp", { email });
-// };
+// Student
+export async function registerStudent(email, password) {
+  const res = await api.post("/api/auth/student/register", { email, password });
+  if (res.data?.token) setToken(res.data.token);
+  return res.data;
+}
 
-// export const verifyOtp = (email, otp) => {
-//     return axios.post("/verify-otp", { email, otp });
-// };
+export async function loginStudent(email, password) {
+  const res = await api.post("/api/auth/student/login", { email, password });
+  if (res.data?.token) setToken(res.data.token);
+  return res.data;
+}
 
-// export const registerUser = (email, password) => {
-//     return axios.post("/register", { email, password });
-// };
+// Admin
+export async function loginAdmin(email, password) {
+  const res = await api.post("/api/auth/admin/login", { email, password });
+  if (res.data?.token) setToken(res.data.token);
+  return res.data;
+}
 
-// export const loginUser = (email, password) => {
-//     return axios.post("/login", { email, password });
-// };
+export function logoutLocal() {
+  clearToken();
+}
+
+// Session
+export async function me() {
+  const res = await api.get("/api/auth/me");
+  return res.data;
+}

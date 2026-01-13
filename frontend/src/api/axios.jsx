@@ -1,7 +1,16 @@
-// src/api/axios.jsx
+// frontend/src/api/axios.jsx
 import axios from "axios";
+import { getToken } from "./token";
 
-export default axios.create({
-    baseURL: "http://localhost:5000",
-    withCredentials: true
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  withCredentials: true,
 });
+
+api.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+export default api;
