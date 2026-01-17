@@ -11,6 +11,7 @@ import { AnnounceButton } from '../../components/button.jsx';
 import { useLocalStorage } from '../../hooks/useLocalStorage.jsx';
 import { useState, useEffect } from 'react';
 import { AnnouncementModal } from '../../components/userModal.jsx';
+import { ConfirmModal } from '../../components/popupModal.jsx';
 
 export default function Admin() {
 
@@ -60,15 +61,25 @@ export default function Admin() {
     }, [announcements]);
 
 
+    const [showConfirm, setShowConfirm] = useState(false);
+
     return(
         <>
             <AdminScreen>
                 <AdminHeader/>
+                
                  <AnnouncementModal 
                     visible={!!selectedAnnouncement} 
                     onClose={() => setSelectedAnnouncement(null)}
                     {...selectedAnnouncement}
                 />
+
+                {showConfirm && (
+                    <ConfirmModal
+                        time={1500}
+                        onClose={() => setShowConfirm(false)}
+                    />
+                )}
                 {/* PARENT CONTAINER */}
                 
                 <div className='w-full flex flex-col gap-10 items-center justify-center rounded-3xl drop-shadow-[0_5px_10px_rgba(0,0,0,0.25)]'>
@@ -140,7 +151,7 @@ export default function Admin() {
                                 />
 
                                 <section className='flex flex-row items-start justify-start gap-10 mt-10'>
-                                    <AnnounceButton btnText="Post" type="submit"/>
+                                    <AnnounceButton btnText="Post" type="submit" onClick={() => setShowConfirm(true)}/>
                                 </section>
                             </div>
                             

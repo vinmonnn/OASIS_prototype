@@ -22,6 +22,8 @@ import MoaOverview from './pages/adminPages/moaOverview';
 import RegStudents from './pages/adminPages/regStudents';
 import { LoadingProvider, useLoading } from './context/LoadingContext';
 import LoadingScreen from './components/LoadingScreen';
+import HteProfile from './pages/studentPages/hteProfile';
+import { AdminProfile, StudentProfile } from './pages/userProfiles/profiles';
 
 
 
@@ -45,6 +47,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <LandingPage /> },
       { path: 'access', element: <UserAccess /> },
+      { path: 'student-profile', element: <StudentProfile /> },
+      { path: 'admin-profile', element: <AdminProfile /> },
       { path: 'admin', element: <Admin /> },
       { path: 'admOperations', element: <AdmOperations /> },
       { path: 'admUploads', element: <DocsUpload /> },
@@ -52,6 +56,7 @@ const router = createBrowserRouter([
       { path: 'admStudents', element: <RegStudents /> },
       { path: 'home', element: <Student /> },
       { path: 'htedirectory', element: <HteDirectory /> },
+      { path: 'hte-profile', element: <HteProfile /> },
       { path: 'ojthub', element: <OjtHub /> },
       { path: 'announcements', element: <Announcements /> },
       { path: '*', element: <NotFound /> }

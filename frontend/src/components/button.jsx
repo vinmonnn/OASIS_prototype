@@ -1,8 +1,8 @@
 import 'animate.css';
 import { useState } from 'react';
-import 'animate.css';
 import HoverLift from './hoverLift';
-
+import add from "../assets/icons/add.png";
+import close from "../assets/icons/close.png"
 export function Button({ text, onClick, disabled, width = "w-auto", type = "button" }) {
   return (
     <button
@@ -53,8 +53,6 @@ export function CoursesButton({ onClick, text, type = "button"}) {
     )
 }
 
-import add from "../assets/icons/add.png";
-
 export function AddButton({ onClick, type = "button", width = "w-25", height = "h-10", iconSize = "w-5 h-5" }) {
     return (
         <button type={type} onClick={onClick} className={`${width} ${height} rounded-full bg-oasis-button-light flex items-center justify-center hover:bg-oasis-button-dark hover:cursor-pointer transition`}>
@@ -63,4 +61,13 @@ export function AddButton({ onClick, type = "button", width = "w-25", height = "
 
         </button>
     );
+}
+
+export function CloseButton({ onClick, type = "button"}) {
+    return (
+        <>
+            <button className="w-9 absolute top-1 right-1/15 translate-x-1/2 translate-y-1/2 p-2 bg-oasis-button-dark text-white rounded-full hover:cursor-pointer"
+            onClick={onClose}><img src={close} className="object-contain w-full" /></button>
+        </>
+    )
 }

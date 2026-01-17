@@ -6,10 +6,37 @@ import {
 } from './EmblaCarouselArrowButtons'
 import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel from 'embla-carousel-react'
-import { CarouselItem } from '../pages/studentPages/hteDirectory'
+import Subtitle from '../utilities/subtitle'
+import location from "../assets/icons/location.png"
+
+export function CarouselItem({ thumbnail, hteName = "Name of HTE", hteAddress = "Address of HTE", onClick }) {
+    return (
+        <>
+                {/* PARENT WRAPPER */}
+                <div className="embla__slide w-60 h-80 overflow-hidden hover:cursor-pointer" onClick={onClick}>
+
+                    {/* IMAGE WRAPPER */}
+                    <div className="w-full h-full bg-center bg-cover py-5 flex items-end" style={{ backgroundImage: `url(${thumbnail || fallbackImg})`}}>
+                        <div className='w-full flex flex-col items-start p-3 backdrop-blur-md bg-white/30 shadow-lg text-white'>
+                            <Subtitle text={hteName} weight={"font-bold"} size={"text-[1.2rem]"}/>
+
+                            <section className='w-full flex flex-row justify-start items-center gap-3'>
+                                <img src={location} className='w-5'/>
+                                <Subtitle text={hteAddress} size={"text-[0.7rem]"}/>
+                            </section>
+                        </div>
+                    </div>
+
+                </div>
+            
+        </>
+        
+    );
+}
+
 
 const EmblaCarousel = (props) => {
-  const { slides, options } = props
+  const { slides, options, onSelectHte } = props
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()])
 
   const onNavButtonClick = useCallback((emblaApi) => {
@@ -41,6 +68,7 @@ const EmblaCarousel = (props) => {
                 thumbnail={slide.thumbnail}
                 hteName={slide.hteName}
                 hteAddress={slide.hteAddress}
+                onClick={() => onSelectHte(slide.hteName)}  
             />
           ))}
         </div>

@@ -2,7 +2,6 @@ import MainScreen from '../../layouts/mainScreen'
 import Title from '../../utilities/title'
 import ctaBg from "../../assets/ctaBg.png"
 import fallbackImg from "../../assets/fallbackImage.jpg"
-import location from "../../assets/icons/location.png"
 import Subtitle from '../../utilities/subtitle';
 import EmblaCarousel from '../../components/EmblaCarousel';
 import "../../embla.css"
@@ -11,34 +10,28 @@ import { Filter } from '../../components/adminComps'
 import ReviewRatings from '../../components/reviewRatings'
 import AverageRating from '../../components/averageRating'
 import { AddReviewCard, ReviewCard } from '../../utilities/card'
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
-export function CarouselItem({ thumbnail, hteName = "Name of HTE", hteAddress = "Address of HTE" }) {
-    return (
-        <>
-                {/* PARENT WRAPPER */}
-                <div className="embla__slide w-60 h-80 overflow-hidden hover:cursor-pointer">
-
-                    {/* IMAGE WRAPPER */}
-                    <div className="w-full h-full bg-center bg-cover py-5 flex items-end" style={{ backgroundImage: `url(${thumbnail || fallbackImg})`}}>
-                        <div className='w-full flex flex-col items-start p-3 backdrop-blur-md bg-white/30 shadow-lg text-white'>
-                            <Subtitle text={hteName} weight={"font-bold"} size={"text-[1.2rem]"}/>
-
-                            <section className='w-full flex flex-row justify-start items-center gap-3'>
-                                <img src={location} className='w-5'/>
-                                <Subtitle text={hteAddress} size={"text-[0.7rem]"}/>
-                            </section>
-                        </div>
-                    </div>
-
-                </div>
-            
-        </>
-        
-    );
-}
 
 export default function HteDirectory() {
     const hteHeaders = ["Name of HTE", "Industry", "MOA Signed Date", "Expiration Date", "Status", "MOA File"]
+
+    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const activeHte = searchParams.get("hte");
+
+    useEffect(() => {
+        if (activeHte) {
+            navigate(`/hte-profile?hte=${encodeURIComponent(activeHte)}`)
+        }
+    }, [activeHte, navigate])
+
+    const setHte = (hteName) => {
+        setSearchParams({ hte: hteName });
+    };
+
+
     const OPTIONS = { loop: true }
     const SLIDES = [
         {
@@ -81,7 +74,7 @@ export default function HteDirectory() {
 
                     <section className="w-full flex flex-col gap-5 justify-center items-center">
                         <Title text={"Overview of Host Training Establishment"}/>
-                        <EmblaCarousel options={OPTIONS} slides={SLIDES}/>
+                        <EmblaCarousel options={OPTIONS} slides={SLIDES} onSelectHte={setHte}/>
                     </section>
                     
                     

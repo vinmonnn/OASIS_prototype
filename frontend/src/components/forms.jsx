@@ -295,7 +295,7 @@ export function UpdatedLogin() {
                 <Title text={"Login"}></Title>
                 <p ref={errRef} className={errMsg ? "opacity-1" : "opacity-0"} aria-live="assertive">{errMsg}</p>
             </section>
-            <form className=" w-full p-5 flex flex-col items-center justify-center gap-5">
+            <form className=" w-full p-5 flex flex-col items-center justify-center gap-5" >
                 <div className="w-full">
                     <label className="mb-1 text-oasis-header font-oasis-text text-[1rem]" htmlFor="webMail">
                         PUP Webmail
