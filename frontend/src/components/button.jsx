@@ -17,23 +17,27 @@ export function Button({ text, onClick, disabled, width = "w-auto", type = "butt
 }
 
 
-export function AnnounceButton({ type="button", btnText = "Posted", onClick }) {
+export function AnnounceButton({ type="button", btnText = "Posted", onClick, disabled }) {
     const text = btnText.toLowerCase();
 
-    const isDanger = ["delete", "reject", "clear all"].includes(text);
-    const isNeutral = ["cancel", "clear"].includes(text);
-    
+    const isDanger = ["delete", "reject", "clear all", "clear"].includes(text);
+    const isNeutral = ["cancel"].includes(text);
+    const isPending = ["pending"].includes(text);
+
     const buttonStyle = isNeutral
         ? "bg-[#D3D3D3] hover:bg-[#A9A9A9] text-black"
         : isDanger
         ? "bg-red-900 hover:bg-red-700 text-white"
-        : "bg-oasis-button-dark hover:bg-oasis-button-light text-white";
+        : isPending 
+        ? "bg-amber-500 hover:bg-amber-700 text-black" 
+        : "bg-oasis-button-dark hover:bg-oasis-button-light text-white"
 
     return (
         <button
             type={type}
             onClick={onClick}
-            className={` font-oasis-text text-[0.8rem] text-center py-2 px-8 w-auto max-w-50 rounded-3xl transition-all duration-200 hover:cursor-pointer ${buttonStyle} `}
+            className={`font-oasis-text text-[0.8rem] text-center py-2 px-8 w-auto max-w-50 rounded-3xl transition-all duration-200 hover:cursor-pointer ${buttonStyle} `}
+            disabled={disabled}
         >
             {btnText}
         </button>

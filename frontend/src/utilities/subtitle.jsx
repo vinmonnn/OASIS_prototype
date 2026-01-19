@@ -1,9 +1,13 @@
 
-export default function Subtitle({  isCenter = false , text, color, size = ('text-xs'), weight = ('font-normal'), isUnderlined = false, isAnimated = false }) {
+export default function Subtitle({  isCenter = false , text, color, size = ('text-xs'), weight = ('font-normal'), isUnderlined = false, isLink = false, isAnimated = false, link}) {
 
     return (
         <>
-            <p className={`${isAnimated ? "animate__animated animate__fadeInDown" : ""} font-oasis-text ${weight} ${isCenter ? "text-center" : "text-start"} ${size} text-center ${color} transition ease-in-out ${isUnderlined ? "underline underline-offset-2": ""}`}>{text}</p>
+        {isLink ? 
+        <a href={link} className={`${isAnimated ? "animate__animated animate__fadeInDown" : ""} font-oasis-text ${weight} ${isCenter ? "text-center" : "text-start"} ${size} text-center ${color} transition ease-in-out duration-500 ${isUnderlined ? "underline underline-offset-2": ""} hover:underline underline-offset-2 cursor-pointer`}>{text}</a> 
+        : 
+        <p className={`${isAnimated ? "animate__animated animate__fadeInDown" : ""} font-oasis-text ${weight} ${isCenter ? "text-center" : "text-start"} ${size} text-center ${color} transition ease-in-out duration-500 ${isUnderlined ? "underline underline-offset-2": ""} `}>{text}</p>}
+            
         </>
     )
 }

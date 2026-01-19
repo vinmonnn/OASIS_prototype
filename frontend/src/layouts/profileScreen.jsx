@@ -6,8 +6,7 @@ export function StudentProfileScreen({ children }) {
         <>
             <Header/>
             <StudentHeader/>
-            <div className="mt-20"></div>
-            <div className="w-full h-auto min-h-dvh flex flex-col items-center overflow-x-hidden p-10 bg-linear-to-l from-white via-oasis-blue to-white">
+            <div className="w-full h-auto min-h-dvh flex flex-col items-center overflow-x-hidden p-10 bg-linear-to-l from-white via-oasis-blue to-white pt-30">
                 {children}
             </div>
         </>

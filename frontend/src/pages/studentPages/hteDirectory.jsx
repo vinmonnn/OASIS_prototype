@@ -4,8 +4,7 @@ import ctaBg from "../../assets/ctaBg.png"
 import fallbackImg from "../../assets/fallbackImage.jpg"
 import Subtitle from '../../utilities/subtitle';
 import EmblaCarousel from '../../components/EmblaCarousel';
-import "../../embla.css"
-import { UserTable } from '../../components/oasisTable';
+import "../../embla.css";
 import { Filter } from '../../components/adminComps'
 import ReviewRatings from '../../components/reviewRatings'
 import AverageRating from '../../components/averageRating'
@@ -80,7 +79,7 @@ export default function HteDirectory() {
                     
                     <section className="w-full flex flex-col gap-5 justify-center items-center">
                         <Title text={"List of available HTE with MOA"}/>
-                        <UserTable headers={hteHeaders}></UserTable>
+                        {/* TABLE HERE */}
                     </section>
 
 {/* REVIEWS SECTION */}

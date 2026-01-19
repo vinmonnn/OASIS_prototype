@@ -1,14 +1,11 @@
 
 import { Link } from 'react-router-dom'
 import MainScreen from '../../layouts/mainScreen';
-import ctaBg from '../../assets/ctaBg.png';
 import fallbackImg from "../../assets/fallbackImage.jpg"
 import { UpperWave, LowerWave } from '../../utilities/waves';
 import Title from '../../utilities/title';
 import Subtitle from '../../utilities/subtitle';
 import { CustomCard } from '../../utilities/card';
-import OasisTable, { UserTable } from "../../components/oasisTable.jsx";
-import { Button } from '../../components/button.jsx';
 
 export default function Student() {
     const updatesHeader = ["Name of HTE", "Industry", "MOA Signed Date", "Expiration", "MOA Status"]
@@ -32,9 +29,8 @@ export default function Student() {
                         <Subtitle isCenter={true} size={'text-[0.75rem]'} text="See the latest HTEs with updates regarding their MOA status!"/>
                     </section>
 
-                    <UserTable headers={updatesHeader}>
+                    {/* TABLE HERE */}
 
-                    </UserTable>
                     <section className='w-[50%] flex flex-col gap-2 mt-10'>
                         <Title text="What is OASIS?"/>
                         <Subtitle isCenter={true} size={'text-[0.75rem]'} text="OJT Administration Support, and Information System is your all-in-one platform for managing OJT requirements, announcements, and host establishment information. Explore the cards below to learn more!"/>
