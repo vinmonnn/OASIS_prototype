@@ -6,18 +6,59 @@ import { UpperWave, LowerWave } from '../../utilities/waves';
 import Title from '../../utilities/title';
 import Subtitle from '../../utilities/subtitle';
 import { CustomCard } from '../../utilities/card';
+import { StudentTable } from '../../components/oasisTable';
+import { Text, StatusView } from '../../utilities/tableUtil';
 
 export default function Student() {
-    const updatesHeader = ["Name of HTE", "Industry", "MOA Signed Date", "Expiration", "MOA Status"]
+
+    // MOCK DATA
+    const tableData = [
+        {
+            id: 1,
+            hteName: "PrimaTech",
+            industry: "IT",
+            signedDate: "January 20, 2026",
+            expiryDate: "January 20, 2029",
+            moaStatus: "Rejected"
+
+        },
+
+        {
+            id: 2,
+            hteName: "PrimaTech",
+            industry: "IT",
+            signedDate: "January 20, 2026",
+            expiryDate: "January 20, 2029",
+            moaStatus: "Active"
+
+        }
+    ]
+
+    const columns = [
+        {header: "HTE Name", render: row => <Text text={row.hteName}/>},
+        {header: "Industry", render: row => <Text text={row.industry}/>},
+        {header: "MOA Signed Date", render: row => <Text text={row.signedDate}/>},
+        {header: "MOA Expiration", render: row => <Text text={row.expiryDate}/>},
+        {header: "MOA Status", render: row => <StatusView value={row.moaStatus}/>}
+    ]
+
+
+
+
     return(
         <>
             <MainScreen hasTopMargin={true}>
                 <div className="w-[90%] h-dvh rounded-3xl overflow-hidden relative flex flex-col items-center justify-center shadow-[0px_0px_10px_rgba(0,0,0,1)]">
-                     <h1 className='text-7xl font-oasis-text font-bold bg-linear-to-b bg-clip-text text-transparent from-oasis-button-light to-30% to-oasis-blue text-shadow-[0px_2px_5px_rgba(255,255,255,0.5)] text-center z-5'>Welcome to OASIS</h1>
-                     {/*  */}
-                     <p className='text-[1rem] italic font-oasis-text bg-linear-to-b bg-clip-text text-transparent from-oasis-button-light to-30% to-oasis-blue text-shadow-[0px_2px_5px_rgba(255,255,255,0.5)] text-center z-5'>Tulay sa oportunidad, gabay sa kinabukasan</p>
+                    <section className='w-full flex flex-col justify-center items-center'>
+                        <h1 className='text-7xl font-oasis-text font-bold bg-linear-to-t from-oasis-button-dark via-oasis-button-light to-oasis-blue bg-clip-text text-transparent  text-center z-5 drop-shadow-[5px_5px_5px_rgba(255,255,255,0.5)]'>Welcome to OASIS</h1>
+                   
+                        <p className='text-[1rem] italic font-oasis-text font-bold text-white text-shadow-[0px_2px_5px_rgba(255,255,255,0.5)] text-center z-5'>Tulay sa oportunidad, gabay sa kinabukasan</p>
+                    </section>
                      
-                    <img src={fallbackImg} className='absolute w-full h-full mt-[-20] object-cover bg-center bg-no-repeat bg-cover '/>
+                     
+                     <button className=' w-70 px-10 absolute top-[75%] left-1/2 -translate-x-1/2 -translate-y-1/2 py-4 rounded-2xl text-center bg-linear-to-b from-oasis-button-light to-oasis-blue to-110% z-5 text-oasis-button-dark font-bold font-oasis-text cursor-pointer shadow-[2px_2px_2px_rgba(0,0,0,0.5)] duration-100 transition ease-in-out hover:scale-115 hover:from-oasis-button-light hover:to-oasis-button-light hover:text-white'>View Dashboard</button>
+
+                    <img src={fallbackImg} className='absolute w-full h-full mt-[-20] object-cover bg-center bg-no-repeat bg-cover opacity-70'/>
                    
                 </div>
 
@@ -30,6 +71,9 @@ export default function Student() {
                     </section>
 
                     {/* TABLE HERE */}
+                    <StudentTable columns={columns} data={tableData}>
+
+                    </StudentTable>
 
                     <section className='w-[50%] flex flex-col gap-2 mt-10'>
                         <Title text="What is OASIS?"/>

@@ -1,7 +1,7 @@
 import MainScreen from "../../layouts/mainScreen";
 import { useSearchParams } from "react-router-dom";
 import Title from "../../utilities/title";
-import hteLogo from "../../assets/icons/hte.png";
+import hteLogo from "../../assets/hteLogo.png";
 import Subtitle from "../../utilities/subtitle";
 import pin from "../../assets/icons/pin.png";
 import link from "../../assets/icons/link.png";

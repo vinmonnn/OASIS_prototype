@@ -11,10 +11,44 @@ import AverageRating from '../../components/averageRating'
 import { AddReviewCard, ReviewCard } from '../../utilities/card'
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-
+import { LowerWave, UpperWave } from '../../utilities/waves';
+import { StudentTable } from '../../components/oasisTable';
+import { Text, StatusView, ViewMoaButton } from '../../utilities/tableUtil';
 
 export default function HteDirectory() {
-    const hteHeaders = ["Name of HTE", "Industry", "MOA Signed Date", "Expiration Date", "Status", "MOA File"]
+    
+    // MOCK DATA
+    const tableData = [
+        {
+            id: 1,
+            hteName: "PrimaTech",
+            industry: "IT",
+            signedDate: "January 20, 2026",
+            expiryDate: "January 20, 2029",
+            moaStatus: "Rejected",
+            moaUrl: "www.facebook.com",
+        },
+
+        {
+            id: 2,
+            hteName: "PrimaTech",
+            industry: "IT",
+            signedDate: "January 20, 2026",
+            expiryDate: "January 20, 2029",
+            moaStatus: "Active",
+            moaUrl: "www.youtube.com",
+
+        }
+    ]
+
+    const columns = [
+        {header: "HTE Name", render: row => <Text text={row.hteName}/>},
+        {header: "Industry", render: row => <Text text={row.industry}/>},
+        {header: "MOA Signed Date", render: row => <Text text={row.signedDate}/>},
+        {header: "MOA Expiration", render: row => <Text text={row.expiryDate}/>},
+        {header: "MOA Status", render: row => <StatusView value={row.moaStatus}/>},
+        {header: "MOA File", render: row => <ViewMoaButton url={row.moaUrl}/>}
+    ]
 
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -31,6 +65,8 @@ export default function HteDirectory() {
     };
 
 
+
+    // MOCK DATA
     const OPTIONS = { loop: true }
     const SLIDES = [
         {
@@ -71,6 +107,7 @@ export default function HteDirectory() {
                         <Subtitle size={"text-[1rem]"} color={"text-oasis-button-dark"} text={"See the lists of HTEs with their MOA and significant details; See the reviews about HTEs and make a review yourself!"}/>
                     </div>
 
+                    {/* VINCENT - LINK TO HTE PROFILE BAWAT SLIDE ITEM */}
                     <section className="w-full flex flex-col gap-5 justify-center items-center">
                         <Title text={"Overview of Host Training Establishment"}/>
                         <EmblaCarousel options={OPTIONS} slides={SLIDES} onSelectHte={setHte}/>
@@ -80,35 +117,42 @@ export default function HteDirectory() {
                     <section className="w-full flex flex-col gap-5 justify-center items-center">
                         <Title text={"List of available HTE with MOA"}/>
                         {/* TABLE HERE */}
+                        <StudentTable columns={columns} data={tableData}>
+
+                        </StudentTable>
                     </section>
 
 {/* REVIEWS SECTION */}
-                    <section className="w-full flex flex-col gap-5 justify-center items-center">
-                        <Title text={"Student Reviews"}/>
+                    <div>
+                        <UpperWave/>
+                        <section className="bg-oasis-blue w-full flex flex-col gap-5 justify-center items-center">
+                            <Title text={"Student Reviews"}/>
 
-                        <section className='w-[80%] flex justify-start items-center'>
-                            <Filter text={"Filters"}/>
-                        </section>
+                            <section className='w-[80%] flex justify-start items-center'>
+                                <Filter text={"Filters"}/>
+                            </section>
 
-                        <section className="w-full p-5 flex flex-row justify-evenly items-center">
-                            <ReviewRatings/>
-                            <AverageRating/>
-                        </section>
+                            <section className="w-full p-5 flex flex-row justify-evenly items-center">
+                                <ReviewRatings/>
+                                <AverageRating/>
+                            </section>
 
-                        <section className="w-full p-5 flex flex-col justify-center items-center relative">
-                            <section className="w-[80%] max-h-dvh overflow-y-auto p-5 flex gap-4 rounded-3xl shadow-[0px_0px_10px_rgba(0,0,0,0.5)]">
-                                <ReviewCard/>
-                                <ReviewCard/>
-                                <ReviewCard/>
-                                <ReviewCard/>
-        
+                            <section className="w-full p-5 flex justify-evenly items-center relative">
+                                <section className="w-[50%] max-h-100 overflow-y-auto p-5 flex flex-wrap gap-4 rounded-3xl shadow-[0px_0px_10px_rgba(0,0,0,0.5)]">
+                                    <ReviewCard/>
+                                    <ReviewCard/>
+                                    <ReviewCard/>
+                                    <ReviewCard/>
+            
+                                </section>
+                                
+                                <AddReviewCard />
                             </section>
                             
-                            <AddReviewCard />
-                        </section>
-                        
 
-                    </section>
+                        </section>
+                        <LowerWave/>
+                    </div>
                     
                 </div>
                 

@@ -54,6 +54,27 @@ export function StatusDropdown({ value, onChange}) {
     )
 }
 
+export function StatusView({ value }) {
+    const text = value.toLowerCase();
+    const statusClasses = {
+        active: "bg-oasis-button-light text-white",
+        pending: "bg-amber-400 text-white",
+        expired: "bg-red-400 text-white",
+        rejected: "bg-gray-400 text-white",
+    };
+
+    const colorClass = statusClasses[text] ?? "bg-gray-200 text-black";
+
+    return(
+        <>
+            {/* Status: Active, Pending, Expired, Rejected*/}
+            <div className={`w-[80%] m-auto px-2 py-1.5 rounded-3xl flex justify-center items-center ${colorClass}`}>
+                <Subtitle text={value} weight={"font-bold"} size={"text-[0.9rem]"}/>
+            </div>
+        </>      
+    )
+}
+
 export function ActionButtons({ onEdit, onArchive, onDelete}) {
     return(
         <>

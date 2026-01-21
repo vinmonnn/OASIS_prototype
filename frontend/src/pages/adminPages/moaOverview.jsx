@@ -23,7 +23,7 @@ export default function MoaOverview() {
         { header: "MOA Status", render: row => <StatusDropdown value={row.status} /> },
         { header: "Actions", render: row => <ActionButtons rowId={row.id} /> }
     ];
-
+    // MOCK DATA
     const currentMoasData = [
         {
             id: 1,
@@ -46,7 +46,7 @@ export default function MoaOverview() {
         { header: "MOA File", render: row => <ViewMoaButton url={row.moaFile} /> },
         { header: "Actions", render: row => <ActionButtons rowId={row.id} /> }
     ];
-
+// MOCK DATA
     const prospectMoaData = [
         {
             id: 1,

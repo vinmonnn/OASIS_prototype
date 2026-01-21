@@ -74,7 +74,10 @@ export default function Announcements() {
                         </div>
                     ))}
                 </section>
-
+                    
+            </div>
+            <div className='bg-oasis-gradient w-80 aspect-video p-5 shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
+                    
             </div>
         </MainScreen>
     );

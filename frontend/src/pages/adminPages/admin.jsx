@@ -50,8 +50,16 @@ export default function Admin() {
 
         setAnnouncements(prev => [newAnnouncement, ...prev]);
         setTitle("");
-        setContent("");
+        setContent(""); 
         setCategory("");
+    };
+
+    const handleDelete = (id) => {
+        console.log("Deleting ID:", id);
+
+        setAnnouncements(prev =>
+            prev.filter(a => a.id !== id)
+        );
     };
 
 
@@ -59,7 +67,6 @@ export default function Admin() {
     useEffect(() => {
         console.log("Updated announcements:", announcements);
     }, [announcements]);
-
 
     const [showConfirm, setShowConfirm] = useState(false);
 
@@ -83,11 +90,12 @@ export default function Admin() {
                 {/* PARENT CONTAINER */}
                 
                 <div className='w-full flex flex-col gap-10 items-center justify-center rounded-3xl drop-shadow-[0_5px_10px_rgba(0,0,0,0.25)]'>
-                    <div className=''>
+                    <div>
                         <Title text={"Admin Dashboard"}/>
                     </div>
 
                     <section className='p-5 basis-[calc(50%-0.5rem)] flex flex-row justify-between items-center flex-wrap gap-5'>
+                        {/* VINCENT - router per card, total students (if clicked) > Students tab */}
 
                         <AdmCard 
                             cardTitle={"Total Students"}
@@ -186,7 +194,7 @@ export default function Admin() {
 
                                     <div className="w-[50%] flex flex-row justify-evenly items-center gap-10">
                                         <AnnounceButton btnText="Posted" />
-                                        <AnnounceButton btnText="Delete" />
+                                        <AnnounceButton btnText="Delete" onClick={() => handleDelete(a.id)}/>
                                     </div>
                                 </section>
                             ))}

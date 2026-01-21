@@ -83,13 +83,37 @@
 }
 
 .flying-bubble {
-  @apply w-20 h-20 rounded-full fixed bottom-5 right-5 bg-white z-50;
+  @apply w-20 h-20 rounded-full fixed bottom-5 right-5 bg-white z-50 shadow-[0px_0px_20px_rgba(0,0,0,1)];
   animation: fly 0.8s ease-out forwards;
 }
 
 
 body {
   background: #F4FCF8;
+  
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+  
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 50px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
   /* background: linear-gradient(to right, #C9FDD7, #54A194); */

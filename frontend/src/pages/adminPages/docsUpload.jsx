@@ -34,6 +34,7 @@ export default function DocsUpload() {
             <Container column={true}>
                 {/* FILTERS */}
                 <section className="w-full flex flex-row justify-start items-center gap-5 mb-10">
+                    {/* VINCENT - filtering lng to kung ano nalabas sa forms */}
                     <Filter
                         text="Procedures"
                         isActive={activeFilter === "procedures"}

@@ -14,6 +14,7 @@ import {
 
 
 export default function RegStudents() {
+    // MOCK DATA
     const advisers = [
         { id: 1, name: "Prof. Maria Santos" },
         { id: 2, name: "Engr. John Reyes" },
@@ -68,7 +69,6 @@ export default function RegStudents() {
         {header: "Actions", render: row => <ActionButtons rowId={row.id}/>},
         
     ]
-
 
     return(
         <>

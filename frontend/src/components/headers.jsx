@@ -14,6 +14,7 @@ export function Header() {
     return (
         <>
             <header className="sticky top-0 w-full flex flex-row bg-linear-to-t justify-between items-center from-oasis-blue  via-oasis-blue to-oasis-dark min-h-15 pl-5 pr-5 shadow-[0_5px_10px_rgba(0,0,0,0.3)] z-50">
+                {/* VINCENT */}
                 <Link to="/"><LogoWrap /></Link>
                 <Link to="/admin"><img src={oasisLogo} className="w-20 aspect-auto hover:cursor-pointer"></img></Link>
                 <Link to="/student-profile"><img src={userIcon} className="w-8 h-8 hover:cursor-pointer"></img></Link>
@@ -77,6 +78,7 @@ export function AdminHeader() {
             {/* Navigation */}
             <div className="bg-admin-header-bg p-1 rounded-4xl w-fit min-h-14 max-h-14 flex flex-row justify-between items-center">
                 <ul className="w-full p-3 flex flex-row justify-center items-center gap-15">
+                    {/* VINCENT */}
                     <NavItem to="/admin" label="Dashboard" />
                     <NavItem to="/admoperations" label="Operations" />
                     <NavItem to="/admMoaOverview" label="MOA Overview" />
@@ -126,7 +128,7 @@ export function StudentHeader() {
                 flex flex-row justify-between items-center px-5 py-3 z-100
             `}
         >
-    
+                {/* VINCENT */}
                 <ul className="w-full p-3 flex flex-row justify-center items-center gap-15">
                     <NavItem to="/home" label="Home" />
                     <NavItem to="/htedirectory" label="HTE Directory" />

@@ -8,7 +8,7 @@ import ChatField from '../utilities/chatField';
 import { useState, useEffect } from 'react';
 
 
-export default function MainScreen({ children,  showHeader = true, hasTopMargin = true}) {
+export default function MainScreen({ children,  showHeader = true, hasTopMargin = true, isRow = false}) {
     const [open, setOpen] = useState(false);
     const [animate, setAnimate] = useState(false);
     const [onBubble, setOnBubble] = useState(false);
@@ -75,12 +75,12 @@ export function FloatingChat({ open }) {
     <div
       className={`
         w-100 aspect-square p-5 fixed top-[60%] right-0
-        translate-x-[-30%] -translate-y-1/2
+        translate-x-[-30%] -translate-y-1/2 z-100
         ${animationClass}
       `}
     >
       <div className="w-full aspect-square bg-[rgba(255,255,255,0.5)]
-                      backdrop-blur-md rounded-3xl p-5
+                      backdrop-blur-xs rounded-3xl p-5
                       shadow-[2px_2px_5px_rgba(0,0,0,0.9)] relative">
         <div className="w-full h-full p-5 border">
           <ChatField />
