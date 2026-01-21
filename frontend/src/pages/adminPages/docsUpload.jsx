@@ -5,20 +5,17 @@ import Title from "../../utilities/title.jsx";
 import { Container, Filter } from '../../components/adminComps.jsx';
 import { BulletField, FileUploadField, MultiField, SingleField } from '../../components/fieldComp.jsx';
 import { AnnounceButton } from '../../components/button.jsx';
-
 import { useState } from "react";
 import { useSearchParams } from 'react-router-dom';
 import { Label } from '../../utilities/label.jsx';
 import { useLocalStorage } from '../../hooks/useLocalStorage.jsx';
-
+import useQueryParam from '../../hooks/useQueryParams.jsx';
 
 export default function DocsUpload() {
     const [uploads, setUploads] = useLocalStorage("uploads", []);
 
-    const [searchParams, setSearchParams] = useSearchParams();
-    const activeFilter = searchParams.get("tab") || "procedures";
+    const [activeFilter, setFilter] = useQueryParam("tab", "procedures")
 
-    const setFilter = (tab) => setSearchParams({ tab });
 
     const addUpload = (data) => {
         setUploads(prev => [data, ...prev]);

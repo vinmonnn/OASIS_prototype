@@ -72,7 +72,7 @@ export function ReviewCard({
 }) {
   return (
     <>
-        <div className="basis-[calc(50%-0.5rem)] aspect-video max-h-75 p-5 bg-white rounded-3xl drop-shadow-[0px_2px_5px_rgba(0,0,0,0.5)] transition duration-300 ease-in-out flex flex-col justify-evenly items-start gap-3">
+        <div className="basis-[calc(50%-0.5rem)] aspect-video max-h-75 p-5 hover:bg-white cursor-pointer rounded-3xl hover:shadow-[0px_2px_5px_rgba(0,0,0,0.5)] transition duration-300 ease-in-out flex flex-col justify-evenly items-start gap-3">
             <section className="w-full flex justify-center items-center">
               <h3 className='font-oasis-text font-bold text-[1.3rem] text-center'>{hteName}</h3>
             </section>

@@ -1,6 +1,15 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+@font-face {
+  font-family: "Heavitas";
+  src: url("/assets/fonts/Heavitas.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 @theme {
   --color-oasis-aqua: #00D0FF; /* Login Reg*/
   --color-oasis-dark: #54A194; /* GRADIENT */
@@ -14,13 +23,13 @@
   --color-admin-element: #CDE8E3;
 
   --font-oasis-text: "Poppins";
+  --font-oasis-title: "Heavitas";
 
   --background-oasis-gradient: linear-gradient(
     170deg,
     var(--color-oasis-button-light) 0%,
     var(--color-oasis-blue) 50%,
-    var(--color-oasis-blue) 50%,
-    rgba(255,255,255,0.3)
+    var(--color-oasis-blue) 50%
   );
 }
 

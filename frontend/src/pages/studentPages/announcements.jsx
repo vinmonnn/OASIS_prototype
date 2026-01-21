@@ -6,7 +6,7 @@ import { Filter } from '../../components/adminComps'
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useState } from 'react'
 import { AnnouncementModal } from '../../components/userModal'
-
+import img from "../../assets/fallbackImage.jpg"
 export default function Announcements() {
     const [announcements] = useLocalStorage("announcements", []);
     const [activeFilter, setActiveFilter] = useState("All");
@@ -76,8 +76,9 @@ export default function Announcements() {
                 </section>
                     
             </div>
-            <div className='bg-oasis-gradient w-80 aspect-video p-5 shadow-[2px_2px_2px_rgba(0,0,0,0.5)]'>
-                    
+            <div className='bg-oasis-gradient relative w-90 aspect-video shadow-[2px_2px_2px_rgba(0,0,0,0.5)] overflow-hidden cursor-pointer'>
+                    <img src={img} className='opacity-90 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 object-cover w-full'/>
+                    <div className='bg-[rgba(0,0,0,1)] w-full h-full z-10'></div>
             </div>
         </MainScreen>
     );

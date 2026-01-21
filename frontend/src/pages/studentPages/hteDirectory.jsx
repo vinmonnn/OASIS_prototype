@@ -138,7 +138,7 @@ export default function HteDirectory() {
                             </section>
 
                             <section className="w-full p-5 flex justify-evenly items-center relative">
-                                <section className="w-[50%] max-h-100 overflow-y-auto p-5 flex flex-wrap gap-4 rounded-3xl shadow-[0px_0px_10px_rgba(0,0,0,0.5)]">
+                                <section className="w-[50%] max-h-100 overflow-y-auto p-5 flex flex-wrap gap-4 rounded-3xl ">
                                     <ReviewCard/>
                                     <ReviewCard/>
                                     <ReviewCard/>

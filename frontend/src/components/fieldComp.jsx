@@ -14,7 +14,7 @@ export function SingleField({
       <Label fieldId={fieldId} labelText={labelText} />
       <AdminField
         type={fieldType}
-        placeholder={fieldHolder}
+        pholder={fieldHolder}
         id={fieldId}
         value={value}
         onChange={onChange}
@@ -35,7 +35,7 @@ export function MultiField({
     <div className="w-full">
       <Label fieldId={fieldId} labelText={labelText} />
       <ContentField
-        placeholder={fieldHolder}
+        pholder={fieldHolder}
         id={fieldId}
         value={value}
         onChange={onChange}
