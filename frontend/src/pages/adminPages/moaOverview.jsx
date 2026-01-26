@@ -32,7 +32,6 @@ export default function MoaOverview() {
             location: "Quezon City",
             contactPerson: "Juan Dela Cruz",
             expiryDate: "Dec 12, 2026",
-            status: "Active"
         }
     ];
 

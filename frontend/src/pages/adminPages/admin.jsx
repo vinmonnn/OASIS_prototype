@@ -94,7 +94,7 @@ export default function Admin() {
                         <Title text={"Admin Dashboard"}/>
                     </div>
 
-                    <section className='p-5 basis-[calc(50%-0.5rem)] flex flex-row justify-between items-center flex-wrap gap-5'>
+                    <section className='p-5 basis-[calc(50%-0.5rem)] flex flex-row justify-between items-center gap-5'>
                         {/* VINCENT - router per card, total students (if clicked) > Students tab */}
 
                         <AdmCard 

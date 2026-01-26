@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom'
-import MainScreen from '../../layouts/mainScreen'
+
 import AdminScreen from '../../layouts/adminScreen.jsx';
 import { AdminHeader } from '../../components/headers.jsx'
 import Title from "../../utilities/title.jsx";
@@ -9,9 +8,37 @@ import { Dropdown, Filter } from '../../components/adminComps.jsx';
 import { Label, RatingLabel } from '../../utilities/label.jsx';
 import { AnnounceButton, CoursesButton } from '../../components/button.jsx';
 import Subtitle from '../../utilities/subtitle.jsx';
+import { Text, StatusDropdown, HteLocation, SignedExpiryDate } from '../../utilities/tableUtil.jsx';
+
 
 export default function AdmOperations() {
-    const headers = ["Name", "Industry", "Location", "Status", "MOA Validity", "Course", "Actions"];
+
+    const hteOverviewHeaders = [
+        {header: "Name", render: row => <Text text={row.hteName}/>},
+        {header: "Industry", render: row => <Text text={row.hteIndustry}/>},
+        {header: "Location", render: row => <HteLocation address={row.hteLocation}/>},
+        {header: "Status", render: row => 
+                                <StatusDropdown 
+                                    value={row.status} 
+                                    onChange={(newStatus) => {
+                                        console.log(`Change HTE ${row.id} status to`, newStatus)
+                                    }}
+                                />},
+        {header: "MOA Validity", render: row => <Text text={row.moaValidity}/>},
+        {header: "Signed Date", render: row => <SignedExpiryDate mode={"signed"} signedDate={row.moaSigned}/>},
+        {header: "Expiry Date", render: row => <SignedExpiryDate mode={"expiry"} signedDate={row.moaSigned}/>},
+    ]
+
+    const hteData = [
+        {
+            id: 1,
+            hteName: "ABC Tech Solutions",
+            hteIndustry: "IT",
+            hteLocation: "Antipolo, Rizal",
+            moaValidity: "3 years",
+            moaSigned: "2023-05-15",
+        }
+    ]
     const categories = ["Active", "Expired", "Pending"];
     const hteDropdown = ["ABC Corp", "Prima Tech", "AbsoluteTech"];
 
@@ -26,7 +53,7 @@ export default function AdmOperations() {
                 <div className='flex justify-start items-start w-[90%]'>
                     <Title text={"HTE Overview"}/>
                 </div>
-                <OasisTable headers={headers}></OasisTable>
+                <OasisTable columns={hteOverviewHeaders} data={hteData}></OasisTable>
 
                 <div className="w-[90%] p-5 rounded-3xl bg-admin-element flex flex-col gap-5 shadow-[0px_0px_10px_rgba(0,0,0,0.5)]">
 

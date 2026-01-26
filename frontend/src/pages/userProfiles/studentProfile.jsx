@@ -7,7 +7,7 @@ import star from "../../assets/icons/star.png";
 import edit from "../../assets/icons/edit.png";
 import testPfp from "../../assets/testprofile.jpg"
 
-export function StudentProfile() {
+export default function StudentProfile() {
     return (
         <>
             <StudentProfileScreen>
@@ -119,11 +119,3 @@ export function SectionHeader({ icon, text}) {
     )
 }
 
-
-export function AdminProfile() {
-    return (
-        <>
-
-        </>
-    )
-}

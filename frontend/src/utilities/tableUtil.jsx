@@ -4,7 +4,7 @@ import Subtitle from "./subtitle"
 export function Text({ text }) {
     return(
         <>
-        {/* Just texts for the table, not customizable */}
+
             <p className="font-oasis-text text-[1rem] truncate">{text}</p>
         </>      
     )
@@ -13,7 +13,7 @@ export function Text({ text }) {
 export function DateTime({ date, time}) {
     return(
         <>
-            {/* optional, dont put anything for now*/}
+
             <div className="">
                 <Subtitle text={date}/>
                 <Subtitle text={time}/>
@@ -22,37 +22,62 @@ export function DateTime({ date, time}) {
     )
 }
 
-export function SignedExpiryDate({ signedDate }) {
+export function SignedExpiryDate({ signedDate, mode }) {
+    if (!signedDate) return <Subtitle text="—" />;
 
     const signed = new Date(signedDate);
+
+    if (isNaN(signed)) {
+        return <Subtitle text="Invalid date" />;
+    }
+
     const expiry = new Date(signed);
-    expiry.setFullYear(expiry.getFullYear() + 3)
+    expiry.setFullYear(expiry.getFullYear() + 3);
 
-    return(
-        <>
-            {/* for MOAs signed date to expiry date, the moa sign lasts for 3 years */}
-            <div>
-                <Subtitle text={`Signed: ${signed.toLocaleDateString()}`}/>
-                <Subtitle text={`Expires in: ${expiry.toLocaleDateString()}`}/>
-            </div>
+    const format = date =>
+        date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        });
 
-        </>      
-    )
+    if (mode === "signed") {
+        return <Subtitle text={format(signed)} />;
+    }
+
+    if (mode === "expiry") {
+        return <Subtitle text={format(expiry)} />;
+    }
+
+    return null;
 }
 
-export function StatusDropdown({ value, onChange}) {
-    return(
-        <>
-            {/* Status: Active, Pending, Expired, Rejected*/}
-            <select value={value} onChange={e => onChange(e.target.value)} className="border rounded p-2 text-[0.8rem]">
-                <option><Subtitle text={"Active"}/></option>
-                <option><Subtitle text={"Pending"}/></option>
-                <option><Subtitle text={"Expired"}/></option>
-                <option><Subtitle text={"Rejected"}/></option>
-            </select>
-        </>      
-    )
+export function StatusDropdown({ value, onChange }) {
+  const statusClasses = {
+    Active: "bg-green-100 text-green-700 border-green-400",
+    Pending: "bg-orange-100 text-orange-700 border-orange-400",
+    Expired: "bg-red-100 text-red-700 border-red-400",
+    Rejected: "bg-gray-200 text-gray-600 border-gray-400",
+  }
+
+  return (
+    <select
+      value={value}
+      onChange={(e) => onChange?.(e.target.value)}
+      className={`
+        px-3 py-2 rounded-xl border text-sm
+        focus:outline-none focus:ring-2 focus:ring-offset-1
+        ${statusClasses[value] || "bg-white text-black border-gray-300"}
+      `}
+    >
+      <option value="Active">Active</option>
+      <option value="Pending">Pending</option>
+      <option value="Expired">Expired</option>
+      <option value="Rejected">Rejected</option>
+    </select>
+  )
 }
+
 
 export function StatusView({ value }) {
     const text = value.toLowerCase();

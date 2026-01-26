@@ -11,7 +11,6 @@ export default function AdminScreen({ children }) {
                 <Header /> 
                     <div className='mt-5'></div>
                         {children}
-                    <div className='mt-100 h-dvh w-dvh'></div>
                 <Footer />
             </div>
         </>

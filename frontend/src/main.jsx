@@ -23,7 +23,8 @@ import RegStudents from './pages/adminPages/regStudents';
 import { LoadingProvider, useLoading } from './context/LoadingContext';
 import LoadingScreen from './components/LoadingScreen';
 import HteProfile from './pages/studentPages/hteProfile';
-import { AdminProfile, StudentProfile } from './pages/userProfiles/profiles';
+import StudentProfile from './pages/userProfiles/studentProfile';
+import AdminProfile from './pages/userProfiles/adminProfile';
 
 
 

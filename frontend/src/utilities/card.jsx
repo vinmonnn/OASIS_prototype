@@ -42,14 +42,14 @@ export function AdmCard({ cardTitle, cardIcon, cardNumber, cardDate}) {
     return (
       <>
       
-        <div className="bg-admin-element p-3 min-w-56 min-h-42 rounded-2xl font-oasis-text text-[0.8rem] flex flex-col justify-between items-center">
+        <div className="bg-admin-element p-3 w-full min-w-70 min-h-42 rounded-2xl font-oasis-text text-[0.8rem] flex flex-col justify-between items-center">
 
           <section className="w-full flex flex-row justify-between items-center">
               <p>{cardTitle}</p>
               <img src={cardIcon}/>
           </section>
 
-          <section className="w-full flex flex-col justify-start items-center">
+          <section className="w-full flex flex-col justify-start items-start">
             <p className="text-[3rem] font-semibold">{cardNumber}</p>
             <p>as of {cardDate}</p>
           </section>
