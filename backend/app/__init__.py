@@ -1,22 +1,36 @@
-from flask import Flask
+from flask import Flask, app
 from dotenv import load_dotenv
-load_dotenv()
 
-from .config import Config
-from .extensions import init_extensions
+from app.extensions import db, migrate, jwt, cors
 
-def create_app():
+def create_app() -> Flask:
+    load_dotenv()
+
+    from app.config import Config
+    
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    if not app.config.get("SQLALCHEMY_DATABASE_URI"):
-        raise RuntimeError("SQLALCHEMY_DATABASE_URI missing. Check backend/.env DATABASE_URL")
+    # init extensions
+    db.init_app(app)
+    migrate.init_app(app, db)
+    jwt.init_app(app)
+    cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
 
-    init_extensions(app)
+    # IMPORTANT: import models so Alembic sees them
+    from app import models  # noqa: F401
 
-    from .routes.auth import auth_bp
-    from .routes.health import health_bp
-    app.register_blueprint(auth_bp, url_prefix="/api/auth")
-    app.register_blueprint(health_bp, url_prefix="/api")
+    # register blueprints
+    from app.routes.health_routes import health_bp
+    from app.routes.auth_routes import auth_bp
+    from app.routes.admin_routes import admin_bp
+    from app.routes.student_profile_routes import student_profile_bp
+    from app.routes.admin_profile_routes import admin_profile_bp
+
+    app.register_blueprint(health_bp)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(admin_bp)
+    app.register_blueprint(student_profile_bp)
+    app.register_blueprint(admin_profile_bp)
 
     return app

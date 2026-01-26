@@ -1,19 +1,24 @@
 import os
 
+def _normalize_database_url(url: str | None) -> str | None:
+    if not url:
+        return None
+    # Some providers use postgres:// which SQLAlchemy may reject; normalize it.
+    if url.startswith("postgres://"):
+        return url.replace("postgres://", "postgresql://", 1)
+    return url
+
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "dev-jwt-secret")
 
-    SQLALCHEMY_DATABASE_URI = (
+    # Prefer DATABASE_URL, but allow SQLALCHEMY_DATABASE_URI too
+    SQLALCHEMY_DATABASE_URI = _normalize_database_url(
         os.getenv("DATABASE_URL") or os.getenv("SQLALCHEMY_DATABASE_URI")
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    JWT_SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
+    OTP_DEV_PRINT = os.getenv("OTP_DEV_PRINT", "1") == "1"
 
-    FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
-
-    SMTP_HOST = os.getenv("SMTP_HOST")
-    SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
-    SMTP_USERNAME = os.getenv("SMTP_USERNAME")
-    SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
-    SMTP_FROM = os.getenv("SMTP_FROM")
+    # 1 hour
+    JWT_ACCESS_TOKEN_EXPIRES = 60 * 60
