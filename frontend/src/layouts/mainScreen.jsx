@@ -2,8 +2,6 @@ import { Header, StudentHeader } from '../components/headers'
 import Footer from '../components/footer'   
 import orbi from "../assets/orbi.png";
 import ProspectMoaForm from '../components/prospectMoaForm';
-import pngblob from "../assets/pngblob.png"
-import svgblob from "../assets/svgblob.svg";
 import ChatField from '../utilities/chatField';
 import { useState, useEffect } from 'react';
 
@@ -28,25 +26,21 @@ export default function MainScreen({ children,  showHeader = true, hasTopMargin 
             <div className={`w-full h-full pb-5 bg-[#F4FCF8] flex flex-col justify-center items-center overflow-x-hidden overflow-y-auto`}>
                 <Header /> 
                 {showHeader ? <StudentHeader/> : ""}
+                {hasTopMargin ? <div className='mt-25'></div> : ""}
+                {children}
+                <img src={orbi} onClick={handleClick} className={`fixed bottom-[0%] right-[0%] z-100 w-35 aspect-square hover:cursor-pointer hover:scale-115 transition ease-in-out duration-200 drop-shadow-[3px_3px_10px_rgba(255,255,255,1)] hover:drop-shadow-[3px_3px_1px_rgba(0,0,0,1)] ${animate ? "animate__animated animate__jello" : ""}`} alt='orbiChatbot'/>
 
-                    {hasTopMargin ? <div className='mt-25'></div> : ""}
-                    
-                    
-                    {children}
-                    <img src={orbi} onClick={handleClick} className={`fixed bottom-[0%] right-[0%] z-100 w-35 aspect-square hover:cursor-pointer hover:scale-115 transition ease-in-out duration-200 drop-shadow-[3px_3px_10px_rgba(255,255,255,1)] hover:drop-shadow-[3px_3px_1px_rgba(0,0,0,1)] ${animate ? "animate__animated animate__jello" : ""}`} alt='orbiChatbot'/>
+                {open && <FloatingChat open={open}/>}
+                {onBubble && <BubbleAnim start={onBubble}/>}
 
-                    {/* floating chat */}
-
-                    {open && <FloatingChat open={open}/>}
-                    {onBubble && <BubbleAnim start={onBubble}/>}
-
-                    <div className='my-20'></div>
-                    <ProspectMoaForm/>
+                <div className='my-20'></div>
+                <ProspectMoaForm/>
                 <Footer />
             </div>
         </>
     )
 }
+
 
 export function FloatingChat({ open }) {
   const [show, setShow] = useState(false);

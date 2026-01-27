@@ -56,7 +56,7 @@ export default function Student() {
                     </section>
                      
                      
-                     <button className=' w-70 px-10 absolute top-[75%] left-1/2 -translate-x-1/2 -translate-y-1/2 py-4 rounded-2xl text-center bg-linear-to-b from-oasis-button-light to-oasis-blue to-110% z-5 text-oasis-button-dark font-bold font-oasis-text cursor-pointer shadow-[2px_2px_2px_rgba(0,0,0,0.5)] duration-100 transition ease-in-out hover:scale-115 hover:from-oasis-button-light hover:to-oasis-button-light hover:text-white'>Submit MOA Prospect</button>
+                     <button className=' w-70 px-10 absolute top-[75%] left-1/2 -translate-x-1/2 -translate-y-1/2 py-4 rounded-2xl text-center bg-linear-to-b from-oasis-button-light to-oasis-blue to-110% z-5 text-oasis-button-dark font-bold font-oasis-text cursor-pointer shadow-[2px_2px_2px_rgba(0,0,0,0.5)] duration-100 transition ease-in-out hover:scale-115 hover:from-oasis-button-light hover:to-oasis-button-light hover:text-white'><a href="#prospectForm">Submit MOA Prospect</a></button>
 
                     <img src={fallbackImg} className='absolute w-full h-full mt-[-20] object-cover bg-center bg-no-repeat bg-cover opacity-70'/>
                    

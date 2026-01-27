@@ -8,7 +8,7 @@ export default function ProspectMoaForm() {
    return(
         <>
             {/* PARENT CONTAINER */}
-            <div className="relative w-full px-5 py-10 flex flex-col gap-2 justify-center items-center shadow-[inset_0_0_50px_rgba(0,0,0,1)]">
+            <div id="prospectForm" className="relative w-full px-5 py-10 flex flex-col gap-2 justify-center items-center shadow-[inset_0_0_50px_rgba(0,0,0,1)]">
                 <img src={imgBg} className="w-full h-full z-1 absolute top-1/2 left-1/2 
                 -translate-x-1/2 -translate-y-1/2 opacity-50 "/>
 

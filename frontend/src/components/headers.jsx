@@ -1,28 +1,43 @@
 import LogoWrap from "../utilities/logoWrap"
 import oasisLogo from "../assets/oasisLogo.png"
-import userIcon from "../assets/userIcon.png"
 import { Link } from "react-router-dom"
 import NavItem from "./navItem"
 import HoverLift from "./hoverLift"
 import clock from "../assets/icons/clock.png"
 import settings from "../assets/icons/settings.png"
 import user from "../assets/icons/user.png"
-
 import { useState, useEffect } from "react"
+import { CircleUserRound, Bell, BellDot } from "lucide-react";
+import Notifications from "../utilities/notifications"
 
-export function Header() {
+export function Header({ admin = false }) {
     return (
         <>
-            <header className="sticky top-0 w-full flex flex-row bg-linear-to-t justify-between items-center from-oasis-blue  via-oasis-blue to-oasis-dark min-h-15 pl-5 pr-5 shadow-[0_5px_10px_rgba(0,0,0,0.3)] z-50">
+            <header className="sticky top-0 w-full h-5 flex flex-row justify-between
+            items-center bg-linear-to-t from-oasis-blue via-oasis-blue to-oasis-dark min-h-15 pl-5 pr-5 shadow-[0_5px_10px_rgba(0,0,0,0.3)] z-50">
                 {/* VINCENT */}
                 <Link to="/"><LogoWrap /></Link>
-                <Link to="/admin"><img src={oasisLogo} className="w-20 aspect-auto hover:cursor-pointer"></img></Link>
-                <Link to="/student-profile"><img src={userIcon} className="w-8 h-8 hover:cursor-pointer"></img></Link>
+                <Link to="/admin" className="absolute left-1/2 -translate-x-1/2"><img src={oasisLogo} className="w-25 aspect-auto hover:cursor-pointer"></img></Link>
+                
+                <div className="flex gap-3 items-center">
+                    <HoverLift>
+                        {admin ? "" : <a href="#prospectForm" className="font-oasis-text text-oasis-button-dark cursor-pointer ">Submit MOA Prospect</a>}
+                    </HoverLift>
+
+                    <HoverLift>
+                        {admin ? "" : <Bell size={28} color="#54A194"/>}
+                    </HoverLift>
+
+                    <HoverLift>                        
+                        {admin ? "" : <Link to="/student-profile"><CircleUserRound color="#54A194" size={28}/></Link>}
+                    </HoverLift>
+                </div>
             </header>
-            
+            {/* <Notifications /> */}
         </>
     )
 }
+
 
 export function AdminHeader() {
     const [time, setTime] = useState('');

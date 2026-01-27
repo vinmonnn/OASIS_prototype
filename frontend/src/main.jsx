@@ -3,12 +3,10 @@ import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import 'animate.css';
 import './styles.css';
-
 import LandingPage from './landingPage';
 import UserAccess from './pages/userAccess';
 import NotFound from './notFound';
 import ScrollToTop from './components/scrollToTop';
-
 
 import Student from './pages/studentPages/student';
 import OjtHub from './pages/studentPages/ojtHub';
