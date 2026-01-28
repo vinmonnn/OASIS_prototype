@@ -3,119 +3,222 @@ import Subtitle from "../../utilities/subtitle";
 import Title from "../../utilities/title";
 import info from "../../assets/icons/info.png";
 import activity from "../../assets/icons/activity.png";
-import star from "../../assets/icons/star.png";
 import edit from "../../assets/icons/edit.png";
-import testPfp from "../../assets/testprofile.jpg"
+import testPfp from "../../assets/testprofile.jpg";
+import { useEffect, useState } from "react";
+import api from "../../api/axios";
+
+// ✅ ALWAYS RELIABLE BACKEND BASE URL
+const API_BASE = api.defaults.baseURL;
 
 export default function StudentProfile() {
-    return (
-        <>
-            <StudentProfileScreen>
-                <div className="bg-white p-5 max-w-[95%] w-[90%] border rounded-3xl grid grid-cols-3 gap-5 bg-oasis-gradient shadow-[10px_10px_1px_rgba(0,0,0,0.5)] backdrop-blur-3xl">
+  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
 
-                    {/* PROFILE */}
-                    <div className="w-full h-auto p-3 flex flex-col gap-1 justify-center items-center">
-                        <img src={testPfp} className="w-40 aspect-square rounded-full object-cover object-center"/>
-                        <Title text={"Francine Hardy Gran"} isAnimated={false}/>
-                        <p>Button</p>
-                    </div>
+  const [isEditing, setIsEditing] = useState(false);
 
-                    {/* 2ND COLUMN */}
-                    <div className="w-full h-auto p-3 flex flex-col gap-5 justify-center items-center border-l">
+  const [firstName, setFirstName] = useState("");
+  const [middleInitial, setMiddleInitial] = useState("");
+  const [lastName, setLastName] = useState("");
 
-                        <section className="w-full flex flex-col gap-4">
+  const [photoPreview, setPhotoPreview] = useState(null);
 
-                            <SectionHeader text={"User Details"} icon={info}/>
-                            {/* FULL NAME AND YEAR */}
-                            <div className="grid grid-cols-2">
-                                <Subtitle text={"Full Name"} size="text-[0.8rem]"/>
-                                <Subtitle text={"Year"} size="text-[0.8rem]"/>
-                                <p className="font-oasis-text text-[0.9rem] font-bold">Francine Hardy Gran</p>
-                                <p className="font-oasis-text text-[0.9rem] font-bold">2nd Year</p>
-                            </div>
-                            {/* WEBMAIL */}
-                            <div>
-                                <Subtitle text={"PUP Webmail"} size="text-[0.8rem]"/>
-                                <p className="font-oasis-text text-[0.9rem] font-bold">francine@iskolarngbayan.pup.edu.ph</p>
-                            </div>
-                            
-                            {/* PASSWORD */}
-                            <div className="grid grid-cols-2 items-center justify-center">
-                                <Subtitle text={"Password"} size="text-[0.8rem]"/>
-                                <img src={edit} className="w-5 object-contain aspect-square row-span-2 cursor-pointer"/>
-                                <p className="font-oasis-text text-[0.9rem] font-bold">**********</p>
-                            </div>
-                            
-                        </section>
-                            
-                        <section className="w-full flex flex-col gap-4 mt-5">
-                            <SectionHeader text={"User Activity"} icon={activity}/>
+  useEffect(() => {
+    async function fetchProfile() {
+      const res = await api.get("/api/student/me");
+      const fetchedProfile = res.data.profile;
 
-                            <div className="w-full py-1 backdrop-blur-3xl rounded-2xl flex flex-col justify-center items-start gap-1">
-                                <Subtitle text={"First Access"} size="text-[0.8rem]"/>
-                                <p>Monday, 24 February 2025, 2:41 PM</p>
-                            </div>
-                        </section>
-                    </div>
+      // ✅ NORMALIZE IMAGE URL ON FETCH
+      fetchedProfile.photo_url = fetchedProfile.photo_path
+        ? `${API_BASE}${fetchedProfile.photo_path}`
+        : null;
 
-                    {/* 3RD COLUMN */}
-                    <div className="w-full h-auto p-3 flex flex-col gap-5 justify-start items-center">
-                        <section className="w-full flex flex-col gap-4">
+      setUser(res.data.user);
+      setProfile(fetchedProfile);
 
-                            <SectionHeader text={"OJT Information"} icon={info}/>
+      setFirstName(fetchedProfile.first_name || "");
+      setMiddleInitial(fetchedProfile.middle_initial || "");
+      setLastName(fetchedProfile.last_name || "");
+    }
 
-                            <div className="grid grid-cols-2">
-                                <Subtitle text={"OJT Adviser"} size="text-[0.8rem]"/>
-                                <Subtitle text={"MOA Request"} size="text-[0.8rem]"/>
+    fetchProfile();
+  }, []);
 
-                                <p className="font-oasis-text text-[0.9rem] font-bold">Raquel G. Salazar</p>
-                                <p className="font-oasis-text text-[0.9rem] font-bold">Pending</p>
-                            </div>
-                            
-                        </section>
+  if (!user || !profile) return null;
 
-                        <section className="w-full flex flex-col gap-4 mt-5">
-                            <SectionHeader text={"Host Training Establishment"} icon={activity}/>
+  const fullName = `${profile.first_name || ""} ${profile.middle_initial || ""} ${profile.last_name || ""}`.trim();
 
-                            <div className="flex flex-col justify-center items-center">
-                                <Subtitle text={"Currently Applied HTE"} size="text-[0.8rem]"/>
-                                <p className="font-oasis-text text-[1rem] font-bold">PrimaTech</p>
-                            </div>
+  const saveProfile = async () => {
+    try {
+      await api.patch("/api/student/me", {
+        first_name: firstName,
+        middle_initial: middleInitial,
+        last_name: lastName,
+      });
 
-                            <div>
-                                <Subtitle text={"Reviews"} size="text-[0.8rem]" isCenter={true}/>
+      setProfile((prev) => ({
+        ...prev,
+        first_name: firstName,
+        middle_initial: middleInitial,
+        last_name: lastName,
+      }));
 
-                                <section className="w-full flex flex-wrap gap-2 mt-2">
+      setIsEditing(false);
+    } catch {
+      alert("Failed to update profile");
+    }
+  };
 
-                                    <div className="w-fit px-3 py-1 border bg-oasis-blue flex flex-col justify-center items-center rounded-3xl cursor-pointer">
-                                        <Subtitle text={"ABC Technologies"} size={"text-[0.8rem]"} weight={"font-bold"}/>
-                                        <div className="flex">
-                                            <img src={star} className="w-3 object-contain aspect-square"/>
-                                            <img src={star} className="w-3 object-contain aspect-square"/>
-                                            <img src={star} className="w-3 object-contain aspect-square"/>
-                                        </div>
-                                        
-                                    </div>
-                                    
+  return (
+    <StudentProfileScreen>
+      <div className="bg-white p-5 max-w-[95%] w-[90%] border rounded-3xl grid grid-cols-3 gap-5 bg-oasis-gradient shadow-[10px_10px_1px_rgba(0,0,0,0.5)] backdrop-blur-3xl">
 
-                                </section>
-                            </div>
-                        </section>
+        {/* PROFILE */}
+        <div className="w-full h-auto p-3 flex flex-col gap-1 justify-center items-center">
+          <img
+            src={photoPreview || profile.photo_url || testPfp}
+            className="w-40 aspect-square rounded-full object-cover object-center"
+          />
 
-                    </div>  
+          {isEditing && (
+            <input
+              type="file"
+              accept="image/*"
+              onChange={async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
 
-                </div>
-            </StudentProfileScreen>
-        </>
-    )
-}
+                // ✅ Instant preview
+                const previewUrl = URL.createObjectURL(file);
+                setPhotoPreview(previewUrl);
 
-export function SectionHeader({ icon, text}) {
-    return(
-        <div className="w-full p-2 flex items-center justify-center gap-1 relative backdrop-blur-3xl bg-oasis-blue shadow-[2px_2px_3px_rgba(0,0,0,0.5)]">
-            <img src={icon} className="w-7 aspect-square object-contain"/>
-            <Subtitle text={text} size={"text-[1rem]"} />
+                const formData = new FormData();
+                formData.append("photo", file);
+
+                try {
+                  const res = await api.patch(
+                    "/api/student/me/photo",
+                    formData
+                  );
+
+                  // ✅ Persist ABSOLUTE URL
+                  setProfile((prev) => ({
+                    ...prev,
+                    photo_path: res.data.photo_path,
+                    photo_url: `${API_BASE}${res.data.photo_path}`,
+                  }));
+                } catch (err) {
+                  alert(
+                    err?.response?.data?.error ||
+                    "Photo upload failed"
+                  );
+                }
+              }}
+            />
+          )}
+
+          {isEditing ? (
+            <>
+              <input
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                className="w-full border-b outline-none"
+                placeholder="First name"
+              />
+              <input
+                value={middleInitial}
+                onChange={(e) => setMiddleInitial(e.target.value)}
+                className="w-full border-b outline-none"
+                placeholder="Middle initial"
+              />
+              <input
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                className="w-full border-b outline-none"
+                placeholder="Last name"
+              />
+            </>
+          ) : (
+            <Title text={fullName || "—"} isAnimated={false} />
+          )}
+
+          <p
+            className="cursor-pointer"
+            onClick={() => setIsEditing(!isEditing)}
+          >
+            {isEditing ? "Cancel" : "Edit Profile"}
+          </p>
+
+          {isEditing && (
+            <p
+              className="cursor-pointer"
+              onClick={saveProfile}
+            >
+              Save
+            </p>
+          )}
         </div>
-    )
+
+        {/* 2ND COLUMN */}
+        <div className="w-full h-auto p-3 flex flex-col gap-5 justify-center items-center border-l">
+          <section className="w-full flex flex-col gap-4">
+            <SectionHeader text={"User Details"} icon={info} />
+
+            <div className="grid grid-cols-2">
+              <Subtitle text={"Full Name"} size="text-[0.8rem]"/>
+              <Subtitle text={"Year"} size="text-[0.8rem]"/>
+
+              <p className="font-oasis-text text-[0.9rem] font-bold">
+                {fullName || "—"}
+              </p>
+              <p className="font-oasis-text text-[0.9rem] font-bold">
+                {profile.year_level || "—"}
+              </p>
+            </div>
+
+            <div>
+              <Subtitle text={"PUP Webmail"} size="text-[0.8rem]"/>
+              <p className="font-oasis-text text-[0.9rem] font-bold">
+                {user.email}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 items-center justify-center">
+              <Subtitle text={"Password"} size="text-[0.8rem]"/>
+              <img src={edit} className="w-5 object-contain aspect-square row-span-2 cursor-pointer"/>
+              <p className="font-oasis-text text-[0.9rem] font-bold">**********</p>
+            </div>
+          </section>
+
+          <section className="w-full flex flex-col gap-4 mt-5">
+            <SectionHeader text={"User Activity"} icon={activity} />
+            <div className="w-full py-1 backdrop-blur-3xl rounded-2xl flex flex-col justify-center items-start gap-1">
+              <Subtitle text={"First Access"} size="text-[0.8rem]"/>
+              <p>{new Date(user.created_at).toLocaleString()}</p>
+            </div>
+          </section>
+        </div>
+
+        {/* 3RD COLUMN */}
+        <div className="w-full h-auto p-3 flex flex-col gap-5 justify-start items-center">
+          <section className="w-full flex flex-col gap-4">
+            <SectionHeader text={"OJT Information"} icon={info}/>
+          </section>
+          <section className="w-full flex flex-col gap-4 mt-5">
+            <SectionHeader text={"Host Training Establishment"} icon={activity}/>
+          </section>
+        </div>
+
+      </div>
+    </StudentProfileScreen>
+  );
 }
 
+export function SectionHeader({ icon, text }) {
+  return (
+    <div className="w-full p-2 flex items-center justify-center gap-1 relative backdrop-blur-3xl bg-oasis-blue shadow-[2px_2px_3px_rgba(0,0,0,0.5)]">
+      <img src={icon} className="w-7 aspect-square object-contain"/>
+      <Subtitle text={text} size={"text-[1rem]"} />
+    </div>
+  );
+}
