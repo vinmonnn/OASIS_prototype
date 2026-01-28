@@ -46,7 +46,7 @@ export function AdmCard({ cardTitle, cardIcon, cardNumber, cardDate}) {
 
           <section className="w-full flex flex-row justify-between items-center">
               <p>{cardTitle}</p>
-              <img src={cardIcon}/>
+              {cardIcon}
           </section>
 
           <section className="w-full flex flex-col justify-start items-start">

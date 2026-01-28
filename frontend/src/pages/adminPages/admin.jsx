@@ -2,7 +2,7 @@ import AdminScreen from '../../layouts/adminScreen.jsx';
 import { AdminHeader } from '../../components/headers.jsx'
 import Title from "../../utilities/title.jsx";
 import { AdmCard } from "../../utilities/card.jsx"
-import user from "../../assets/icons/user.png";
+import { UsersRound, ScrollText, Bell, User, Book, BookAlert } from 'lucide-react';
 import { SingleField, MultiField } from '../../components/fieldComp.jsx';
 import { Filter, Dropdown } from '../../components/adminComps.jsx';
 import { Label } from '../../utilities/label.jsx';
@@ -14,7 +14,6 @@ import { AnnouncementModal } from '../../components/userModal.jsx';
 import { ConfirmModal } from '../../components/popupModal.jsx';
 
 export default function Admin() {
-
      const categories = [
         "HTE Related",
         "Deadlines",
@@ -99,25 +98,25 @@ export default function Admin() {
 
                         <AdmCard 
                             cardTitle={"Total Students"}
-                            cardIcon={user}
+                            cardIcon={<UsersRound color='#377268'/>}
                             cardNumber={"24"}
                             cardDate={"January 7, 2026"}
                         />
                         <AdmCard 
                             cardTitle={"Total Active MOAs"}
-                            cardIcon={user}
+                            cardIcon={<Book color='#377268'/>}
                             cardNumber={"105"}
                             cardDate={"January 7, 2026"}
                         />
                         <AdmCard 
                             cardTitle={"Total expired MOAs"}
-                            cardIcon={user}
+                            cardIcon={<BookAlert color='#377268'/>}
                             cardNumber={"32"}
                             cardDate={"January 7, 2026"}
                         />
                         <AdmCard 
                             cardTitle={"Total Notifications"}
-                            cardIcon={user}
+                            cardIcon={<Bell color='#377268'/>}
                             cardNumber={"55"}
                             cardDate={"January 7, 2026"}
                         />

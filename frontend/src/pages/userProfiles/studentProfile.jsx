@@ -6,6 +6,7 @@ import activity from "../../assets/icons/activity.png";
 import star from "../../assets/icons/star.png";
 import edit from "../../assets/icons/edit.png";
 import testPfp from "../../assets/testprofile.jpg"
+import { Activity, BriefcaseBusiness, Edit, FileUser, Info } from "lucide-react";
 
 export default function StudentProfile() {
     return (
@@ -25,7 +26,7 @@ export default function StudentProfile() {
 
                         <section className="w-full flex flex-col gap-4">
 
-                            <SectionHeader text={"User Details"} icon={info}/>
+                            <SectionHeader text={"User Details"} icon={<Info size={20}/>}/>
                             {/* FULL NAME AND YEAR */}
                             <div className="grid grid-cols-2">
                                 <Subtitle text={"Full Name"} size="text-[0.8rem]"/>
@@ -42,14 +43,14 @@ export default function StudentProfile() {
                             {/* PASSWORD */}
                             <div className="grid grid-cols-2 items-center justify-center">
                                 <Subtitle text={"Password"} size="text-[0.8rem]"/>
-                                <img src={edit} className="w-5 object-contain aspect-square row-span-2 cursor-pointer"/>
+                                <Edit size={20} color="#377268"/>
                                 <p className="font-oasis-text text-[0.9rem] font-bold">**********</p>
                             </div>
                             
                         </section>
                             
                         <section className="w-full flex flex-col gap-4 mt-5">
-                            <SectionHeader text={"User Activity"} icon={activity}/>
+                            <SectionHeader text={"User Activity"} icon={<Activity size={25}/>}/>
 
                             <div className="w-full py-1 backdrop-blur-3xl rounded-2xl flex flex-col justify-center items-start gap-1">
                                 <Subtitle text={"First Access"} size="text-[0.8rem]"/>
@@ -62,7 +63,7 @@ export default function StudentProfile() {
                     <div className="w-full h-auto p-3 flex flex-col gap-5 justify-start items-center">
                         <section className="w-full flex flex-col gap-4">
 
-                            <SectionHeader text={"OJT Information"} icon={info}/>
+                            <SectionHeader text={"OJT Information"} icon={<FileUser size={25}/>}/>
 
                             <div className="grid grid-cols-2">
                                 <Subtitle text={"OJT Adviser"} size="text-[0.8rem]"/>
@@ -75,7 +76,7 @@ export default function StudentProfile() {
                         </section>
 
                         <section className="w-full flex flex-col gap-4 mt-5">
-                            <SectionHeader text={"Host Training Establishment"} icon={activity}/>
+                            <SectionHeader text={"Host Training Establishment"} icon={<BriefcaseBusiness size={25}/>}/>
 
                             <div className="flex flex-col justify-center items-center">
                                 <Subtitle text={"Currently Applied HTE"} size="text-[0.8rem]"/>
@@ -96,8 +97,6 @@ export default function StudentProfile() {
                                         </div>
                                         
                                     </div>
-                                    
-
                                 </section>
                             </div>
                         </section>
@@ -112,8 +111,8 @@ export default function StudentProfile() {
 
 export function SectionHeader({ icon, text}) {
     return(
-        <div className="w-full p-2 flex items-center justify-center gap-1 relative backdrop-blur-3xl bg-oasis-blue shadow-[2px_2px_3px_rgba(0,0,0,0.5)]">
-            <img src={icon} className="w-7 aspect-square object-contain"/>
+        <div className="w-full py-2 px-5 flex items-center justify-start gap-2 relative backdrop-blur-3xl bg-oasis-blue shadow-[2px_2px_3px_rgba(0,0,0,0.5)]">
+           {icon}
             <Subtitle text={text} size={"text-[1rem]"} />
         </div>
     )
