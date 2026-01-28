@@ -9,7 +9,6 @@
   font-display: swap;
 }
 
-
 @theme {
   --color-oasis-aqua: #00D0FF; /* Login Reg*/
   --color-oasis-dark: #54A194; /* GRADIENT */
@@ -96,7 +95,9 @@
   animation: fly 0.8s ease-out forwards;
 }
 
-
+html {
+  scroll-behavior: smooth;
+}
 body {
   background: #F4FCF8;
   

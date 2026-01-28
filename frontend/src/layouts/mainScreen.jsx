@@ -94,7 +94,7 @@ export function BubbleAnim({ start, onEnd }) {
       const timer = setTimeout(() => {
         setShow(false);
         if (onEnd) onEnd(); // optional callback
-      }, 800); // match animation duration
+      }, 800); 
 
       return () => clearTimeout(timer);
     }

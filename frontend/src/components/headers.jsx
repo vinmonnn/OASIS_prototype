@@ -11,6 +11,15 @@ import { CircleUserRound, Bell, BellDot } from "lucide-react";
 import Notifications from "../utilities/notifications"
 
 export function Header({ admin = false }) {
+    const [bell, setBell] = useState('');
+    const [open, setOpen] = useState(false);
+
+    const handleClick = () => {
+
+        requestAnimationFrame(() => setAnimate(true));
+        setOpen(prev => !prev);
+    }
+
     return (
         <>
             <header className="sticky top-0 w-full h-5 flex flex-row justify-between
@@ -25,7 +34,7 @@ export function Header({ admin = false }) {
                     </HoverLift>
 
                     <HoverLift>
-                        {admin ? "" : <Bell size={28} color="#54A194"/>}
+                        {admin ? "" : <div onClick={handleClick}><Bell size={28} color="#54A194"/></div>}
                     </HoverLift>
 
                     <HoverLift>                        
@@ -33,7 +42,8 @@ export function Header({ admin = false }) {
                     </HoverLift>
                 </div>
             </header>
-            {/* <Notifications /> */}
+            {open && <Notifications open={open}/>}
+            
         </>
     )
 }
