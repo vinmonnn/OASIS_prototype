@@ -26,12 +26,16 @@ def create_app() -> Flask:
     from app.routes.admin_routes import admin_bp
     from app.routes.student_profile_routes import student_profile_bp
     from app.routes.admin_profile_routes import admin_profile_bp
-
+    from app.routes.student_dashboard_routes import student_dashboard_bp
+    from app.routes.student_hte_routes import student_hte_bp
+    
     app.register_blueprint(health_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(student_profile_bp)
     app.register_blueprint(admin_profile_bp)
+    app.register_blueprint(student_dashboard_bp)
+    app.register_blueprint(student_hte_bp)
 
     from flask import send_from_directory
 

@@ -55,7 +55,7 @@ ENV/
 ####################################
 # FLASK / BACKEND RUNTIME
 ####################################
-backend/__pycache__/
+backend/migrations/__pycache__/
 backend/migrations/versions/__pycache__/
 instance/
 .flaskenv
@@ -92,3 +92,15 @@ htmlcov/
 # OS
 ####################################
 Desktop.ini
+
+####################################
+# JWT / AUTH / TEMP
+####################################
+*.jwt
+*.token
+
+####################################
+# TEMP FILES
+####################################
+*.bak
+*.old
