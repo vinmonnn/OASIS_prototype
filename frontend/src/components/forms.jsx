@@ -3,13 +3,15 @@ import { useForm } from "react-hook-form";
 import { useRef, useState, useEffect } from "react";
 import Title from "../utilities/title";
 import { useNavigate } from "react-router-dom";
+import { clearToken } from "../api/token";
+import { useAuth } from "../context/authContext";
 import {
   sendOtp,
   verifyOtp,
-  registerStudent,
-  loginStudent,
-  loginAdmin,
+  login,
+  completeRegistration
 } from "../api/auth.service";
+
 
 const USER_REGEX = /^[a-z]+[a-z][a-z]+@iskolarngbayan\.pup\.edu\.ph$/;
 const PWD_REGEX = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -98,9 +100,11 @@ export function UpdatedReg() {
     }
 
     try {
-      await registerStudent(user, pwd);
+      clearToken();
+
+      await completeRegistration(user, pwd, matchPwd);
       setSuccess(true);
-      navigate("/home");
+      navigate("/access");
     } catch (err) {
       setErrMsg(
         err?.response?.data?.error ||
@@ -160,6 +164,7 @@ export function UpdatedReg() {
                                     </p>
                                     <Button
                                         text="Send OTP"
+                                        type="button"
                                         disabled={!validName}
                                         onClick={async (e) => {
                                             e.preventDefault();
@@ -197,6 +202,7 @@ export function UpdatedReg() {
                                      <p id="otpnote" className={otpFocus && otp && !validOtp ? "opacity-100 font-oasis-text text-red-600 text-xs ": "opacity-0 "}> OTP must be a 6-digit number.</p>
                                     <Button
                                         text="Verify OTP"
+                                        type="button"
                                         disabled={!validOtp}
                                         onClick={async (e) => {
                                             e.preventDefault();
@@ -271,70 +277,85 @@ export function UpdatedReg() {
 
 
 export function UpdatedLogin() {
-    
-    const userRef = useRef();
-    const errRef = useRef();
+  const userRef = useRef();
+  const navigate = useNavigate();
+  const errRef = useRef();
 
-    const [user, setUser] = useState('');
-    const [pwd, setPwd] = useState('');
-    const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
+  const { loginUser } = useAuth(); // ✅ IMPORTANT
 
-    useEffect(() => {
-        userRef.current.focus();
-    }, [])
-    
-    useEffect(() => {
-        setErrMsg('');
-    }, [user, pwd])
+  const [user, setUser] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
+  useEffect(() => {
+    userRef.current?.focus();
+  }, []);
 
-    return (
-        <>
-            <section className="w-full p-1 flex flex-col items-center justify-center gap-1">
-                <Title text={"Login"}></Title>
-                <p ref={errRef} className={errMsg ? "opacity-1" : "opacity-0"} aria-live="assertive">{errMsg}</p>
-            </section>
-            <form className=" w-full p-5 flex flex-col items-center justify-center gap-5" >
-                <div className="w-full">
-                    <label className="mb-1 text-oasis-header font-oasis-text text-[1rem]" htmlFor="webMail">
-                        PUP Webmail
-                    </label>
-                    <input
-                        type="text"
-                        id="webMail"
-                        placeholder="Enter valid webmail"
-                        ref={userRef}
-                        autoComplete="off"
-                        onChange={(e) => setUser(e.target.value)}
-                        value={user}
-                        required
+  useEffect(() => {
+    setErrMsg("");
+  }, [user, pwd]);
 
-                        className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
-                    />
-                </div>
-                
-                <div className="w-full">
-                    <label className="mb-1 text-oasis-header font-oasis-text text-[1rem]" htmlFor="loginPwd">
-                        Password
-                    </label>
-                    <input
-                        type="text"
-                        id="loginPwd"
-                        placeholder="Enter password"
-                        ref={userRef}
-                        autoComplete="off"
-                        onChange={(e) => setPwd(e.target.value)}
-                        value={pwd}
-                        required
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-                        className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
-                    />
-                </div> 
-                
-                <Button text={"Sign in"}/>
-            </form>
-        </>
-    )
+    try {
+      const res = await loginUser(user, pwd);
+
+      const redirectPath = res.role === "ADMIN" ? "/admin" : "/home";
+      navigate(redirectPath, { replace: true });
+    } catch (err) {
+      setErrMsg(
+        err?.response?.data?.error || "Invalid credentials"
+      );
+    }
+  };
+
+  return (
+    <>
+      <section className="w-full p-1 flex flex-col items-center justify-center gap-1">
+        <Title text={"Login"} />
+        <p
+          ref={errRef}
+          className={errMsg ? "opacity-1 text-red-600" : "opacity-0"}
+          aria-live="assertive"
+        >
+          {errMsg}
+        </p>
+      </section>
+
+      <form
+        className="w-full p-5 flex flex-col items-center justify-center gap-5"
+        onSubmit={handleLogin}
+      >
+        <div className="w-full">
+          <label className="mb-1 text-oasis-header font-oasis-text">
+            PUP Webmail / Admin ID
+          </label>
+          <input
+            type="text"
+            ref={userRef}
+            value={user}
+            onChange={(e) => setUser(e.target.value)}
+            required
+            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none"
+          />
+        </div>
+
+        <div className="w-full">
+          <label className="mb-1 text-oasis-header font-oasis-text">
+            Password
+          </label>
+          <input
+            type="password"
+            value={pwd}
+            onChange={(e) => setPwd(e.target.value)}
+            required
+            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none"
+          />
+        </div>
+
+        <Button text="Sign in" type="submit" />
+      </form>
+    </>
+  );
 }
-

@@ -4,8 +4,6 @@ import { Link } from "react-router-dom"
 import NavItem from "./navItem"
 import HoverLift from "./hoverLift"
 import clock from "../assets/icons/clock.png"
-import settings from "../assets/icons/settings.png"
-import user from "../assets/icons/user.png"
 import { useState, useEffect } from "react"
 import { CircleUserRound, Bell, BellDot } from "lucide-react";
 import Notifications from "../utilities/notifications"
@@ -26,7 +24,7 @@ export function Header({ admin = false }) {
             items-center bg-linear-to-t from-oasis-blue via-oasis-blue to-oasis-dark min-h-15 pl-5 pr-5 shadow-[0_5px_10px_rgba(0,0,0,0.3)] z-50">
                 {/* VINCENT */}
                 <Link to="/"><LogoWrap /></Link>
-                <Link to="/admin" className="absolute left-1/2 -translate-x-1/2"><img src={oasisLogo} className="w-25 aspect-auto hover:cursor-pointer"></img></Link>
+                <img src={oasisLogo} className="absolute left-1/2 -translate-x-1/2 w-25 aspect-auto hover:cursor-pointer"></img>
                 
                 <div className="flex gap-3 items-center">
                     <HoverLift>

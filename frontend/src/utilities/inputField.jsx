@@ -26,12 +26,14 @@ export function ContentField({ pholder, id, maxNum = 'max-h-100', value, onChang
 }
 
 
-export function UploadField() {
+export function UploadField( { accept, onChange} ) {
   return (
     <label className="w-full flex items-center gap-4 p-4 bg-white rounded-2xl cursor-pointer border border-gray-300 hover:border-oasis-button-light transition">
       
       <input
         type="file"
+        accept={accept}
+        onChange={onChange}
         className="hidden"
       />
 

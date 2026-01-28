@@ -1,25 +1,26 @@
 import 'animate.css';
-import { useState, useRef, useEffect } from 'react';   // <-- UPDATED: added useEffect here
+import { useState, useRef, useEffect } from 'react';
 import LogregScreen from '../layouts/logregScreen';
 import UserModal from '../components/userModal';
 import { UpdatedLogin, UpdatedReg } from '../components/forms';
-import { Link } from 'react-router-dom';
-import { health } from "../api/auth.service";
-
+import { useNavigate, Navigate } from "react-router-dom";
+import { useAuth } from '../context/authContext';
 
 export default function UserAccess() {
+  const { role, loading } = useAuth();
+
+  // ✅ ADD THESE (MISSING BEFORE)
   const ACCESS = {
     LOGIN: "LOGIN",
-    REGISTER: "REGISTER"
+    REGISTER: "REGISTER",
   };
 
   const [accessType, setAccessType] = useState(ACCESS.LOGIN);
 
-  useEffect(() => {                             
-    health()
-      .then((d) => console.log("BACKEND CONNECTED:", d))
-      .catch((e) => console.error("BACKEND NOT CONNECTED:", e));
-  }, []);
+  if (loading) return null;
+
+  if (role === "ADMIN") return <Navigate to="/admin" replace />;
+  if (role === "STUDENT") return <Navigate to="/home" replace />;
 
   return (
     <>
@@ -30,16 +31,17 @@ export default function UserAccess() {
             <>
               <UpdatedLogin />
               <section className="w-full flex flex-row items-center justify-between">
-                  <p
-                      className="cursor-pointer hover:underline underline-offset-2 font-oasis-text text-[0.8rem]"
-                      onClick={() => setAccessType(ACCESS.REGISTER)}
-                  >
-                      Not registered yet?
-                  </p>
-                  <p 
-                      className="cursor-pointer hover:underline underline-offset-2 font-oasis-text text-[0.8rem]">
-                      Forgot password
-                  </p>
+                <p
+                  className="cursor-pointer hover:underline underline-offset-2 font-oasis-text text-[0.8rem]"
+                  onClick={() => setAccessType(ACCESS.REGISTER)}
+                >
+                  Not registered yet?
+                </p>
+                <p 
+                  className="cursor-pointer hover:underline underline-offset-2 font-oasis-text text-[0.8rem]"
+                >
+                  Forgot password
+                </p>
               </section>
             </>
           )}
