@@ -9,7 +9,7 @@ import user from "../assets/icons/user.png"
 import { useState, useEffect } from "react"
 import { CircleUserRound, Bell, BellDot } from "lucide-react";
 import Notifications from "../utilities/notifications"
-
+import { Settings, UserRound } from "lucide-react"
 export function Header({ admin = false }) {
     const [bell, setBell] = useState('');
     const [open, setOpen] = useState(false);
@@ -115,11 +115,11 @@ export function AdminHeader() {
             {/* Icons */}
             <div className="bg-admin-header-bg p-3 rounded-4xl w-fit flex flex-row justify-between items-center gap-5">
                 <HoverLift>
-                    <img src={settings} className="w-[1.2rem]" />
+                    <Settings/>
                 </HoverLift>
 
                 <HoverLift>
-                    <img src={user} className="w-[1.2rem]" />
+                    <Link to={"/admin-profile"}><UserRound/></Link>
                 </HoverLift>
             </div>
         </div>

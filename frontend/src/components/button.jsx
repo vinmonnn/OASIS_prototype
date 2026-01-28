@@ -1,8 +1,8 @@
 import 'animate.css';
-import { useState } from 'react';
 import HoverLift from './hoverLift';
 import add from "../assets/icons/add.png";
 import close from "../assets/icons/close.png"
+
 export function Button({ text, onClick, disabled, width = "w-auto", type = "button" }) {
   return (
     <button
@@ -17,7 +17,7 @@ export function Button({ text, onClick, disabled, width = "w-auto", type = "butt
 }
 
 
-export function AnnounceButton({ type="button", btnText = "Posted", onClick, disabled }) {
+export function AnnounceButton({ type="button", btnText = "Posted", onClick, disabled,  icon}) {
     const text = btnText.toLowerCase();
 
     const isDanger = ["delete", "reject", "clear all", "clear"].includes(text);
@@ -36,9 +36,10 @@ export function AnnounceButton({ type="button", btnText = "Posted", onClick, dis
         <button
             type={type}
             onClick={onClick}
-            className={`font-oasis-text text-[0.8rem] text-center py-2 px-8 w-auto max-w-50 rounded-3xl transition-all duration-200 hover:cursor-pointer ${buttonStyle} `}
+            className={`font-oasis-text text-[0.8rem] text-center py-2 px-5 w-auto flex flex-row items-center justify-center gap-3 max-w-70 rounded-3xl transition-all duration-200 hover:cursor-pointer ${buttonStyle} `}
             disabled={disabled}
         >
+            {icon}
             {btnText}
         </button>
     );

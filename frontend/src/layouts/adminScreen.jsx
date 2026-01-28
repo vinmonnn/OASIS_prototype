@@ -1,6 +1,5 @@
 import { Header } from '../components/headers'
 import Footer from '../components/footer'
-import ctaBg from "../assets/ctaBg.png"
 
 export default function AdminScreen({ children }) {
     return(
