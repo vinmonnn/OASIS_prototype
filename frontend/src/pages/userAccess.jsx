@@ -1,7 +1,7 @@
 import 'animate.css';
 import { useState } from 'react';
 import LogregScreen from '../layouts/logregScreen';
-import { ForgotPassword, UpdatedLogin, UpdatedReg } from '../components/forms';
+import { UpdatedLogin, UpdatedReg } from '../components/forms';
 import { Navigate } from "react-router-dom";
 import { useAuth } from '../context/authContext';
 

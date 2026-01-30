@@ -33,4 +33,18 @@ def create_app() -> Flask:
     app.register_blueprint(student_profile_bp)
     app.register_blueprint(admin_profile_bp)
 
+    from flask import send_from_directory
+
+    @app.route("/uploads/profile_photos/<filename>")
+    def serve_profile_photo(filename):
+        return send_from_directory(
+            app.config["UPLOAD_FOLDER"],
+            filename
+        )
+    
+    @app.route("/uploads/<path:filename>")
+    def uploaded_files(filename):
+        upload_folder = app.config["UPLOAD_FOLDER"]
+        return send_from_directory(upload_folder, filename)
+    
     return app
