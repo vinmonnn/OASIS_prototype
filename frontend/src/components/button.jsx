@@ -9,7 +9,7 @@ export function Button({ text, onClick, disabled, width = "w-auto", type = "butt
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`animate__animated animate__fadeIn min-w-70 ${width} p-3 bg-linear-to-t from-oasis-button-dark to-oasis-button-light font-oasis-text text-white font-semibold hover:from-oasis-button-light hover:to-oasis-aqua ease-in duration-100 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}
+      className={`animate__animated animate__fadeIn min-w-70 ${width} p-3 shadow-[0px_3px_5px_rgba(0,0,0,0.8)] bg-linear-to-t from-oasis-button-dark from-10%  via-oasis-button-light via-70% to-oasis-blue to-120% font-oasis-text text-white font-semibold cursor-pointer ease-in duration-100 hover:-translate-y-1 active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:translate-0 rounded-2xl`}
     >
       {text}
     </button>

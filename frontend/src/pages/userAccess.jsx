@@ -1,31 +1,29 @@
 import 'animate.css';
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import LogregScreen from '../layouts/logregScreen';
-import UserModal from '../components/userModal';
-import { UpdatedLogin, UpdatedReg } from '../components/forms';
-import { useNavigate, Navigate } from "react-router-dom";
+import { ForgotPassword, UpdatedLogin, UpdatedReg } from '../components/forms';
+import { Navigate } from "react-router-dom";
 import { useAuth } from '../context/authContext';
 
 export default function UserAccess() {
   const { role, loading } = useAuth();
 
-  // ✅ ADD THESE (MISSING BEFORE)
   const ACCESS = {
     LOGIN: "LOGIN",
     REGISTER: "REGISTER",
+    FORGOTPASS: "FORGOTPASS",
   };
 
   const [accessType, setAccessType] = useState(ACCESS.LOGIN);
 
   if (loading) return null;
-
   if (role === "ADMIN") return <Navigate to="/admin" replace />;
   if (role === "STUDENT") return <Navigate to="/home" replace />;
 
   return (
     <>
       <LogregScreen>
-        <UserModal>
+        <div className='absolute right-0 top-[50%] right translate-y-[-50%] shadow-[inset_0px_0px_100px] shadow-oasis-blue p-5 h-full w-[40%] flex flex-col justify-center'>
 
           {accessType === ACCESS.LOGIN && (
             <>
@@ -39,6 +37,7 @@ export default function UserAccess() {
                 </p>
                 <p 
                   className="cursor-pointer hover:underline underline-offset-2 font-oasis-text text-[0.8rem]"
+                  onClick={() => setAccessType(ACCESS.FORGOTPASS)}
                 >
                   Forgot password
                 </p>
@@ -51,7 +50,7 @@ export default function UserAccess() {
               <UpdatedReg />
               <section className="flex flex-row items-center justify-center">
                 <p
-                  className="cursor-pointer underline font-oasis-text text-[0.8rem]"
+                  className="cursor-pointer hover:underline underline-offset-2 font-oasis-text text-[0.8rem]"
                   onClick={() => setAccessType(ACCESS.LOGIN)}
                 >
                   Already registered?
@@ -60,7 +59,19 @@ export default function UserAccess() {
             </>
           )}
 
-        </UserModal>
+          {accessType === ACCESS.FORGOTPASS && (
+            <>
+              <ForgotPassword/>
+                <p
+                  className="cursor-pointer hover:underline underline-offset-2 font-oasis-text text-[0.8rem]"
+                  onClick={() => setAccessType(ACCESS.LOGIN)}
+                >
+                  Back to Login
+                </p>
+            </>
+          )}
+        </div>
+      
       </LogregScreen>
     </>
   );

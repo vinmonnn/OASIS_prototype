@@ -136,137 +136,138 @@ export function UpdatedReg() {
             </p>
           </section>
 
-                        {/* WEBMAIL */}
-                        <form onSubmit={handleSubmit} className=" w-full p-5 flex flex-col items-center justify-center gap-3">
-                            {step === STEPS.EMAIL && (
-                                <>
-                                    <div className="w-full">
-                                        <label className="mb-1 text-oasis-header font-oasis-text" htmlFor="webMail">PUP Webmail</label>
-                                        <input
-                                            type="text"
-                                            id="webMail"
-                                            placeholder="Enter valid webmail"
-                                            ref={userRef}
-                                            autoComplete="off"
-                                            required
-                                            onChange={(e) => setUser(e.target.value)}
-                                            aria-invalid={validName ? "false" : "true"}
-                                            aria-describedby="uidnote"
-                                            onFocus={() => setUserFocus(true)}
-                                            onBlur={() => setUserFocus(false)}
+            {/* WEBMAIL */}
+            <form onSubmit={handleSubmit} className="w-full p-5 flex flex-col items-center gap-3">
+                {step === STEPS.EMAIL && (
+                    <>
+                        <div className="w-full">
+                            <label className="mb-1 text-oasis-header font-oasis-text" htmlFor="webMail">PUP Webmail</label>
+                            <input
+                                type="text"
+                                id="webMail"
+                                placeholder="Enter valid webmail"
+                                ref={userRef}
+                                autoComplete="off"
+                                required
+                                onChange={(e) => setUser(e.target.value)}
+                                aria-invalid={validName ? "false" : "true"}
+                                aria-describedby="uidnote"
+                                onFocus={() => setUserFocus(true)}
+                                onBlur={() => setUserFocus(false)}
 
-                                            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
-                                        />
-                                    </div>
-                                    
-                                    <p id="uidnote" className={userFocus && user && !validName ? "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic m-auto text-center": "opacity-0 "}>Must be a valid webmail.<br/> 
-                                    E.g. juanmdelacruz@iskolarngbayan.pup.edu.ph
-                                    </p>
-                                    <Button
-                                        text="Send OTP"
-                                        type="button"
-                                        disabled={!validName}
-                                        onClick={async (e) => {
-                                            e.preventDefault();
-                                            try {
-                                                await sendOtp(user);
-                                                setStep(STEPS.OTP);
+                                className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                            />
+                        </div>
+                        
+                        <p id="uidnote" className={userFocus && user && !validName ? 
+                          "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic m-auto text-center": "opacity-0 font-oasis-text text-red-900 text-[0.8rem] italic m-auto text-center"}>Must be a valid webmail.<br/> 
+                        E.g. juanmdelacruz@iskolarngbayan.pup.edu.ph
+                        </p>
+                        <Button
+                            text="Send OTP"
+                            type="button"
+                            disabled={!validName}
+                            onClick={async (e) => {
+                                e.preventDefault();
+                                try {
+                                    await sendOtp(user);
+                                    setStep(STEPS.OTP);
 
-                                            } catch {
-                                                setErrMsg("Failed to send OTP");
-                                            }
-                                        }}
-                                    />
-                                </>
-                            )}
+                                } catch {
+                                    setErrMsg("Failed to send OTP");
+                                }
+                            }}
+                        />
+                    </>
+                )}
 
-                            {/* OTP */}
-                            {step === STEPS.OTP && (
-                                <>
-                                    <div className="text-center">
-                                        <label htmlFor="otp" className="mb-1 text-oasis-header font-oasis-text">Enter OTP</label>
-                                        <input
-                                            ref={otpRef}
-                                            type="text"
-                                            id="otp"
-                                            required
-                                            placeholder="6-digit OTP"
-                                            onChange={(e) => setOtp(e.target.value)}
-                                            aria-describedby="otpnote"
-                                            onFocus={() => setOtpFocus(true)}
-                                            onBlur={() => setOtpFocus(false)}
-                                            
-                                            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
-                                        />
-                                    </div>
-                                     <p id="otpnote" className={otpFocus && otp && !validOtp ? "opacity-100 font-oasis-text text-red-600 text-xs ": "opacity-0 "}> OTP must be a 6-digit number.</p>
-                                    <Button
-                                        text="Verify OTP"
-                                        type="button"
-                                        disabled={!validOtp}
-                                        onClick={async (e) => {
-                                            e.preventDefault();
+                {/* OTP */}
+                {step === STEPS.OTP && (
+                    <>
+                        <div className="text-center">
+                            <label htmlFor="otp" className="mb-1 text-oasis-header font-oasis-text">Enter OTP</label>
+                            <input
+                                ref={otpRef}
+                                type="text"
+                                id="otp"
+                                required
+                                placeholder="6-digit OTP"
+                                onChange={(e) => setOtp(e.target.value)}
+                                aria-describedby="otpnote"
+                                onFocus={() => setOtpFocus(true)}
+                                onBlur={() => setOtpFocus(false)}
+                                
+                                className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                            />
+                        </div>
+                          <p id="otpnote" className={otpFocus && otp && !validOtp ? "opacity-100 font-oasis-text text-red-600 text-xs ": "opacity-0 "}> OTP must be a 6-digit number.</p>
+                        <Button
+                            text="Verify OTP"
+                            type="button"
+                            disabled={!validOtp}
+                            onClick={async (e) => {
+                                e.preventDefault();
 
-                                            try {
-                                                await verifyOtp(user, otp); //backend call
-                                                setStep(STEPS.PASSWORD);
-                                            } catch {
-                                                setErrMsg("Invalid OTP");
-                                            }
-                                        }}
-                                    />
+                                try {
+                                    await verifyOtp(user, otp); //backend call
+                                    setStep(STEPS.PASSWORD);
+                                } catch {
+                                    setErrMsg("Invalid OTP");
+                                }
+                            }}
+                        />
 
-                                </>
-                            )}
+                    </>
+                )}
 
-                            {/* PASSWORD */}
-                            {step === STEPS.PASSWORD && (
-                                <>
-                                    <div className="text-center">
-                                        <label htmlFor="password" className="mb-1 text-oasis-header font-oasis-text">Password</label>
-                                        <input
-                                            ref={pwdRef}
-                                            type="password"
-                                            id="password"
-                                            placeholder="Enter password"
-                                            required
-                                            onChange={(e) => setPwd(e.target.value)}
-                                            aria-invalid={!validPwd}
-                                            aria-describedby="pwdnote"
-                                            onFocus={() => setPwdFocus(true)}
-                                            onBlur={() => setPwdFocus(false)}
+                {/* PASSWORD */}
+                {step === STEPS.PASSWORD && (
+                  <>
+                      <div className="text-center">
+                          <label htmlFor="password" className="mb-1 text-oasis-header font-oasis-text">Password</label>
+                          <input
+                              ref={pwdRef}
+                              type="password"
+                              id="password"
+                              placeholder="Enter password"
+                              required
+                              onChange={(e) => setPwd(e.target.value)}
+                              aria-invalid={!validPwd}
+                              aria-describedby="pwdnote"
+                              onFocus={() => setPwdFocus(true)}
+                              onBlur={() => setPwdFocus(false)}
 
-                                            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
-                                        />
-                                    </div>
+                              className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                          />
+                      </div>
 
-                                    <div className="text-center">
-                                        <label htmlFor="confirm_pwd">Confirm Password</label>
-                                        <input
-                                            type="password"
-                                            id="confirm_pwd"
-                                            placeholder="Re-enter password"
-                                            onChange={(e) => setMatchPwd(e.target.value)}
-                                            aria-invalid={!validMatch}
-                                            aria-describedby="matchnote"
-                                            required
-                                            onFocus={() => setMatchFocus(true)}
-                                            onBlur={() => setMatchFocus(false)}
-                                            
-                                            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
-                                        />
-                                    </div>
+                      <div className="text-center">
+                          <label htmlFor="confirm_pwd">Confirm Password</label>
+                          <input
+                              type="password"
+                              id="confirm_pwd"
+                              placeholder="Re-enter password"
+                              onChange={(e) => setMatchPwd(e.target.value)}
+                              aria-invalid={!validMatch}
+                              aria-describedby="matchnote"
+                              required
+                              onFocus={() => setMatchFocus(true)}
+                              onBlur={() => setMatchFocus(false)}
+                              
+                              className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+                          />
+                      </div>
 
-                                    <p id="pwdnote" className={pwdFocus && pwd && !validPwd ? "opacity-100 font-oasis-text text-red-600 text-xs ": "opacity-0 "}>
-                                        Password must not be less than 8 characters.<br/>
-                                        Including an uppercase letter, and special character
-                                    </p>
-                                   <p id="matchnote" className={matchFocus && matchPwd && !validMatch ? "opacity-100 font-oasis-text text-red-600 text-xs": "opacity-0 "}>
-                                        password not matched!
-                                    </p>
+                      <p id="pwdnote" className={pwdFocus && pwd && !validPwd ? "opacity-100 font-oasis-text text-red-600 text-xs ": "opacity-0 "}>
+                          Password must not be less than 8 characters.<br/>
+                          Including an uppercase letter, and special character
+                      </p>
+                      <p id="matchnote" className={matchFocus && matchPwd && !validMatch ? "opacity-100 font-oasis-text text-red-600 text-xs": "opacity-0 "}>
+                          password not matched!
+                      </p>
 
-                <Button text="Register" type="submit" disabled={!validPwd || !validMatch} />
-              </>
+                    <Button text="Register" type="submit" disabled={!validPwd || !validMatch} />
+                  </>
             )}
           </form>
         </>
@@ -281,7 +282,7 @@ export function UpdatedLogin() {
   const navigate = useNavigate();
   const errRef = useRef();
 
-  const { loginUser } = useAuth(); // ✅ IMPORTANT
+  const { loginUser } = useAuth(); //IMPORTANT
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
@@ -337,7 +338,7 @@ export function UpdatedLogin() {
             value={user}
             onChange={(e) => setUser(e.target.value)}
             required
-            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none"
+            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
           />
         </div>
 
@@ -350,7 +351,7 @@ export function UpdatedLogin() {
             value={pwd}
             onChange={(e) => setPwd(e.target.value)}
             required
-            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none"
+            className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
           />
         </div>
 
@@ -358,4 +359,45 @@ export function UpdatedLogin() {
       </form>
     </>
   );
+}
+
+// Enter webmail
+// Send OTP
+// Verify
+// Enter new and confirm password
+
+export function ForgotPassword() {
+  return (
+    <>
+      <form className="w-full p-5 flex flex-col items-center justify-center gap-5">
+
+        <div className="w-full">
+          <label className="mb-1 text-oasis-header font-oasis-text" htmlFor="webMail">PUP Webmail</label>
+          <input
+              type="text"
+              id="webMail"
+              placeholder="Enter valid webmail"
+              // ref={userRef}
+              autoComplete="off"
+              required
+              // onChange={(e) => setUser(e.target.value)}
+              // aria-invalid={validName ? "false" : "true"}
+              // aria-describedby="uidnote"
+              // onFocus={() => setUserFocus(true)}
+              // onBlur={() => setUserFocus(false)}
+
+              className="w-full p-3 border-b-2 border-oasis-light focus:outline-none focus:border-oasis-aqua transition-all"
+          />
+        </div>
+
+        <Button text="Send OTP" type="submit" />
+      </form>
+      
+{/*       
+      <p id="uidnote" className={userFocus && user && !validName ? 
+        "opacity-100 font-oasis-text text-red-900 text-[0.8rem] italic m-auto text-center": "opacity-0 font-oasis-text text-red-900 text-[0.8rem] italic m-auto text-center"}>Must be a valid webmail.<br/> 
+      E.g. juanmdelacruz@iskolarngbayan.pup.edu.ph
+      </p> */}
+    </>
+  )
 }
