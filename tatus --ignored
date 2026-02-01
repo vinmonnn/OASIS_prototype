@@ -1,0 +1,27 @@
+[33mcommit 6878707c97ed5acc33be8917b07795ec88530056[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m)[m
+Author: Vincent Pagarigan <johnvincentpagarigan@gmail.com>
+Date:   Wed Jan 28 15:01:05 2026 +0800
+
+    Updates: Connection of Backend (Profiles, Login, Register, and Protected Routes
+
+.env.example
+.gitignore
+backend/.env
+backend/app/__init__.py
+backend/app/__pycache__/__init__.cpython-312.pyc
+backend/app/__pycache__/config.cpython-312.pyc
+backend/app/config.py
+backend/app/routes/__pycache__/student_profile_routes.cpython-312.pyc
+backend/app/routes/student_profile_routes.py
+backend/app/utils/file_utils.py
+frontend/.env
+frontend/src/api/auth.service.jsx
+frontend/src/api/axios.jsx
+frontend/src/api/token.js
+frontend/src/components/forms.jsx
+frontend/src/context/authContext.jsx
+frontend/src/main.jsx
+frontend/src/pages/userAccess.jsx
+frontend/src/pages/userProfiles/studentProfile.jsx
+frontend/src/routes/AdminRoute.jsx
+frontend/src/routes/StudentRoute.jsx
