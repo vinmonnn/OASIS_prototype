@@ -112,14 +112,20 @@ export default function HteDirectory() {
        CAROUSEL DATA (OVERVIEW)
     ============================== */
     const OPTIONS = { loop: true };
-
-    const SLIDES = htes.map(hte => ({
-        thumbnail: hte.thumbnail
+    
+    const SLIDES = htes.map(hte => {
+        const resolved = hte.thumbnail
             ? resolveMediaUrl(hte.thumbnail)
-            : fallbackImg,
-        hteName: hte.company_name,
-        hteAddress: hte.address
-    }));
+            : fallbackImg;
+
+        console.log("Resolved thumbnail:", resolved);
+
+        return {
+            thumbnail: resolved,
+            hteName: hte.company_name,
+            hteAddress: hte.address
+        };
+    });
 
     return (
         <>

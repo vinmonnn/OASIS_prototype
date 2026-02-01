@@ -42,7 +42,7 @@ def create_app() -> Flask:
     @app.route("/uploads/<path:filename>")
     def uploaded_files(filename):
         return send_from_directory(
-            app.config["UPLOAD_ROOT"],
+            app.config["UPLOAD_ROOT"],  # BASE_DIR/uploads
             filename
         )
     

@@ -31,7 +31,7 @@ def hte_dashboard():
             "id": hte.id,
             "company_name": hte.company_name,
             "industry": hte.industry,
-            "thumbnail_path": hte.thumbnail_path,
+            "thumbnail": hte.thumbnail_path,
             "moa_status": hte.moa_status,
             "moa_signed_at": (
                 hte.moa_signed_at.isoformat()

@@ -1,8 +1,10 @@
 export function resolveMediaUrl(path) {
-    if (!path) return null;
+    if (!path || typeof path !== "string") {
+        return null;
+    }
 
-    const base = import.meta.env.VITE_API_BASE_URL.replace(/\/$/, "");
-    const cleanPath = path.replace(/^\//, "");
+    if (path.startsWith("http")) return path;
 
-    return `${base}/${cleanPath}`;
+    const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+    return `${import.meta.env.VITE_API_BASE_URL}/${cleanPath}`;
 }
