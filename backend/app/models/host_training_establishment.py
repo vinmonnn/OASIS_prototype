@@ -31,4 +31,6 @@ class HostTrainingEstablishment(db.Model):
 
     moa_file_path = db.Column(db.String(255), nullable=True)
 
+    thumbnail_path = db.Column(db.String(255), nullable=True)
+
     created_at = db.Column(db.DateTime, server_default=db.func.now())

@@ -8,7 +8,7 @@ def create_app() -> Flask:
 
     from app.config import Config
     
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder="static")
     app.config.from_object(Config)
 
     # init extensions
@@ -38,17 +38,13 @@ def create_app() -> Flask:
     app.register_blueprint(student_hte_bp)
 
     from flask import send_from_directory
-
-    @app.route("/uploads/profile_photos/<filename>")
-    def serve_profile_photo(filename):
-        return send_from_directory(
-            app.config["UPLOAD_FOLDER"],
-            filename
-        )
     
     @app.route("/uploads/<path:filename>")
     def uploaded_files(filename):
-        upload_folder = app.config["UPLOAD_FOLDER"]
-        return send_from_directory(upload_folder, filename)
+        return send_from_directory(
+            app.config["UPLOAD_ROOT"],
+            filename
+        )
     
     return app
+
