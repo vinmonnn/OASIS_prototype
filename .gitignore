@@ -59,6 +59,8 @@ backend/migrations/__pycache__/
 backend/migrations/versions/__pycache__/
 instance/
 .flaskenv
+__pycache__/
+*.py[cod]
 
 ####################################
 # DATABASE

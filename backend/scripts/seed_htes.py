@@ -25,7 +25,7 @@ with app.app_context():
     moa_validity=12,
     moa_expiry_date=date(2025, 3, 1),
     moa_file_path="/uploads/moa/abc_tech.pdf",
-    thumbnail_path="/uploads/hte_thumbnails/abc.png"
+    thumbnail_path="/uploads/hte_thumbnails/hte_sample_pic.jpg"
 )
 
     db.session.add(hte)
