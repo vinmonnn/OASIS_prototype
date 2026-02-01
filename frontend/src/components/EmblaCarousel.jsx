@@ -8,6 +8,7 @@ import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel from 'embla-carousel-react'
 import Subtitle from '../utilities/subtitle'
 import location from "../assets/icons/location.png"
+import fallbackImg from "../assets/fallbackImage.jpg";
 
 export function CarouselItem({ thumbnail, hteName = "Name of HTE", hteAddress = "Address of HTE", onClick }) {
     return (
@@ -16,7 +17,7 @@ export function CarouselItem({ thumbnail, hteName = "Name of HTE", hteAddress = 
                 <div className="embla__slide w-60 h-80 overflow-hidden hover:cursor-pointer" onClick={onClick}>
 
                     {/* IMAGE WRAPPER */}
-                    <div className="w-full h-full bg-center bg-cover py-5 flex items-end" style={{ backgroundImage: `url(${thumbnail || fallbackImg})`}}>
+                    <div className="w-full h-full bg-center bg-cover py-5 flex items-end" style={{ backgroundImage: `url(${thumbnail ? thumbnail : fallbackImg})`}}>
                         <div className='w-full flex flex-col items-start p-3 backdrop-blur-md bg-white/30 shadow-lg text-white'>
                             <Subtitle text={hteName} weight={"font-bold"} size={"text-[1.2rem]"}/>
 
